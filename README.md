@@ -7,6 +7,9 @@
 ├── Makefile
 ├── README.md
 ├── README_TREE.md
+├── assets
+│   ├── gitjump.png
+│   └── wallpaper.png
 ├── flake.lock
 ├── flake.nix
 ├── home
@@ -19,35 +22,23 @@
 │       ├── kitty.nix
 │       ├── neovim.nix
 │       └── zsh.nix
-├── image
-│   ├── gitjump.png
-│   └── wallpaper.png
 ├── nix
 │   ├── apps
 │   │   ├── default.nix
+│   │   ├── devtools
+│   │   ├── nixpkgs.nix
 │   │   ├── notion-app-enhanced
 │   │   ├── printing.nix
-│   │   ├── tlp.nix
-│   │   └── virtualization.nix
+│   │   └── tlp.nix
 │   ├── c0d3h01
 │   │   ├── audio.nix
 │   │   ├── default.nix
 │   │   ├── desktop.nix
 │   │   ├── fonts.nix
-│   │   └── networking.nix
-│   ├── default.nix
-│   ├── dev
-│   │   ├── default.nix
-│   │   ├── docker.nix
-│   │   ├── java.nix
-│   │   ├── python.nix
-│   │   └── rust.nix
+│   │   ├── networking.nix
+│   │   └── user.nix
 │   ├── hardware.nix
-│   └── modules
-│       ├── boot.nix
-│       ├── default.nix
-│       ├── hardware.nix
-│       └── services.nix
+│   └── nixman.nix
 └── scripts
     ├── bootstrap.sh
     └── update.sh
