@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ ... }:
 
 {
   # Disable power-profiles-daemon to avoid conflicts with TLP

@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ pkgs, ... }:
 {
   imports = [
     ./modules
@@ -79,6 +79,23 @@
 
     # -*-[ Diffing ]-*-
     diff-so-fancy
+
+    # -*-[ Auto syntax formmater ]-*-
+    nixpkgs-fmt
+    shfmt
+    prettierd
+    eslint
+    black
+    isort
+    rustfmt
+    clippy
+    clang-tools
+    gofumpt
+    golines
+    google-java-format
+    dart
+    php84Packages.php-cs-fixer
+    stylua
   ];
 
   # XDG Base Directory specification

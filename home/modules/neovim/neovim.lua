@@ -1,51 +1,3 @@
-{ pkgs, ... }:
-{
-  programs.neovim = {
-    enable = true;
-    viAlias = true;
-    vimAlias = true;
-
-    # Enhanced plugin selection for VS Code-like experience
-    plugins = with pkgs.vimPlugins; [
-      # Core plugins
-      vim-sensible
-      vim-commentary
-      vim-surround
-      vim-lastplace
-      vim-sleuth
-      direnv-vim
-
-      # VS Code-like UI
-      telescope-nvim
-      telescope-fzf-native-nvim
-      nvim-web-devicons
-      lualine-nvim
-      bufferline-nvim
-      nvim-tree-lua
-
-      # Development features
-      nvim-lspconfig
-      nvim-treesitter.withAllGrammars
-      gitsigns-nvim
-      which-key-nvim
-      indent-blankline-nvim
-      toggleterm-nvim
-
-      # Completion
-      nvim-cmp
-      cmp-nvim-lsp
-      cmp-buffer
-      cmp-path
-      luasnip
-      cmp_luasnip
-
-      # Theme
-      tokyonight-nvim
-      mini-icons
-    ];
-
-    # VS Code-like configuration with properly escaped Lua
-    extraLuaConfig = ''
       -- Set theme
       vim.cmd('colorscheme tokyonight')
 
@@ -125,22 +77,22 @@
       })
 
       -- Command palette
-      require('which-key').setup({})
-      require('which-key').register({
-        f = {
-          name = "File",
-          f = { "<cmd>Telescope find_files<cr>", "Find File" },
-          g = { "<cmd>Telescope live_grep<cr>", "Search in Files" },
-          e = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
-        },
-        e = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
-        b = {
+      local wk = require("which-key")
+
+      wk.register({
+        ["<leader>b"] = {
           name = "Buffers",
+          c = { "<cmd>bd<cr>", "Close" },
           n = { "<cmd>BufferLineCycleNext<cr>", "Next" },
           p = { "<cmd>BufferLineCyclePrev<cr>", "Previous" },
-          c = { "<cmd>bdelete<cr>", "Close" },
         },
-      }, { prefix = "<leader>" })
+        ["<leader>f"] = {
+          name = "File",
+          e = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
+          f = { "<cmd>Telescope find_files<cr>", "Find File" },
+          s = { "<cmd>Telescope live_grep<cr>", "Search in Files" },
+        },
+      })
 
       -- LSP setup
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -192,9 +144,9 @@
       })
 
       -- Indent guides
-      require('indent_blankline').setup({
-        char = '│',
-        show_current_context = true,
+      require('ibl').setup({
+        indent = { char = '│' },
+        scope = { enabled = true },
       })
 
       -- Telescope file finder
@@ -229,6 +181,18 @@
           enable = true,
         },
       })
-    '';
-  };
-}
+
+      -- Auto syntax formmater
+      local null_ls = require("null-ls")
+        null_ls.setup({
+          sources = {
+            require("null-ls").builtins.formatting.prettierd,
+            require("null-ls").builtins.formatting.black,
+            require("null-ls").builtins.formatting.rustfmt,
+            require("null-ls").builtins.formatting.stylua,
+            require("null-ls").builtins.formatting.shfmt,
+            require("null-ls").builtins.formatting.clang_format,
+            require("null-ls").builtins.formatting.google_java_format,
+          },
+        })
+

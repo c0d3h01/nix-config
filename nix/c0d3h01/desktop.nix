@@ -49,20 +49,22 @@
     rhythmbox
     libreoffice
     micro
+    kdePackages.kpat
+    yaru-theme # Theme
 
     # Gnome Extensions
-    gnomeExtensions.user-themes
     gnomeExtensions.gsconnect
+    gnomeExtensions.dash2dock-lite
   ];
 
-  # Home Manager settings (for per-user configuration)
   home-manager.users.c0d3h01 = { pkgs, ... }: {
-    # GNOME dconf settings (User-specific)
     dconf.settings = {
       "org/gnome/shell" = {
         disable-user-extensions = false;
         enabled-extensions = [
-          "user-theme@gnome-shell-extensions.gcampax.github.com"
+          # gnome Extensions 
+          "gsconnect@andyholmes.github.io"
+          "dash2dock-lite@icedman.github.com"
         ];
 
         #   favorite-apps = [
@@ -78,19 +80,30 @@
         #   ];
       };
 
+      # Set Yaru Red Dark theme for GNOME Shell
+      "org/gnome/shell/extensions/user-theme" = {
+        name = "Yaru-red-dark";
+      };
+
+      # Set Yaru Red Dark for GTK apps
       "org/gnome/desktop/interface" = {
+        gtk-theme = "Yaru-red-dark";
+        icon-theme = "Yaru-red";
+        cursor-theme = "Yaru";
         color-scheme = "prefer-dark";
         enable-hot-corners = false;
       };
 
+      # Set wallpaper
       "org/gnome/desktop/background" = {
         picture-uri = "file://${config.users.users.c0d3h01.home}/dotfiles/assets/wallpaper.png";
         picture-uri-dark = "file://${config.users.users.c0d3h01.home}/dotfiles/assets/wallpaper.png";
       };
 
+      # Set screensaver
       "org/gnome/desktop/screensaver" = {
         picture-uri = "file://${config.users.users.c0d3h01.home}/dotfiles/assets/wallpaper.png";
-        primary-color = "#3465a4";
+        primary-color = "#8a0707";
         secondary-color = "#000000";
       };
     };

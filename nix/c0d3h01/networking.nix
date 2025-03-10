@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ lib, ... }:
 
 {
   # Enables wireless support via wpa_supplicant (uncomment if needed)
