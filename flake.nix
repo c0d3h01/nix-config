@@ -52,7 +52,7 @@
         inherit system specialArgs;
         modules = [
           # -*-[ System configurations, modules ]-*-
-          ./nix/nixconfig.nix
+          ./nix/configuration.nix
 
           # -*-[ Home Manager integration, modules ]-*-
           home-manager.nixosModules.home-manager
