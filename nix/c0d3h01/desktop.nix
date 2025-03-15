@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ lib, config, pkgs, ... }:
 
 {
   # Enable X server and GNOME
@@ -44,7 +44,11 @@
     rhythmbox
     libreoffice
     kdePackages.kpat # Game
-    yaru-theme # Theme
+
+    # Theme pkgs
+    palenight-theme
+    numix-cursor-theme
+    pkgs.papirus-icon-theme
 
     # Gnome Extensions
     gnomeExtensions.gsconnect
@@ -60,30 +64,13 @@
           "gsconnect@andyholmes.github.io"
           "dash-to-dock@micxgx.gmail.com"
         ];
-
-        #   favorite-apps = [
-        #     "firefox.desktop"
-        #     "youtube-music.desktop"
-        #     "gnome-text-editor.desktop"
-        #     "jupyterlab.desktop"
-        #     "element-desktop.desktop"
-        #     "vesktop.desktop"
-        #     "code.desktop"
-        #     "kitty.desktop"
-        #     "org.gnome.Nautilus.desktop"
-        #   ];
-      };
-
-      # Set Yaru Red Dark theme for GNOME Shell
-      "org/gnome/shell/extensions/user-theme" = {
-        name = "Yaru-red-dark";
       };
 
       # Set Yaru Red Dark for GTK apps
       "org/gnome/desktop/interface" = {
-        gtk-theme = "Yaru-red-dark";
-        icon-theme = "Yaru-red";
-        cursor-theme = "Yaru";
+        gtk-theme = "palenight";
+        icon-theme = "Papirus-Dark";
+        cursor-theme = "Numix-Cursor";
         color-scheme = "prefer-dark";
         enable-hot-corners = false;
       };
