@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, username, pkgs, ... }:
 with lib;
 let
   cfg = config.modules.firefox;
@@ -11,7 +11,7 @@ in
       enable = true;
 
       # Balance privacy and functionality
-      profiles.c0d3h01 = {
+      profiles.${username} = {
         # Essential extensions
         extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
           ublock-origin
@@ -19,6 +19,13 @@ in
         ];
 
         settings = {
+          # Set default coustom fonts
+          "font.default.x-western" = "sans-serif";
+          "font.name.serif.x-western" = "Source Serif Pro";
+          "font.name.sans-serif.x-western" = "Inter";
+          "font.name.monospace.x-western" = "Fira Code";
+          "font.minimum-size.x-western" = 12;
+
           # Enable screenshot functionality
           "extensions.screenshots.disabled" = false;
           "screenshots.browser.component.enabled" = true;
@@ -104,67 +111,67 @@ in
 
         # userChome.css remains the same
         userChrome = "
-                    * { 
-                        box-shadow: none !important;
-                        border: 0px solid !important;
-                    }
+          * { 
+              box-shadow: none !important;
+              border: 0px solid !important;
+          }
 
-                    #tabbrowser-tabs {
-                        --user-tab-rounding: 8px;
-                    }
+          #tabbrowser-tabs {
+              --user-tab-rounding: 8px;
+          }
 
-                    .tab-background {
-                        border-radius: var(--user-tab-rounding) var(--user-tab-rounding) 0px 0px !important;
-                        margin-block: 1px 0 !important;
-                    }
+          .tab-background {
+              border-radius: var(--user-tab-rounding) var(--user-tab-rounding) 0px 0px !important;
+              margin-block: 1px 0 !important;
+          }
                     
-                    #scrollbutton-up, #scrollbutton-down {
-                        border-top-width: 1px !important;
-                        border-bottom-width: 0 !important;
-                    }
+          #scrollbutton-up, #scrollbutton-down {
+              border-top-width: 1px !important;
+              border-bottom-width: 0 !important;
+          }
 
-                    .tab-background:is([selected], [multiselected]):-moz-lwtheme {
-                        --lwt-tabs-border-color: rgba(0, 0, 0, 0.5) !important;
-                        border-bottom-color: transparent !important;
-                    }
+          .tab-background:is([selected], [multiselected]):-moz-lwtheme {
+              --lwt-tabs-border-color: rgba(0, 0, 0, 0.5) !important;
+              border-bottom-color: transparent !important;
+          }
                     
-                    [brighttext='true'] .tab-background:is([selected], [multiselected]):-moz-lwtheme {
-                        --lwt-tabs-border-color: rgba(255, 255, 255, 0.5) !important;
-                        border-bottom-color: transparent !important;
-                    }
+          [brighttext='true'] .tab-background:is([selected], [multiselected]):-moz-lwtheme {
+              --lwt-tabs-border-color: rgba(255, 255, 255, 0.5) !important;
+              border-bottom-color: transparent !important;
+          }
 
-                    /* Container color bar visibility */
-                    .tabbrowser-tab[usercontextid] > .tab-stack > .tab-background > .tab-context-line {
-                        margin: 0px max(calc(var(--user-tab-rounding) - 3px), 0px) !important;
-                    }
+          /* Container color bar visibility */
+          .tabbrowser-tab[usercontextid] > .tab-stack > .tab-background > .tab-context-line {
+              margin: 0px max(calc(var(--user-tab-rounding) - 3px), 0px) !important;
+          }
 
-                    #TabsToolbar, #tabbrowser-tabs {
-                        --tab-min-height: 29px !important;
-                    }
+          #TabsToolbar, #tabbrowser-tabs {
+              --tab-min-height: 29px !important;
+          }
                     
-                    #main-window[sizemode='true'] #toolbar-menubar[autohide='true'] + #TabsToolbar, 
-                    #main-window[sizemode='true'] #toolbar-menubar[autohide='true'] + #TabsToolbar #tabbrowser-tabs {
-                        --tab-min-height: 30px !important;
-                    }
+          #main-window[sizemode='true'] #toolbar-menubar[autohide='true'] + #TabsToolbar, 
+          #main-window[sizemode='true'] #toolbar-menubar[autohide='true'] + #TabsToolbar #tabbrowser-tabs {
+              --tab-min-height: 30px !important;
+          }
                     
-                    #scrollbutton-up,
-                    #scrollbutton-down {
-                        border-top-width: 0 !important;
-                        border-bottom-width: 0 !important;
-                    }
+          #scrollbutton-up,
+          #scrollbutton-down {
+              border-top-width: 0 !important;
+              border-bottom-width: 0 !important;
+          }
 
-                    #TabsToolbar, #TabsToolbar > hbox, #TabsToolbar-customization-target, #tabbrowser-arrowscrollbox  {
-                        max-height: calc(var(--tab-min-height) + 1px) !important;
-                    }
+          #TabsToolbar, #TabsToolbar > hbox, #TabsToolbar-customization-target, #tabbrowser-arrowscrollbox  {
+              max-height: calc(var(--tab-min-height) + 1px) !important;
+          }
                     
-                    #TabsToolbar-customization-target toolbarbutton > .toolbarbutton-icon, 
-                    #TabsToolbar-customization-target .toolbarbutton-text, 
-                    #TabsToolbar-customization-target .toolbarbutton-badge-stack,
-                    #scrollbutton-up,#scrollbutton-down {
-                        padding-top: 7px !important;
-                        padding-bottom: 6px !important;
-                    }
-                ";
+          #TabsToolbar-customization-target toolbarbutton > .toolbarbutton-icon, 
+          #TabsToolbar-customization-target .toolbarbutton-text, 
+          #TabsToolbar-customization-target .toolbarbutton-badge-stack,
+          #scrollbutton-up,#scrollbutton-down {
+              padding-top: 7px !important;
+              padding-bottom: 6px !important;
+          }
+        ";
       };
     };
   };
