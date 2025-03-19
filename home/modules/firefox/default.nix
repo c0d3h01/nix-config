@@ -24,7 +24,6 @@ in
           "font.name.serif.x-western" = "Source Serif Pro";
           "font.name.sans-serif.x-western" = "Inter";
           "font.name.monospace.x-western" = "Fira Code";
-          "font.minimum-size.x-western" = 12;
 
           # Enable screenshot functionality
           "extensions.screenshots.disabled" = false;
