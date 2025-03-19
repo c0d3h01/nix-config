@@ -28,7 +28,6 @@
 
   # -*-[ Home Packages ]-*-
   home.packages = with pkgs; [
-
     # -*-[ Let install Home-manager ]-*-
     home-manager
 
@@ -85,21 +84,9 @@
     diff-so-fancy
   ];
 
-  # XDG Base Directory specification
+  # XDG Base
   xdg = {
     enable = true;
-
-    # Define standard directories
-    userDirs = {
-      enable = true;
-      desktop = "$HOME/Desktop";
-      documents = "$HOME/Documents";
-      download = "$HOME/Downloads";
-      music = "$HOME/Music";
-      pictures = "$HOME/Pictures";
-      videos = "$HOME/Videos";
-      templates = "$HOME/Templates";
-      publicShare = "$HOME/Public";
-    };
+    userDirs.enable = true;
   };
 }
