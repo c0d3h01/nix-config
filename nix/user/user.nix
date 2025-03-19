@@ -12,7 +12,7 @@
     isNormalUser = true;
     home = "/home/${username}";
     shell = pkgs.zsh;
-    extraGroups = [ "networkmanager" "wheel" "audio" "video" "plugdev" "docker" "libvirtd" ];
+    extraGroups = [ "networkmanager" "wheel" "audio" "video" "plugdev" ];
     openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINcq9uTCVusCJRWgHTj8u4sdvvuXfPZcinAYTbNZW+eI c0d3h01@gmail.com" ];
   };
 

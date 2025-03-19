@@ -13,6 +13,7 @@
 
   # Virtual boxes
   virtualisation.libvirtd.enable = true;
+  users.users.${username}.extraGroups = [ "libvirtd" ];
 
   # Exclude unwanted GNOME packages
   environment.gnome.excludePackages = with pkgs; [

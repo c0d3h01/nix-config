@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, username, ... }:
 
 {
   # -*-[ Docker Setup ]-*-
@@ -15,6 +15,8 @@
     docker-compose
     lazydocker
   ];
+
+  users.users.${username}.extraGroups = [ "docker" ];
 
   # Configure default memory and CPU limits
   virtualisation.docker.extraOptions = ''
