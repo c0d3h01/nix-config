@@ -38,6 +38,11 @@
 │       ├── fonts.nix
 │       ├── networking.nix
 │       └── user.nix
-└── scripts
-    └── install.sh
+├── scripts
+│   ├── install.sh
+│   └── secrets.sh
+├── secrets
+│   ├── recipients.txt
+│   └── wifi-password.age
+└── secrets.nix
 ```
