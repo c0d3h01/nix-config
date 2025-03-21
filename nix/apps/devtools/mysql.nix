@@ -18,7 +18,7 @@
     mariadb
     mysql84
     mysql-workbench
-    parallel-full
+    parallel
   ];
 
   environment.variables.PATH = [ "${pkgs.mysql84}/bin" ];
