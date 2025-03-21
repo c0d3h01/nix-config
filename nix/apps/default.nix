@@ -62,6 +62,13 @@
     # Development tools.
     nodejs
     yarn
+    (with nodePackages; [
+      typescript
+      node2nix
+      typescript-language-server
+      vscode-langservers-extracted
+      prettier
+    ])
 
     # C/C++ tools
     clang
