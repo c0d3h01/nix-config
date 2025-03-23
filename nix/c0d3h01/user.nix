@@ -1,4 +1,4 @@
-{ pkgs, username, ... }:
+{ config, pkgs, username, ... }:
 
 {
   # Set your time zone.
@@ -9,11 +9,24 @@
   # -*- Define a user account -*-
   users.users.${username} = {
     description = "Harshal Sawant";
+
     isNormalUser = true;
+
     home = "/home/${username}";
     shell = pkgs.zsh;
-    extraGroups = [ "networkmanager" "wheel" "audio" "video" "plugdev" ];
-    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINcq9uTCVusCJRWgHTj8u4sdvvuXfPZcinAYTbNZW+eI c0d3h01@gmail.com" ];
+
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "audio"
+      "video"
+      "dialout"
+      "plugdev"
+    ];
+
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINcq9uTCVusCJRWgHTj8u4sdvvuXfPZcinAYTbNZW+eI c0d3h01@gmail.com"
+    ];
   };
 
   # Enable Zsh shell (alternative to Bash)
