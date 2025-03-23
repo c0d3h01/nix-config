@@ -27,16 +27,16 @@
 │   │   ├── notion-app-enhanced
 │   │   ├── printing.nix
 │   │   └── vm.nix
+│   ├── c0d3h01
+│   │   ├── audio.nix
+│   │   ├── default.nix
+│   │   ├── desktop.nix
+│   │   ├── fonts.nix
+│   │   ├── networking.nix
+│   │   └── user.nix
 │   ├── configuration.nix
 │   ├── hardware.nix
-│   ├── optimization.nix
-│   └── user
-│       ├── audio.nix
-│       ├── default.nix
-│       ├── desktop.nix
-│       ├── fonts.nix
-│       ├── networking.nix
-│       └── user.nix
+│   └── optimization.nix
 ├── scripts
 │   ├── install.sh
 │   ├── npm.sh
