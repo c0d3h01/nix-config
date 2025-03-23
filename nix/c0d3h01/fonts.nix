@@ -5,17 +5,16 @@
     enableDefaultPackages = true;
 
     packages = with pkgs; [
-      inter
-      source-serif-pro
-      fira-code
+      dejavu_fonts
+      hack-font
       twitter-color-emoji
     ];
     fontconfig = {
       enable = true;
       defaultFonts = {
-        serif = lib.mkForce [ "Source Serif Pro" ];
-        sansSerif = lib.mkForce [ "Inter" ];
-        monospace = lib.mkForce [ "Fira Code" ];
+        serif = lib.mkForce [ "DejaVu Serif" ];
+        sansSerif = lib.mkForce [ "DejaVu Sans" ];
+        monospace = lib.mkForce [ "Hack" ];
         emoji = lib.mkForce [ "Twitter Color Emoji" ];
       };
     };
