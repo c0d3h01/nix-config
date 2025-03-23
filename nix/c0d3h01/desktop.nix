@@ -2,45 +2,54 @@
 
 {
   # Enable X server and GNOME
-  services.xserver.enable = true;
-  services.xserver.videoDrivers = [ "amdgpu" ];
-  services.xserver.xkb.layout = "us";
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.xserver = {
+    enable = true;
+    videoDrivers = [ "amdgpu" ];
+    xkb.layout = "us";
+    displayManager.gdm.enable = true;
+    desktopManager.gnome.enable = true;
+    excludePackages = with pkgs; [ xterm ];
+  };
 
   # Enable dconf service for GNOME settings management
   programs.dconf.enable = true;
 
   # Exclude unwanted GNOME packages
-  environment.gnome.excludePackages = with pkgs; [
-    gnome-tour
-    gnome-backgrounds
-    gnome-font-viewer
-    epiphany
-    geary
-    yelp
-    baobab
-    gnome-weather
-    gnome-connections
-    gnome-contacts
-    gnome-system-monitor
-  ];
+  environment = {
+    gnome.excludePackages = with pkgs; [
+      gnome-tour
+      gnome-backgrounds
+      gnome-font-viewer
+      epiphany
+      geary
+      yelp
+      baobab
+      gnome-weather
+      gnome-text-editor
+      gnome-connections
+      gnome-contacts
+      gnome-system-monitor
+    ];
 
-  services.xserver.excludePackages = with pkgs; [
-    xterm
-  ];
+    systemPackages = with pkgs; [
+      gnome-photos
+      gnome-tweaks
+      evolutionWithPlugins
+      micro
+      libreoffice
+      # Gnome Extensions
+      gnomeExtensions.gsconnect
+      gnomeExtensions.dash2dock-lite
+    ];
 
-  # Additional system packages
-  environment.systemPackages = with pkgs; [
-    gnome-photos
-    gnome-tweaks
-    evolutionWithPlugins
-    libreoffice
-
-    # Gnome Extensions
-    gnomeExtensions.gsconnect
-    gnomeExtensions.dash2dock-lite
-  ];
+    pathsToLink = [
+      "/share/gtksourceview-4"
+      "/share/gtksourceview-5"
+      "/share/icons"
+      "/share/themes"
+      "/share/applications"
+    ];
+  };
 
   home-manager.users.${username} = { pkgs, ... }: {
     dconf.settings = {
@@ -52,20 +61,25 @@
         ];
       };
 
-      # Set interface
+      # interface
       "org/gnome/desktop/interface" = {
         enable-hot-corners = false;
+        clock-show-weekday = true;
+        clock-show-seconds = false;
+        clock-show-date = true;
       };
 
-      # Set wallpaper
+      # wallpaper
       "org/gnome/desktop/background" = {
         picture-uri = "file://${config.users.users.${username}.home}/dotfiles/assets/wallpaper.png";
         picture-uri-dark = "file://${config.users.users.${username}.home}/dotfiles/assets/wallpaper.png";
+        picture-options = "zoom";
       };
 
-      # Set screensaver
+      # screensaver
       "org/gnome/desktop/screensaver" = {
         picture-uri = "file://${config.users.users.${username}.home}/dotfiles/assets/wallpaper.png";
+        picture-options = "zoom";
         primary-color = "#8a0707";
         secondary-color = "#000000";
       };
@@ -88,6 +102,17 @@
       gtk3.extraConfig = {
         "gtk-application-prefer-dark-theme" = true;
       };
+      gtk4.extraConfig = {
+        "gtk-application-prefer-dark-theme" = true;
+      };
     };
+  };
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gtk
+      xdg-desktop-portal-gnome
+    ];
   };
 }
