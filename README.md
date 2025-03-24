@@ -21,7 +21,6 @@
 │       └── zshell
 ├── nix
 │   ├── apps
-│   │   ├── android.nix
 │   │   ├── default.nix
 │   │   ├── devtools
 │   │   ├── notion-app-enhanced
