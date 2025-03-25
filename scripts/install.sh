@@ -20,6 +20,6 @@ fi
 
 # Rebuild system using flake
 echo "Applying system configuration..."
-sudo nixos-rebuild switch --flake . --upgrade --show-trace --option experimental-features "nix-command flakes"
+sudo nixos-rebuild switch --flake .#NixOS --upgrade --show-trace --option experimental-features "nix-command flakes"
 
 echo "✅ Setup complete! Your system is now configured."
