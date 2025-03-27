@@ -31,7 +31,6 @@
       home-manager
       # Utilities
       fastfetch
-      unzip
       glances
       tmux
       xclip

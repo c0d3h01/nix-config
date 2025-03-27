@@ -40,7 +40,6 @@
       libreoffice
       # Gnome Extensions
       gnomeExtensions.gsconnect
-      gnomeExtensions.dash2dock-lite
     ];
 
     pathsToLink = [
@@ -58,7 +57,6 @@
         disable-user-extensions = false;
         enabled-extensions = [
           "gsconnect@andyholmes.github.io"
-          "dash2dock-lite@icedman.github.com"
         ];
       };
 
