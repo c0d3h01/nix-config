@@ -26,6 +26,7 @@ in
       ANDROID_NDK_ROOT = "${androidSdk}/libexec/android-sdk/ndk/22.0.7026061";
     };
     extraInit = ''
+      export CHROME_EXECUTABLE="${pkgs.firefox}/bin/firefox"
       export PATH="${androidSdk}/libexec/android-sdk/ndk/22.0.7026061:$PATH"
       export PATH="${androidSdk}/libexec/android-sdk/platform-tools:$PATH"
       export PATH="${androidSdk}/libexec/android-sdk/cmdline-tools/latest/bin:$PATH"
