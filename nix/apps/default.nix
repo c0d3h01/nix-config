@@ -89,7 +89,7 @@
         android-studio
         flutter
         dart
-        # openjdk
+        openjdk
         gradle
         kotlin
         go
