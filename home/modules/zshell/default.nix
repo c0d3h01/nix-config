@@ -1,17 +1,15 @@
-{ config, pkgs, lib, ... }:
-
+{ config
+, pkgs
+, ...
+}:
 {
-  # ZSH configuration  
   programs.zsh = {
     enable = true;
-
-    # Essential ZSH features
     autosuggestion.enable = true;
     enableCompletion = true;
     autocd = true;
     dotDir = ".config/zsh";
 
-    # History configuration - keeping your existing settings
     history = {
       extended = true;
       ignoreDups = true;
@@ -23,19 +21,16 @@
       share = true;
     };
 
-    # Keeping your useful aliases
     shellAliases = {
       # Navigation
       ".." = "cd ..";
       "..." = "cd ../..";
       "...." = "cd ../../..";
-
       # Modern ls replacements
       ls = "eza --icons --group-directories-first";
       ll = "eza -l --icons --group-directories-first --git";
       la = "eza -a --icons --group-directories-first";
       lt = "eza --tree --icons --level=2";
-
       # Git shortcuts
       g = "git";
       ga = "git add";
@@ -43,36 +38,24 @@
       gc = "git commit";
       gph = "git push";
       gpl = "git pull";
-
       # Safety nets
       rm = "rm -I";
       cp = "cp -i";
       mv = "mv -i";
-
       # Modern alternatives
       cat = "bat";
       grep = "rg";
       find = "fd";
-
       # Handy shortcuts
       ff = "fastfetch";
       cl = "clear";
       x = "exit";
       v = "nvim";
-
-      # Nix
-      nrs = "sudo nixos-rebuild switch --flake ~/dotfiles/. --upgrade --show-trace";
-      ncg = "sudo nix-collect-garbage -d";
     };
 
-    # Using oh-my-zsh as a pre-configured solution
     oh-my-zsh = {
       enable = true;
-
-      # Theme with minimal setup required
       theme = "robbyrussell";
-
-      # Useful plugins from oh-my-zsh
       plugins = [
         "git"
         "z"
@@ -83,7 +66,6 @@
       ];
     };
 
-    # Essential plugins not included in oh-my-zsh
     plugins = [
       {
         name = "zsh-autosuggestions";
@@ -107,35 +89,81 @@
 
     # Environment setup
     envExtra = ''
-      export CHROME_EXECUTABLE="/etc/profiles/per-user/c0d3h01/bin/firefox"
       export MANPAGER="nvim +Man!"
     '';
 
     # Functional config
     initExtra = ''
-      # Improved Vi mode
-      bindkey -v
-      bindkey '^?' backward-delete-char
-      bindkey '^h' backward-delete-char
-      bindkey '^w' backward-kill-word
+            # Improved Vi mode
+            bindkey -v
+            bindkey '^?' backward-delete-char
+            bindkey '^h' backward-delete-char
+            bindkey '^w' backward-kill-word
       
-      # Directory stack
-      setopt AUTO_PUSHD
-      setopt PUSHD_IGNORE_DUPS
+            # Directory stack
+            setopt AUTO_PUSHD
+            setopt PUSHD_IGNORE_DUPS
       
-      # Extract function
-      extract() {
-        if [ -f "$1" ]; then
+            # Extract function
+            extract() {
+          if [ -z "$1" ]; then
+              echo "Usage: extract <file>"
+              return 1
+          fi
+
+          if [ ! -f "$1" ]; then
+              echo "Error: '$1' is not a valid file"
+              return 1
+          fi
+
           case "$1" in
-            *.tar.gz) tar xzf "$1" ;;
-            *.tar.xz) tar xJf "$1" ;;
-            *.tar.bz2) tar xjf "$1" ;;
-            *.zip) unzip "$1" ;;
-            *) echo "Unsupported file format!" ;;
+              # Tar archives
+              *.tar)       tar xf "$1"       ;;
+              *.tar.bz2)   tar xjf "$1"      ;;
+              *.tbz2)      tar xjf "$1"      ;;
+              *.tar.gz)    tar xzf "$1"      ;;
+              *.tgz)       tar xzf "$1"      ;;
+              *.tar.xz)    tar xJf "$1"      ;;
+              *.txz)       tar xJf "$1"      ;;
+              *.tar.zst)   tar --use-compress-program=unzstd -xf "$1" ;;
+
+              # Compressed files
+              *.7z)        7z x "$1"         ;;
+              *.zip)       unzip "$1"        ;;
+              *.rar)       unrar x "$1"      ;;
+              *.gz)        gunzip "$1"       ;;
+              *.bz2)       bunzip2 "$1"      ;;
+              *.xz)        unxz "$1"         ;;
+              *.zst)       unzstd "$1"       ;;
+
+              # Archives
+              *.war)       unzip "$1"        ;;
+              *.jar)       unzip "$1"        ;;
+              *.deb)       ar x "$1"         ;;
+
+              # Compressed images
+              *.Z)         uncompress "$1"   ;;
+
+              # Apple disk image
+              *.dmg)       hdiutil mount "$1" ;;
+
+              # Windows compressed files
+              *.cab)       cabextract "$1"   ;;
+
+              # If no matching type is found
+              *)
+                  echo "Error: Cannot extract '$1' - unknown file type"
+                  return 1
+                  ;;
           esac
-        else
-          echo "File not found: $1"
-        fi
+
+          # Check if extraction was successful
+          if [ $? -eq 0 ]; then
+              echo "Successfully extracted: $1"
+          else
+              echo "Extraction failed for: $1"
+              return 1
+          fi
       }
     '';
   };
@@ -145,7 +173,6 @@
     enable = true;
     enableZshIntegration = true;
     settings = {
-      # Starship config with Catppuccin colors
       format = "$directory$git_branch$git_status$cmd_duration$line_break$character";
       add_newline = false;
 
@@ -175,9 +202,14 @@
   };
 
   # Essential complementary tools
-  programs.fzf.enable = true;
-  programs.direnv = {
-    enable = true;
-    nix-direnv.enable = true;
+  programs = {
+    fzf = {
+      enable = true;
+      enableZshIntegration = true;
+    };
+    direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
   };
 }
