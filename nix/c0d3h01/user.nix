@@ -5,7 +5,6 @@
 }:
 {
   time.timeZone = "Asia/Kolkata";
-  # programs.zsh.enable = true;
   i18n = {
     defaultLocale = "en_IN";
     extraLocaleSettings = {
