@@ -5,6 +5,7 @@
 ├── README.md
 ├── assets
 │   ├── chillet.png
+│   ├── glow-text.svg
 │   ├── image.png
 │   └── wallpaper.png
 ├── flake.lock
