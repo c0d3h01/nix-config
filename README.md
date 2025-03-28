@@ -25,5 +25,10 @@ sudo nixos-rebuild switch --flake github:c0d3h01/dotfiles#NixOS --impure
 - If you **don’t want to apply** the `hardware-configuration.nix` from your dotfiles and instead use the one in `/etc/nixos/`.  
 - If you have **system-dependent configurations** that should not be overridden by the flake.  
 
+## 📂 **Home Manager config Installation**
+```bash
+home-manager switch --flake .
+```
+
 ### 📁 **Dotfiles Structure**
 - ⟶ [Click HERE!](https://github.com/c0d3h01/dotfiles/blob/main/structure.md)

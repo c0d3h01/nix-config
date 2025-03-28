@@ -5,7 +5,7 @@
 
 {
   nixpkgs = {
-    config = lib.mkForce {
+    config = lib.mkDefault {
       allowUnfree = true;
       allowBroken = true;
       tarball-ttl = 0;

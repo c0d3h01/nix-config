@@ -83,7 +83,6 @@
       ];
 
       androidTools = with pkgs; [
-        android-studio
         flutter
         dart
         openjdk

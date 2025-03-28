@@ -13,11 +13,11 @@ in
 
       profiles.${username} = {
         # Essential extensions only
-        extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
-          ublock-origin
-          privacy-badger
-          link-cleaner
-        ];
+        # extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
+        #   ublock-origin
+        #   privacy-badger
+        #   link-cleaner
+        # ];
 
         settings = {
           # Core privacy settings
