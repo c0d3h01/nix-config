@@ -4,6 +4,13 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixcord.url = "github:kaylorben/nixcord";
+    stylix.url = "github:danth/stylix";
+    sops-nix.url = "github:Mic92/sops-nix";
+    spicetify-nix = {
+      url = "github:Gerg-L/spicetify-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -30,7 +37,7 @@
       # System, User configurations
       system = "x86_64-linux";
       username = "c0d3h01";
-      hostname = "NixOS"; # nixos-rebuild --flake .#NewHostName!
+      hostname = "NixOS";
       useremail = "c0d3h01@gmail.com";
 
       # Shared arguments for modules
@@ -52,22 +59,23 @@
           })
         ];
       };
-
       lib = nixpkgs.lib;
     in
     {
       nixosConfigurations.${hostname} = lib.nixosSystem {
         inherit system specialArgs;
         modules = [
-          # -*-[ System configurations, modules ]-*-
           ./nix
           ./secrets.nix
+
+          inputs.stylix.nixosModules.stylix
+          inputs.sops-nix.nixosModules.sops
+
           ({ config, ... }: {
             system.stateVersion = "24.11";
             networking.hostName = hostname;
           })
 
-          # -*-[ Home Manager integration, modules ]-*-
           home-manager.nixosModules.home-manager
           {
             home-manager = {
@@ -77,26 +85,19 @@
               users.${username} = import ./home/home.nix;
             };
           }
-
-          # NUR overlay
           nur.modules.nixos.default
         ];
       };
 
-      # DevShell
       devShells.${system}.default = pkgs.mkShell {
         packages = with pkgs; [
-          # Nix tools
           nixpkgs-fmt
           nil
-          # GTK & Graphics
           pkg-config
           gtk3
         ];
         shellHook = "exec ${pkgs.zsh}/bin/zsh";
       };
-
-      # NixFormatter
       formatter.${system} = pkgs.nixpkgs-fmt;
     };
 }
