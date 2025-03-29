@@ -1,7 +1,7 @@
 {
   imports = [
     ./apps
-    ./c0d3h01
+    ../hosts/c0d3h01
     ./modules
     ./hardware-configuration.nix
   ];
