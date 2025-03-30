@@ -15,10 +15,10 @@
       "2606:4700:4700::1111"
       "2606:4700:4700::1001"
     ];
-    firewall = {
-      enable = true;
-      allowedTCPPorts = [ 1716 ];
-      allowedUDPPorts = [ 1716 ];
-    };
+    # firewall = {
+    #   enable = true;
+    #   allowedTCPPorts = [ 1716 ];
+    #   allowedUDPPorts = [ 1716 ];
+    # };
   };
 }
