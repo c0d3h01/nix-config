@@ -39,6 +39,9 @@
       gnome-weather
       gnome-text-editor
       gnome-connections
+      gnome-music
+      gnome-remote-desktop
+      gnome-usage
       gnome-contacts
       gnome-system-monitor
     ];
@@ -48,6 +51,9 @@
       gnome-tweaks
       micro
       libreoffice
+      rhythmbox
+      transmission-gtk
+      # transmission_4-gtk
       # Gnome Extensions
       gnomeExtensions.gsconnect
     ];
@@ -121,19 +127,13 @@
   xdg = {
     portal = {
       enable = true;
-      extraPortals = with pkgs; [ xdg-desktop-portal ];
+      extraPortals = with pkgs; [ xdg-desktop-portal-gtk xdg-desktop-portal-gnome ];
     };
     mime = {
       enable = true;
       defaultApplications = {
         "application/x-bittorrent" = [ "transmission-gtk.desktop" ];
-        "application/pdf" = [ "firefox.desktop" ];
         "default-web-browser" = [ "firefox.desktop" ];
-        "text/html" = [ "firefox.desktop" ];
-        "x-scheme-handler/http" = [ "firefox.desktop" ];
-        "x-scheme-handler/https" = [ "firefox.desktop" ];
-        "x-scheme-handler/about" = [ "firefox.desktop" ];
-        "x-scheme-handler/unknown" = [ "firefox.desktop" ];
       };
     };
   };
