@@ -20,18 +20,18 @@
     };
     loader = {
       efi.canTouchEfiVariables = true;
-      # systemd-boot = {
-      #   enable = true;
-      #   configurationLimit = 3;
-      #   consoleMode = "max";
-      #   editor = false;
-      # };
-      grub = {
+      systemd-boot = {
         enable = true;
-        device = "nodev";
-        efiSupport = true;
-        useOSProber = false;
+        configurationLimit = 4;
+        consoleMode = "max";
+        editor = false;
       };
+      # grub = {
+      #   enable = true;
+      #   device = "nodev";
+      #   efiSupport = true;
+      #   useOSProber = false;
+      # };
     };
   };
 }
