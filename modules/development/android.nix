@@ -1,6 +1,6 @@
 { config
-, username
 , pkgs
+, specialArgs
 , ...
 }:
 let

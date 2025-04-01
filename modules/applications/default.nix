@@ -1,6 +1,7 @@
 { config
 , pkgs
 , lib
+, specialArgs
 , ...
 }:
 {
@@ -13,7 +14,7 @@
 
   # VirtualMachine
   # virtualisation.libvirtd.enable = true;
-  # users.users.${username}.extraGroups = [ "libvirtd" ];
+  # users.users.${specialArgs.username}.extraGroups = [ "libvirtd" ];
 
   # Allow running dynamically linked binaries
   programs.nix-ld.enable = true;

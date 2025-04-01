@@ -34,14 +34,15 @@
     let
       # System, User configurations
       system = "x86_64-linux";
-      username = "c0d3h01";
-      hostname = "NixOS";
-      useremail = "c0d3h01@gmail.com";
 
       # Shared arguments for modules
       specialArgs = {
-        inherit system username hostname useremail agenix;
+        inherit system agenix;
         inputs = self.inputs;
+
+        username = "c0d3h01";
+        hostname = "NixOS";
+        useremail = "c0d3h01@gmail.com";
       };
 
       # Generate pkgs with custom configurations
@@ -60,15 +61,15 @@
       lib = nixpkgs.lib;
     in
     {
-      nixosConfigurations.${hostname} = lib.nixosSystem {
+      nixosConfigurations.${specialArgs.hostname} = lib.nixosSystem {
         inherit system specialArgs;
         modules = [
           ./hosts/c0d3h01 # User Modules
           inputs.stylix.nixosModules.stylix
 
-          ({ config, ... }: {
+          ({ config, specialArgs, ... }: {
             system.stateVersion = "24.11";
-            networking.hostName = hostname;
+            networking.hostName = specialArgs.hostname;
           })
 
           home-manager.nixosModules.home-manager
@@ -77,7 +78,7 @@
               useGlobalPkgs = true;
               useUserPackages = true;
               extraSpecialArgs = specialArgs;
-              users.${username} = import ./home;
+              users.${specialArgs.username} = import ./home;
             };
           }
           nur.modules.nixos.default

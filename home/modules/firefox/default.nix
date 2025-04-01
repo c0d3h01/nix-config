@@ -1,4 +1,9 @@
-{ lib, config, username, pkgs, ... }:
+{ lib
+, config
+, specialArgs
+, pkgs
+, ...
+}:
 with lib;
 let
   cfg = config.modules.firefox;
@@ -11,7 +16,7 @@ in
     programs.firefox = lib.mkForce {
       enable = true;
 
-      profiles.${username} = {
+      profiles.${specialArgs.username} = {
         # Essential extensions only
         extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
           ublock-origin

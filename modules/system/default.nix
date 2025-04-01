@@ -1,6 +1,6 @@
 { config
-, username
 , pkgs
+, specialArgs
 , lib
 , ...
 }:
@@ -31,7 +31,7 @@
       settings = {
         PasswordAuthentication = false;
         PermitRootLogin = "prohibit-password";
-        AllowUsers = [ "${username}" ];
+        AllowUsers = [ "${specialArgs.username}" ];
       };
     };
     # Printing support
