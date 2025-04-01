@@ -4,16 +4,16 @@
 ├── LICENSE
 ├── README.md
 ├── assets
-│   ├── chillet.png
-│   ├── glow-text.svg
-│   ├── image.png
-│   └── wallpaper.png
+│   ├── README
+│   │   ├── chillet.png
+│   │   └── glow-text.svg
+│   └── wallpapers
+│       └── image1.png
 ├── flake.lock
 ├── flake.nix
 ├── home
-│   ├── flake.lock
+│   ├── default.nix
 │   ├── flake.nix
-│   ├── home.nix
 │   └── modules
 │       ├── default.nix
 │       ├── discord
@@ -25,25 +25,33 @@
 │       ├── spicetify
 │       └── zshell
 ├── hosts
-│   └── c0d3h01
-│       ├── audio.nix
-│       ├── default.nix
-│       ├── desktop.nix
-│       ├── fonts.nix
-│       ├── networking.nix
-│       └── user.nix
-├── nix
-│   ├── apps
+│   ├── c0d3h01
 │   │   ├── default.nix
-│   │   ├── devtools
+│   │   └── hardware-configuration.nix
+│   └── common.nix
+├── modules
+│   ├── applications
+│   │   ├── default.nix
 │   │   └── notion-app-enhanced
 │   ├── default.nix
-│   ├── hardware-configuration.nix
-│   └── modules
+│   ├── development
+│   │   ├── android.nix
+│   │   ├── default.nix
+│   │   ├── docker.nix
+│   │   ├── mysql.nix
+│   │   ├── podman.nix
+│   │   ├── python.nix
+│   │   └── rust.nix
+│   └── system
+│       ├── audio.nix
 │       ├── boot.nix
-│       ├── config.nix
 │       ├── default.nix
-│       └── nix-settings.nix
-├── secrets.nix
+│       ├── desktop
+│       ├── fonts.nix
+│       ├── networking.nix
+│       └── security.nix
+├── secrets
+│   ├── default.nix
+│   └── secrets.nix
 └── structure.md
 ```
