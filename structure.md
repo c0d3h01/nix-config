@@ -43,12 +43,16 @@
 │   │   └── rust.nix
 │   └── system
 │       ├── audio.nix
+│       ├── auth.nix
 │       ├── boot.nix
 │       ├── default.nix
 │       ├── desktop
 │       ├── fonts.nix
+│       ├── hardware.nix
 │       ├── networking.nix
-│       └── security.nix
+│       ├── nix.nix
+│       ├── security.nix
+│       └── services.nix
 ├── secrets
 │   ├── default.nix
 │   └── secrets.nix
