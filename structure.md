@@ -29,6 +29,7 @@
 │   │   ├── default.nix
 │   │   └── hardware-configuration.nix
 │   └── common.nix
+├── keys.nix
 ├── modules
 │   ├── applications
 │   │   ├── default.nix
@@ -55,7 +56,6 @@
 │       ├── security.nix
 │       └── services.nix
 ├── secrets
-│   ├── default.nix
 │   └── secrets.nix
 └── structure.md
 ```
