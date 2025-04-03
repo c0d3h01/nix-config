@@ -30,6 +30,8 @@
 
     packages = with pkgs; [
       home-manager
+      age
+      openssh
       # Utilities
       fastfetch
       glances

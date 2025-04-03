@@ -4,7 +4,6 @@
 }: {
   imports = [
     ../../modules
-    # ../../secrets
     # Hardware configuration
     ./hardware-configuration.nix
   ];
@@ -37,8 +36,9 @@
       "audio"
       "video"
     ];
+    # passwordFile = config.age.secrets.passwordFile;
     openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMeUqmD36Sp53CW96W3yCumTY8nt4xN1UAugJGm1AelM c0d3h01@gmail.com"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPMHEDTYxp5o3ZLpEg4fWjXZ/MctVco8R9qYVfE0tIn+ c0d3h01@gmail.com"
     ];
   };
 }

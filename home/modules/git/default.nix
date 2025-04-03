@@ -6,7 +6,7 @@
   programs.git = {
     enable = true;
     lfs.enable = true;
-    
+
     # User Configurations
     userName = "${user.username}";
     userEmail = "${user.email}";
