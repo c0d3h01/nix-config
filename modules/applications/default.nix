@@ -22,7 +22,8 @@
     let
       devTools = with pkgs; [
         # Editors and IDEs
-        vscode-fhs
+        unstable.vscode-fhs
+        unstable.vscodium-fhs
         jetbrains.webstorm
 
         # JavaScript/TypeScript
