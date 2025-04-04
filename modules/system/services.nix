@@ -1,15 +1,21 @@
-{ pkgs, ... }:
-{
+{ pkgs
+, ...
+}: {
   # Printing
-  services.printing = {
-    enable = true;
-    drivers = [ pkgs.gutenprint pkgs.hplip ];
-  };
+  services = {
+    printing = {
+      enable = true;
+      drivers = [ pkgs.gutenprint pkgs.hplip ];
+    };
 
-  # Avahi (mDNS)
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-    # openFirewall = true;
+    # Avahi (mDNS)
+    avahi = {
+      enable = true;
+      nssmdns4 = true;
+      openFirewall = true;
+    };
+
+    # Fstrim optimization
+    fstrim.enable = true;
   };
 }
