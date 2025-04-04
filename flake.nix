@@ -10,10 +10,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nur.url = "github:nix-community/NUR";
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
+    agenix = {
+      url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -28,7 +31,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... } @ inputs:
+  outputs = { self, nixpkgs, home-manager, agenix, ... } @ inputs:
     let
       # ========== Configuration ==========
       supportedSystems = [ "x86_64-linux" "aarch64-linux" ];
@@ -60,7 +63,7 @@
       };
 
       mkSpecialArgs = system: {
-        inherit inputs system;
+        inherit inputs system agenix;
         user = userConfig;
         pkgs = mkPkgs system;
       };
@@ -72,7 +75,7 @@
           specialArgs = mkSpecialArgs system;
 
           modules = [
-            # Host-specific configuration
+            # Host-specific configurat  ion
             ./hosts/${userConfig.username}
 
             # Home Manager integration
