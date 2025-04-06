@@ -45,7 +45,7 @@
       gnome-system-monitor
     ];
 
-    systemPackages = with pkgs; [
+    systemPackages = with pkgs.unstable; [
       gnome-photos
       gnome-tweaks
       micro
