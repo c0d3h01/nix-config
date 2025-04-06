@@ -1,7 +1,8 @@
 { config
 , user
-, ...
-}: {
+, ... }: {
+
+  hardware.acpilight.enable = true;
 
   system.autoUpgrade = {
     enable = true;
@@ -19,7 +20,11 @@
   nix = {
     settings = {
       auto-optimise-store = true;
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+        "ca-derivations"
+      ];
       substituters = [
         "https://cache.nixos.org"
         "https://nix-community.cachix.org"
@@ -32,8 +37,8 @@
 
     gc = {
       automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 7d";
+      dates = "daily";
+      options = "--delete-older-than 2d";
     };
   };
 }
