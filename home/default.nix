@@ -83,6 +83,78 @@
   programs = {
     zoxide.enable = true;
 
+    zellij = {
+      enable = true;
+      enableBashIntegration = false;
+      enableFishIntegration = false;
+
+      settings = {
+        theme = "one-half-dark";
+        themes.one-half-dark = {
+          bg = [
+            40
+            44
+            52
+          ];
+          gray = [
+            40
+            44
+            52
+          ];
+          red = [
+            227
+            63
+            76
+          ];
+          green = [
+            152
+            195
+            121
+          ];
+          yellow = [
+            229
+            192
+            123
+          ];
+          blue = [
+            97
+            175
+            239
+          ];
+          magenta = [
+            198
+            120
+            221
+          ];
+          orange = [
+            216
+            133
+            76
+          ];
+          fg = [
+            220
+            223
+            228
+          ];
+          cyan = [
+            86
+            182
+            194
+          ];
+          black = [
+            27
+            29
+            35
+          ];
+          white = [
+            233
+            225
+            254
+          ];
+        };
+      };
+    };
+
     ssh = {
       enable = true;
       matchBlocks = {
@@ -103,39 +175,6 @@
         indentchar = "space";
         scrollbar = true;
       };
-    };
-
-    bat = {
-      enable = true;
-      config.theme = "OneHalfDark";
-    };
-
-    ripgrep = {
-      enable = true;
-      arguments = [
-        "--smart-case"
-        "--pretty"
-      ];
-    };
-
-    eza = {
-      enable = true;
-      extraOptions = [
-        "--classify"
-        "--color-scale"
-        "--git"
-        "--group-directories-first"
-      ];
-    };
-
-    direnv = {
-      enable = true;
-      nix-direnv.enable = true;
-    };
-
-    gh = {
-      enable = true;
-      gitCredentialHelper.enable = true;
     };
   };
 }
