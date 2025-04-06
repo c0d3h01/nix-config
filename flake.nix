@@ -47,10 +47,16 @@
 
       # ========== Helper Functions ==========
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
+      nixpkgsConfig = import ./modules/system;
 
       mkPkgs = system: import inputs.nixpkgs {
         inherit system;
-        config.allowUnfree = true;
+        config = {
+          allowUnfree = true;
+          tarball-ttl = 0;
+          android_sdk.accept_license = true;
+        };
+  
         overlays = [
           (final: prev: {
             unstable = import inputs.nixpkgs-unstable {
