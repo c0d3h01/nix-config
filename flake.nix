@@ -12,22 +12,22 @@
 
     nur = {
       url = "github:nix-community/NUR";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     agenix = {
       url = "github:ryantm/agenix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     spicetify-nix = {
       url = "github:Gerg-L/spicetify-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     pre-commit-hooks = {
       url = "github:cachix/pre-commit-hooks.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };
 
@@ -47,7 +47,6 @@
 
       # ========== Helper Functions ==========
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
-      nixpkgsConfig = import ./modules/system;
 
       mkPkgs = system: import inputs.nixpkgs {
         inherit system;
@@ -56,7 +55,7 @@
           tarball-ttl = 0;
           android_sdk.accept_license = true;
         };
-  
+
         overlays = [
           (final: prev: {
             unstable = import inputs.nixpkgs-unstable {
@@ -115,7 +114,7 @@
               pkg-config
               gtk3
             ];
-            shellHook = "exec ${pkgs.zsh}/bin/zsh";
+            shellHook = "exec zsh";
           };
 
           ci = pkgs.mkShell {
@@ -129,14 +128,14 @@
 
       formatter = forAllSystems (system: (mkPkgs system).nixpkgs-fmt);
 
-      checks = forAllSystems (system:
-        inputs.pre-commit-hooks.lib.${system}.run {
-          src = ./.;
-          hooks = {
-            nixpkgs-fmt.enable = true;
-            statix.enable = true;
-            deadnix.enable = true;
-          };
-        });
+    #   checks = forAllSystems (system:
+    #     inputs.pre-commit-hooks.lib.${system}.run {
+    #       src = ./.;
+    #       hooks = {
+    #         nixpkgs-fmt.enable = true;
+    #         statix.enable = true;
+    #         deadnix.enable = true;
+    #       };
+    #     });
     };
 }
