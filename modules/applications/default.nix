@@ -12,18 +12,12 @@
   # Allow running dynamically linked binaries
   programs.nix-ld.enable = true;
 
-  programs.wireshark = {
-    enable = true;
-    package = pkgs.wireshark-qt;
-  };
-
   # Environment packages
   environment.systemPackages =
     let
-      devTools = with pkgs; [
+      devTools = with pkgs.unstable; [
         # Editors and IDEs
-        unstable.vscode-fhs
-        unstable.vscodium-fhs
+        vscode-fhs
         jetbrains.webstorm
 
         # JavaScript/TypeScript
@@ -46,7 +40,13 @@
         postman
       ];
 
-      utilityApps = with pkgs; [
+      utilityApps = with pkgs.unstable; [
+        # Networking tools
+        metasploit
+        nmap
+        tcpdump
+        aircrack-ng
+        wireshark
       ];
 
       communicationApps = with pkgs; [
@@ -62,14 +62,13 @@
         spotify
         anydesk
         github-desktop
-        chromium
       ];
 
-      androidTools = with pkgs; [
-        unstable.android-studio
+      androidTools = with pkgs.unstable; [
+        android-studio
         flutter
         openjdk
-        gradle
+        android-tools
       ];
     in
     utilityApps ++ devTools ++ communicationApps ++ desktopApps ++ androidTools;
