@@ -1,8 +1,8 @@
 { config
 , user
-, ... }: {
-
-  hardware.acpilight.enable = true;
+, lib
+, ...
+}: {
 
   system.autoUpgrade = {
     enable = true;
@@ -20,6 +20,10 @@
   nix = {
     settings = {
       auto-optimise-store = true;
+      max-jobs = "auto";
+      cores = 0; # Use all available cores
+      builders = lib.mkForce "";
+      trusted-users = [ "root" "${user.username}" ];
       experimental-features = [
         "nix-command"
         "flakes"
@@ -38,7 +42,9 @@
     gc = {
       automatic = true;
       dates = "daily";
+      randomizedDelaySec = "45min";
       options = "--delete-older-than 2d";
+      persistent = true;
     };
   };
 }
