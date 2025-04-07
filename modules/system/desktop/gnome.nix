@@ -52,7 +52,11 @@
       libreoffice
       rhythmbox
       transmission_4-gtk
-      gnomeExtensions.gsconnect # Extension
+      gnomeExtensions.gsconnect
+      gnomeExtensions.appindicator
+      gnomeExtensions.dash-to-dock
+      gnomeExtensions.blur-my-shell
+      gnomeExtensions.just-perfection
     ];
 
     pathsToLink = [
@@ -67,6 +71,10 @@
         disable-user-extensions = false;
         enabled-extensions = [
           "gsconnect@andyholmes.github.io"
+          "appindicator@rgcjonas.gmail.com"
+          "dash-to-dock@micxgx.gmail.com"
+          "blur-my-shell@aunetx"
+          "just-perfection-desktop@just-perfection"
         ];
       };
       # interface
@@ -76,6 +84,30 @@
         clock-show-seconds = false;
         clock-show-date = true;
         clock-format = "12h";
+        color-scheme = "prefer-dark";
+      };
+      # power management
+      "org/gnome/settings-daemon/plugins/power" = {
+        sleep-inactive-ac-type = "nothing";
+        sleep-inactive-battery-type = "suspend";
+        sleep-inactive-battery-timeout = 1800;
+        power-button-action = "poweroff";
+      };
+      # night light
+      "org/gnome/settings-daemon/plugins/color" = {
+        night-light-enabled = true;
+        night-light-temperature = 4000;
+      };
+      # touchpad
+      "org/gnome/desktop/peripherals/touchpad" = {
+        tap-to-click = true;
+        two-finger-scrolling-enabled = true;
+        natural-scroll = true;
+      };
+      # workspaces
+      "org/gnome/mutter" = {
+        dynamic-workspaces = true;
+        workspaces-only-on-primary = true;
       };
       # wallpaper
       "org/gnome/desktop/background" = {
@@ -96,18 +128,21 @@
       enable = true;
 
       cursorTheme = lib.mkForce {
-        name = "Qogir-dark";
-        package = pkgs.qogir-theme;
+        name = "Bibata-Modern-Classic";
+        package = pkgs.bibata-cursors;
       };
 
       iconTheme = lib.mkForce {
-        name = "Qogir-dark";
-        package = pkgs.qogir-icon-theme;
+        name = "Tela-dark";
+        package = pkgs.tela-icon-theme;
       };
 
       theme = lib.mkForce {
-        name = "Arc-Darker";
-        package = pkgs.arc-theme;
+        name = "Catppuccin-Mocha-Blue";
+        package = pkgs.catppuccin-gtk.override {
+          variant = "mocha";
+          accents = [ "blue" ];
+        };
       };
 
       gtk3.extraConfig = lib.mkForce {
