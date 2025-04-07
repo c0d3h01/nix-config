@@ -11,24 +11,24 @@
       dejavu_fonts
       hack-font
       twitter-color-emoji
-      
+
       # Programming fonts
       jetbrains-mono
       fira-code
       iosevka
       source-code-pro
-      
+
       # UI fonts
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-emoji
       roboto
       open-sans
-      
+
       # Icon fonts
       material-design-icons
       font-awesome
-      
+
       # Nerd fonts (for terminal icons)
       (nerdfonts.override { fonts = [ "FiraCode" "JetBrainsMono" "Iosevka" ]; })
     ];
