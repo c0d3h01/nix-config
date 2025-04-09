@@ -1,12 +1,14 @@
-{
+{ lib, ... }: {
+
   services.resolved.enable = true;
   systemd.network.wait-online.enable = false;
 
   networking = {
     networkmanager = {
       enable = true;
+      # wifi.backend = "iwd";
+      connectionConfig."connection.mdns" = 2; # enabled
       wifi.powersave = false;
-      connectionConfig."connection.mdns" = 2;
     };
 
     nameservers = [
@@ -16,4 +18,21 @@
       "2606:4700:4700::1001"
     ];
   };
+
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+  };
+
+  # SSH Daemon
+  services.openssh = {
+    enable = true;
+    openFirewall = true;
+    settings = {
+      PasswordAuthentication = false;
+      AllowAgentForwarding = true;
+    };
+  };
+
+  programs.ssh.knownHosts = lib.mapAttrs (_: v: { publicKey = v; }) (import ../../secrets/keys.nix);
 }
