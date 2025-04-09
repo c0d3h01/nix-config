@@ -30,7 +30,7 @@
       "$HOME/.npm-global/bin"
     ];
 
-    packages = with pkgs.unstable; [
+    packages = with pkgs; [
       home-manager
 
       # Utilities
@@ -40,7 +40,6 @@
       xclip
       curl
       wget
-      openssh
       tree
       asar
       fuse
