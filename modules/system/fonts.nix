@@ -30,7 +30,10 @@
       font-awesome
 
       # Nerd fonts (for terminal icons)
-      (nerdfonts.override { fonts = [ "FiraCode" "JetBrainsMono" "Iosevka" ]; })
+      nerd-fonts.fira-code
+      nerd-fonts.jetbrains-mono
+      nerd-fonts.iosevka
+      nerd-fonts.droid-sans-mono
     ];
     fontconfig = {
       enable = true;
