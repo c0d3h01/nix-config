@@ -15,7 +15,6 @@
     kernelParams = [
       "preempt=full"
       "mitigations=off"
-      "quiet"
       "udev.log_level=3"
     ];
 
