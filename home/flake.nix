@@ -34,7 +34,7 @@
         username = "c0d3h01";
         stateVersion = "24.11";
         hostname = "NixOS";
-        email = "c0d3h01@gmail.com";
+        email = "haarshalsawant@gmail.com";
       };
     in
     {
