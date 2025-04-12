@@ -23,7 +23,7 @@
       # ANDROID_SDK_ROOT = "/home/c0d3h01/Android";
       # ANDROID_NDK_HOME = "/home/c0d3h01/Android/android-ndk-r27c";
       # PATH = "$HOME/Android/cmdline-tools/bin:$HOME/Android/platform-tools:$HOME/Android/android-ndk-r27c:$PATH";
-      CHROME_EXECUTABLE = "${pkgs.chromium}/bin/chromium";
+      CHROME_EXECUTABLE = "${pkgs.firefox}/bin/firefox";
     };
 
     sessionPath = [
@@ -31,8 +31,6 @@
     ];
 
     packages = with pkgs; [
-      home-manager
-
       # Utilities
       fastfetch
       glances
@@ -42,11 +40,7 @@
       tree
       asar
       fuse
-      dos2unix
       appimage-run
-      wine # Windows
-      ventoy
-      shc # Shell compiler
       nh # Nix Garbage Cleaner
 
       # Editors & Viewers
@@ -81,78 +75,6 @@
   programs = {
     zoxide.enable = true;
 
-    zellij = {
-      enable = true;
-      enableBashIntegration = false;
-      enableFishIntegration = false;
-
-      settings = {
-        theme = "one-half-dark";
-        themes.one-half-dark = {
-          bg = [
-            40
-            44
-            52
-          ];
-          gray = [
-            40
-            44
-            52
-          ];
-          red = [
-            227
-            63
-            76
-          ];
-          green = [
-            152
-            195
-            121
-          ];
-          yellow = [
-            229
-            192
-            123
-          ];
-          blue = [
-            97
-            175
-            239
-          ];
-          magenta = [
-            198
-            120
-            221
-          ];
-          orange = [
-            216
-            133
-            76
-          ];
-          fg = [
-            220
-            223
-            228
-          ];
-          cyan = [
-            86
-            182
-            194
-          ];
-          black = [
-            27
-            29
-            35
-          ];
-          white = [
-            233
-            225
-            254
-          ];
-        };
-      };
-    };
-
     ssh = {
       enable = true;
       matchBlocks = {
@@ -161,17 +83,6 @@
           user = "root";
           forwardAgent = true;
         };
-      };
-    };
-
-    micro = {
-      enable = true;
-      settings = {
-        clipboard = "internal";
-        colorscheme = "one-dark";
-        diffgutter = true;
-        indentchar = "space";
-        scrollbar = true;
       };
     };
   };
