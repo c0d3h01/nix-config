@@ -28,7 +28,7 @@ git clone "$REPO_URL" "$DOTFILES_DIR"
 cd "$DOTFILES_DIR"
 
 echo -e "${BLUE}Updating flake...${null}"
-nix flake update
+nix flake update --option extra-experimental-features 'nix-command flakes'
 
 echo -e "${RED}Removing old hardware config...${null}"
 rm -f "./hosts/$HOST_NAME/hardware-configuration.nix"
