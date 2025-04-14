@@ -6,7 +6,7 @@
 }:
 {
   imports = [ ./modules ];
-  
+
   modules.firefox.enable = true;
 
   home = {
