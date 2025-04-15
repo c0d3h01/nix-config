@@ -1,7 +1,5 @@
 {
   imports = [
-    ./firefox
-    ./nextcloud
     ./spicetify
   ];
 }

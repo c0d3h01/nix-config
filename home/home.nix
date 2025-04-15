@@ -7,8 +7,6 @@
 {
   imports = [ ./modules ];
 
-  modules.firefox.enable = true;
-
   home = {
     username = "${userConfig.username}";
     homeDirectory = "/home/${userConfig.username}";

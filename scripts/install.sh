@@ -27,14 +27,14 @@ git clone "$REPO_URL" "$DOTFILES_DIR"
 
 cd "$DOTFILES_DIR"
 
-echo -e "${BLUE}Updating flake...${null}"
-nix flake update --option extra-experimental-features 'nix-command flakes'
-
 echo -e "${RED}Removing old hardware config...${null}"
 rm -f "./nix/$HOST_NAME/hardware-configuration.nix"
 
 echo -e "${YELLOW}Copying current hardware config...${null}"
 cp /etc/nixos/hardware-configuration.nix "./nix/$HOST_NAME/"
+
+echo -e "${BLUE}Updating flake...${null}"
+nix flake update --option extra-experimental-features 'nix-command flakes'
 
 echo -e "${MAGENTA}Rebuilding system with flake...${null}"
 sudo nixos-rebuild switch --flake ".#$FLAKE_TARGET" --fast --option extra-experimental-features 'nix-command flakes'

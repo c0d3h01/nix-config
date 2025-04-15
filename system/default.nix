@@ -4,7 +4,7 @@
   imports = [
     ./applications
     ./development
-    ./hosts/laptop
+    ./laptop
     ./modules
   ];
 

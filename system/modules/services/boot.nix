@@ -4,6 +4,20 @@
 }:
 {
 
+  # powerManagement.cpuFreqGovernor = "schedutil";
+
+  # ZRAM Swap
+  zramSwap = {
+    enable = true;
+    swapDevices = 1;
+    priority = -2;
+    algorithm = "zstd";
+    memoryPercent = 200;
+  };
+
+  # Fstrim optimization
+  services.fstrim.enable = true;
+
   boot = {
     tmp.cleanOnBoot = true;
     consoleLogLevel = 3;
