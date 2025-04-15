@@ -22,17 +22,17 @@ jobs:
 
       - name: Generate tree structure
         run: |
-          echo "# 📂 Dotfiles Structure" > docs/structure.md
-          echo '```' >> docs/structure.md
-          echo "Last updated: $(date +'%Y-%m-%d %H:%M:%S')" >> docs/structure.md
-          tree -L 3 --noreport >> docs/structure.md
-          echo '```' >> docs/structure.md
+          echo "# 📂 Dotfiles Structure" > structure.md
+          echo '```' >> structure.md
+          echo "Last updated: $(date +'%Y-%m-%d %H:%M:%S')" >> structure.md
+          tree -L 3 --noreport >> structure.md
+          echo '```' >> structure.md
 
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "automated: update structure.md"
-          branch: nixos
+          branch: main
           file_pattern: structure.md
           commit_user_name: "Readme Bot"
           commit_author: "Readme Bot <actions@github.com>"
