@@ -11,7 +11,8 @@
   # Allow running dynamically linked binaries
   programs.nix-ld.enable = true;
 
-  programs.firefox.enable
+  # Firefox install
+  programs.firefox.enable = true;
 
   # Environment packages
   environment.systemPackages =
