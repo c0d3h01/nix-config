@@ -1,6 +1,10 @@
-{ pkgs, userConfig, ... }:
 {
+  pkgs,
+  userConfig,
+  ...
+}:
 
+{
   imports = [
     ./hardware-configuration.nix
   ];
@@ -36,7 +40,7 @@
       "input"
     ];
     openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINYgWFz+XI6zQvE23I9ZOvewv8ybkbjgVwoA/8rmocsE haarshalsawant@gmail.com"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL8tSc9v55HcEDI/cmI2aEWd8XEXsgiflNhfnyZz5F49 haarshalsawant@gmail.com"
     ];
   };
 }
