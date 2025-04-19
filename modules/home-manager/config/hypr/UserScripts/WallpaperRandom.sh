@@ -1,5 +1,5 @@
 #!/bin/bash
-#
+# /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
 # Script for Random Wallpaper ( CTRL ALT W)
 
 wallDIR="$HOME/Pictures/wallpapers"
@@ -25,6 +25,5 @@ wait $!
 "$SCRIPTSDIR/WallustSwww.sh" &&
 
 wait $!
-sleep 2
 "$SCRIPTSDIR/Refresh.sh"
 

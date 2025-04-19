@@ -1,5 +1,5 @@
 #!/bin/bash
-#
+# /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
 
 # GDK BACKEND. Change to either wayland or x11 if having issues
 BACKEND=wayland

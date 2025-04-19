@@ -1,5 +1,5 @@
 #!/bin/bash
-#
+# /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
 # For applying Pre-configured Monitor Profiles
 
 # Check if rofi is already running
@@ -38,5 +38,4 @@ if [[ -n "$chosen_file" ]]; then
     notify-send -u low -i "$iDIR/ja.png" "$chosen_file" "Monitor Profile Loaded"
 fi
 
-sleep 1
 ${SCRIPTSDIR}/RefreshNoWaybar.sh &

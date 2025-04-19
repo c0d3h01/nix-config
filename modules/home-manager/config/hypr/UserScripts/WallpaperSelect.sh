@@ -100,7 +100,6 @@ menu() {
 
 # Offer SDDM Sequioa Wallpaper Option (only for non-video wallpapers)
 set_sddm_wallpaper() {
-  sleep 1
   sddm_sequoia="/usr/share/sddm/themes/sequoia_2"
 
   if [ -d "$sddm_sequoia" ]; then
@@ -172,10 +171,7 @@ apply_image_wallpaper() {
 
   # Run additional scripts
   "$SCRIPTSDIR/WallustSwww.sh"
-  sleep 2
   "$SCRIPTSDIR/Refresh.sh"
-  sleep 1
-
   set_sddm_wallpaper
 }
 

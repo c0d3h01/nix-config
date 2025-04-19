@@ -1,5 +1,5 @@
 #!/bin/bash
-#
+# /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
 # For applying Animations from different users
 
 # Check if rofi is already running
@@ -27,5 +27,4 @@ if [[ -n "$chosen_file" ]]; then
     notify-send -u low -i "$iDIR/ja.png" "$chosen_file" "Hyprland Animation Loaded"
 fi
 
-sleep 1
 "$SCRIPTSDIR/RefreshNoWaybar.sh"

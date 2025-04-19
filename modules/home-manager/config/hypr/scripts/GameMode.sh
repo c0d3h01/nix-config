@@ -1,5 +1,5 @@
 #!/bin/bash
-#
+# /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
 # Game Mode. Turning off all animations
 
 notif="$HOME/.config/swaync/images/ja.png"
@@ -23,9 +23,7 @@ if [ "$HYPRGAMEMODE" = 1 ] ; then
     exit
 else
 	swww-daemon --format xrgb && swww img "$HOME/.config/rofi/.current_wallpaper" &
-	sleep 0.1
 	${SCRIPTSDIR}/WallustSwww.sh
-	sleep 0.5
 	${SCRIPTSDIR}/Refresh.sh	 
     notify-send -e -u normal -i "$notif" " Gamemode:" " disabled"
     exit

@@ -1,17 +1,13 @@
-/* ---- 💫 https://github.com/JaKooLit 💫 ---- */
-// ### TOP Simple ## //
-
 {
 "include": [
   "$HOME/.config/waybar/Modules",
   "$HOME/.config/waybar/ModulesWorkspaces",
   "$HOME/.config/waybar/ModulesCustom",
   "$HOME/.config/waybar/ModulesGroups",
-  "$HOME/.config/waybar/UserModules",
+  "$HOME/.config/waybar/UserModules"
   ],
 "layer": "top", 
-"position": "top", 
-//"mode": "dock",
+"position": "top",
 "exclusive": true,
 "passthrough": false,
 "gtk-layer-shell": true,
@@ -24,19 +20,19 @@
 	"group/mobo_drawer",
 	"hyprland/workspaces#rw",
 	"tray",
-	"mpris", 
+	"mpris"
 	],
     
 "modules-center": [
 	"clock#2",
-	"group/notify",
+	"group/notify"
 	],
     
 "modules-right": [
 	"hyprland/window",  
 	"battery",
  	"group/audio", 
-	"custom/power",
-	],
+	"custom/power"
+	]
 }
 

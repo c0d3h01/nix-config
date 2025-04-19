@@ -1,5 +1,5 @@
 #!/bin/bash
-##
+## /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
 # For Dark and Light switching
 # Note: Scripts are looking for keywords Light or Dark except for wallpapers as the are in a separate directories
 
@@ -14,8 +14,6 @@ SCRIPTSDIR="$HOME/.config/hypr/scripts"
 notif="$HOME/.config/swaync/images/bell.png"
 wallust_rofi="$HOME/.config/wallust/templates/colors-rofi.rasi"
 
-kitty_conf="$HOME/.config/kitty/kitty.conf"
-
 wallust_config="$HOME/.config/wallust/wallust.toml"
 pallete_dark="dark16"
 pallete_light="light16"
@@ -24,7 +22,6 @@ pallete_light="light16"
 for pid in waybar rofi swaync ags swaybg; do
     killall -SIGUSR1 "$pid"
 done
-
 
 # Initialize swww if needed
 swww query || swww-daemon --format xrgb
@@ -104,21 +101,6 @@ if command -v ags >/dev/null 2>&1; then
     fi
 fi
 
-# kitty background color change
-if [ "$next_mode" = "Dark" ]; then
-    sed -i '/^foreground /s/^foreground .*/foreground #dddddd/' "${kitty_conf}"
-	sed -i '/^background /s/^background .*/background #000000/' "${kitty_conf}"
-	sed -i '/^cursor /s/^cursor .*/cursor #dddddd/' "${kitty_conf}"
-else
-	sed -i '/^foreground /s/^foreground .*/foreground #000000/' "${kitty_conf}"
-	sed -i '/^background /s/^background .*/background #dddddd/' "${kitty_conf}"
-	sed -i '/^cursor /s/^cursor .*/cursor #000000/' "${kitty_conf}"
-fi
-
-for pid_kitty in $(pidof kitty); do
-    kill -SIGUSR1 "$pid_kitty"
-done
-
 # Set Dynamic Wallpaper for Dark or Light Mode
 if [ "$next_mode" = "Dark" ]; then
     next_wallpaper="$(find -L "${dark_wallpapers}" -type f \( -iname "*.jpg" -o -iname "*.png" \) -print0 | shuf -n1 -z | xargs -0)"
@@ -129,22 +111,20 @@ fi
 # Update wallpaper using swww command
 $swww "${next_wallpaper}" $effect
 
-
 # Set Kvantum Manager theme & QT5/QT6 settings
 if [ "$next_mode" = "Dark" ]; then
     kvantum_theme="catppuccin-mocha-blue"
-    #qt5ct_color_scheme="$HOME/.config/qt5ct/colors/Catppuccin-Mocha.conf"
-    #qt6ct_color_scheme="$HOME/.config/qt6ct/colors/Catppuccin-Mocha.conf"
+    qt5ct_color_scheme="$HOME/.config/qt5ct/colors/Catppuccin-Mocha.conf"
+    qt6ct_color_scheme="$HOME/.config/qt6ct/colors/Catppuccin-Mocha.conf"
 else
     kvantum_theme="catppuccin-latte-blue"
-    #qt5ct_color_scheme="$HOME/.config/qt5ct/colors/Catppuccin-Latte.conf"
-    #qt6ct_color_scheme="$HOME/.config/qt6ct/colors/Catppuccin-Latte.conf"
+    qt5ct_color_scheme="$HOME/.config/qt5ct/colors/Catppuccin-Latte.conf"
+    qt6ct_color_scheme="$HOME/.config/qt6ct/colors/Catppuccin-Latte.conf"
 fi
 
 sed -i "s|^color_scheme_path=.*$|color_scheme_path=$qt5ct_color_scheme|" "$HOME/.config/qt5ct/qt5ct.conf"
 sed -i "s|^color_scheme_path=.*$|color_scheme_path=$qt6ct_color_scheme|" "$HOME/.config/qt6ct/qt6ct.conf"
 kvantummanager --set "$kvantum_theme"
-
 
 # set the rofi color for background
 if [ "$next_mode" = "Dark" ]; then
@@ -197,7 +177,6 @@ set_custom_gtk_theme() {
         # Flatpak GTK apps (themes)
         if command -v flatpak &> /dev/null; then
             flatpak --user override --filesystem=$HOME/.themes
-            sleep 0.5
             flatpak --user override --env=GTK_THEME="$selected_theme"
         fi
     else
@@ -220,7 +199,6 @@ set_custom_gtk_theme() {
         # Flatpak GTK apps (icons)
         if command -v flatpak &> /dev/null; then
             flatpak --user override --filesystem=$HOME/.icons
-            sleep 0.5
             flatpak --user override --env=ICON_THEME="$selected_icon"
         fi
     else
@@ -234,19 +212,15 @@ set_custom_gtk_theme "$next_mode"
 # Update theme mode for the next cycle
 update_theme_mode
 
-
 ${SCRIPTSDIR}/WallustSwww.sh &&
 
-sleep 2
 # kill process
 for pid1 in waybar rofi swaync ags swaybg; do
     killall "$pid1"
 done
 
-sleep 1
 ${SCRIPTSDIR}/Refresh.sh 
 
-sleep 0.5
 # Display notifications for theme and icon changes 
 notify-send -u low -i "$notif" " Themes switched to:" " $next_mode Mode"
 

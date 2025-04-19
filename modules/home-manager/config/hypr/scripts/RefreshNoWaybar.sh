@@ -1,5 +1,5 @@
 #!/bin/bash
-#
+# /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
 
 # Modified version of Refresh.sh but waybar wont refresh
 # Used by automatic wallpaper change
@@ -35,7 +35,6 @@ ${SCRIPTSDIR}/WallustSwww.sh &
 swaync-client --reload-config
 
 # Relaunching rainbow borders if the script exists
-sleep 1
 if file_exists "${UserScripts}/RainbowBorders.sh"; then
     ${UserScripts}/RainbowBorders.sh &
 fi

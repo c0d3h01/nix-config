@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  #
 # Wallpaper Effects using ImageMagick (SUPER SHIFT W)
 
 # Variables
@@ -50,7 +50,6 @@ no-effects() {
     wallust run "$wallpaper_current" -s &&
     wait $!
     # Refresh rofi, waybar, wallust palettes
-	sleep 2
 	"$SCRIPTSDIR/Refresh.sh"
 
     notify-send -u low -i "$iDIR/ja.png" "No wallpaper" "effects applied"
@@ -81,14 +80,8 @@ main() {
             for pid in swaybg mpvpaper; do
             killall -SIGUSR1 "$pid"
             done
-
-            sleep 1
-            swww img -o "$focused_monitor" "$wallpaper_output" $SWWW_PARAMS &
-
-            sleep 2
-  
+            swww img -o "$focused_monitor" "$wallpaper_output" $SWWW_PARAMS &  
             wallust run "$wallpaper_output" -s &
-            sleep 1
             # Refresh rofi, waybar, wallust palettes
             "${SCRIPTSDIR}/Refresh.sh"
             notify-send -u low -i "$iDIR/ja.png" "$choice" "effects applied"
@@ -104,8 +97,6 @@ if pidof rofi > /dev/null; then
 fi
 
 main
-
-sleep 1
 
 if [[ -n "$choice" ]]; then
   sddm_sequoia="/usr/share/sddm/themes/sequoia_2"
