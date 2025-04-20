@@ -49,8 +49,8 @@
     # wallpaper
     "org/gnome/desktop/background" = {
       # Use Home Manager's config.home.homeDirectory
-      picture-uri = "file://${config.home.homeDirectory}/dotfiles/assets/wallpapers/Dynamic-Wallpapers/Light/Beach-light.png";
-      picture-uri-dark = "file://${config.home.homeDirectory}/dotfiles/assets/wallpapers/Dynamic-Wallpapers/Dark/Beach-dark.png";
+      picture-uri = "file://${config.home.homeDirectory}/dotfiles/assets/wallpapers/Space-Nebula.png";
+      picture-uri-dark = "file://${config.home.homeDirectory}/dotfiles/assets/wallpapers/Space-Nebula.png";
       picture-options = "zoom";
     };
   };
