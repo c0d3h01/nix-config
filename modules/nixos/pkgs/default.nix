@@ -34,7 +34,7 @@
         github-desktop
 
         # Communication apps
-        discord
+        vesktop
         telegram-desktop
         zoom-us
 
