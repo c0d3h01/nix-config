@@ -11,18 +11,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    spicetify-nix = {
-      url = "github:Gerg-L/spicetify-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    stylix = {
-      url = "github:danth/stylix";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        home-manager.follows = "home-manager";
-      };
-    };
+    spicetify-nix.url = "github:Gerg-L/spicetify-nix";
 
     pre-commit-hooks = {
       url = "github:cachix/pre-commit-hooks.nix";
@@ -43,9 +32,8 @@
 
       supportedSystems = [
         "aarch64-linux"
-        "i686-linux"
-        "x86_64-linux"
         "aarch64-darwin"
+        "x86_64-linux"
         "x86_64-darwin"
       ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
@@ -66,6 +54,8 @@
           src = ./.;
           hooks = {
             alejandra.enable = true;
+            statix.enable = true;
+            deadnix.enable = true;
           };
         };
       });
@@ -78,7 +68,7 @@
         specialArgs = { inherit inputs outputs userConfig; };
         modules = [
           ./hosts/laptop # Host Modules <<-
-            home-manager.nixosModules.home-manager
+          home-manager.nixosModules.home-manager
           {
             home-manager = {
               useGlobalPkgs = true;

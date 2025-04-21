@@ -5,11 +5,11 @@
   userConfig,
   lib,
   ...
-}:
-let
-  flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
-in
-{
+}: {
+
+  system.stateVersion = userConfig.stateVersion;
+  networking.hostName = userConfig.hostname;
+
   nixpkgs = {
     overlays = builtins.attrValues outputs.overlays;
     config = {
@@ -19,12 +19,7 @@ in
     };
   };
 
-  system.stateVersion = userConfig.stateVersion;
-  networking.hostName = userConfig.hostname;
-
   nix = {
-    registry = lib.mapAttrs (_: flake: { inherit flake; }) flakeInputs;
-
     settings = {
       flake-registry = "";
       warn-dirty = false;

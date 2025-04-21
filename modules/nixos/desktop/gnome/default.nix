@@ -25,7 +25,10 @@
     });
   '';
 
-  services.power-profiles-daemon.enable = true;
+  services = {
+    power-profiles-daemon.enable = true;
+    gnome.gnome-browser-connector.enable = true;
+  };
 
   # Exclude unwanted GNOME packages
   environment = {
@@ -37,7 +40,6 @@
       yelp
       baobab
       gnome-weather
-      gnome-text-editor
       gnome-connections
       gnome-music
       gnome-remote-desktop
@@ -53,7 +55,6 @@
       libreoffice
       rhythmbox
       qbittorrent
-      papers
     ];
 
     pathsToLink = [

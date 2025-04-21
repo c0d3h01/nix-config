@@ -24,7 +24,7 @@
     };
 
     kernelParams = [
-      "quite"
+      "quiet"
       "splash"
       "preempt=full"
       "mitigations=off"

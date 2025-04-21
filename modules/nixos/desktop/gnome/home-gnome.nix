@@ -21,6 +21,7 @@
         "dash-to-dock@micxgx.gmail.com"
       ];
     };
+
     # interface
     "org/gnome/desktop/interface" = {
       enable-hot-corners = true;
@@ -30,17 +31,20 @@
       clock-format = "12h";
       color-scheme = "prefer-dark";
     };
+
     # touchpad
     "org/gnome/desktop/peripherals/touchpad" = {
       tap-to-click = true;
       two-finger-scrolling-enabled = true;
       natural-scroll = true;
     };
+
     # workspaces
     "org/gnome/mutter" = {
       dynamic-workspaces = true;
       workspaces-only-on-primary = true;
     };
+
     # wallpaper
     "org/gnome/desktop/background" = {
       # Use Home Manager's config.home.homeDirectory
