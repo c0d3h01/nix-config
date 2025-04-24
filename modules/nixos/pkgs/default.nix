@@ -21,13 +21,14 @@
 
       unstablePkgs = with pkgs; [
         # Browser
-        brave
+        firefox
 
         # Notion Enhancer With patches
         (pkgs.callPackage ./notion-app-enhanced { })
 
         # Editors and IDEs
         vscode-fhs
+        code-cursor
 
         # Developement desktop apps
         postman
