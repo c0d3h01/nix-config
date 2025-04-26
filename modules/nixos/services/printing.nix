@@ -1,13 +1,12 @@
 { pkgs, ... }:
-{
 
-  # Printing
+{
   services = {
     printing = {
       enable = true;
-      drivers = [
-        pkgs.gutenprint
-        pkgs.hplip
+      drivers = with pkgs; [
+        gutenprint
+        hplip
       ];
     };
 
