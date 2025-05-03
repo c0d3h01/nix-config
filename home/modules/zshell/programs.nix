@@ -9,6 +9,16 @@ let
 in
 {
   programs = {
+
+    tmux = {
+      enable = true;
+      extraConfig = ''
+        ...
+        set -g status-right '#[fg=black,bg=color15] #{cpu_percentage}  %H:%M '
+        run-shell ${pkgs.tmuxPlugins.cpu}/share/tmux-plugins/cpu/cpu.tmux
+      '';
+    };
+
     bat = {
       enable = true;
       config = {
@@ -25,6 +35,14 @@ in
       enable = true;
       silent = true;
       nix-direnv.enable = true;
+    };
+
+    zoxide = {
+      enable = true;
+      enableZshIntegration = true;
+      options = [
+        "--cmd cd"
+      ];
     };
 
     eza = {

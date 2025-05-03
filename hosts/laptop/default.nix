@@ -3,9 +3,8 @@
 {
   imports = [
     ./disko.nix
-    ./hardware-configuration.nix
     ./hardware.nix
-    ../../modules/nixos
+    ../../nixos
   ];
 
   time.timeZone = "Asia/Kolkata";

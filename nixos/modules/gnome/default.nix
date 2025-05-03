@@ -53,10 +53,6 @@
 
       # Gnome extensions
       gnomeExtensions.gsconnect
-      gnomeExtensions.blur-my-shell
-      gnomeExtensions.just-perfection
-      gnomeExtensions.rounded-corners
-      gnomeExtensions.compiz-alike-magic-lamp-effect
     ];
   };
 
@@ -66,22 +62,7 @@
         disable-user-extensions = false;
         enabled-extensions = [
           "gsconnect@andyholmes.github.io"
-          "blur-my-shell@aunetx"
-          "just-perfection-desktop@just-perfection"
-          "Rounded_Corners@lennart-k"
-          "compiz-alike-magic-lamp-effect@hermes83.github.com"
         ];
-      };
-
-      # Just Perfection
-      "org/gnome/shell/extensions/just-perfection" = {
-        hot-corner = false;
-      };
-
-      # Rounded Corners
-      "org/gnome/shell/extensions/rounded-window-corners" = {
-        use-gtk-theme-radius = false;
-        radius = 12;
       };
 
       # interface

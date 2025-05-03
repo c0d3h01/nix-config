@@ -3,16 +3,14 @@
   userConfig,
   outputs,
   inputs,
+  lib,
   ...
 }:
 
 {
   imports = [
-    ./config
-    ./git
-    ./gtk
-    ./spicetify
-    ./zshell
+    ./configs
+    ./modules
   ];
 
   home = {
@@ -27,12 +25,6 @@
       BROWSER = "firefox";
       PAGER = "less";
       LESS = "-R";
-      JAVA_HOME = "${pkgs.openjdk}/lib/openjdk";
-      # ANDROID_HOME = "/home/c0d3h01/Android";
-      # ANDROID_SDK_ROOT = "/home/c0d3h01/Android";
-      # ANDROID_NDK_HOME = "/home/c0d3h01/Android/android-ndk-r27c";
-      # PATH = "$HOME/Android/cmdline-tools/bin:$HOME/Android/platform-tools:$HOME/Android/android-ndk-r27c:$PATH";
-      CHROME_EXECUTABLE = "${pkgs.firefox-esr}/bin/firefox-esr";
     };
 
     sessionPath = [
@@ -92,28 +84,6 @@
           forwardAgent = true;
         };
       };
-    };
-
-    neovim = {
-      enable = true;
-      viAlias = true;
-      vimAlias = true;
-      defaultEditor = true;
-
-      plugins = with pkgs.vimPlugins; [
-        lazy-nvim
-        LazyVim
-        lazygit-nvim
-        tokyonight-nvim
-        rocks-nvim
-      ];
-
-      extraPackages = with pkgs; [
-        tree-sitter
-        lazygit
-        imagemagick
-        xclip
-      ];
     };
   };
 }

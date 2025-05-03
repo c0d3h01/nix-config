@@ -81,7 +81,7 @@
               useUserPackages = true;
               extraSpecialArgs = { inherit inputs outputs userConfig; };
               users.${userConfig.username} = {
-                imports = [ ./modules/home-manager/home.nix ];
+                imports = [ ./home/home.nix ];
               };
             };
           }
@@ -94,7 +94,7 @@
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = { inherit inputs outputs userConfig; };
           modules = [
-            ./modules/home-manager/home.nix
+            ./home/home.nix
             { nixpkgs.config.allowUnfree = true; }
           ];
         };

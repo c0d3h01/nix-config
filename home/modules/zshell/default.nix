@@ -25,7 +25,7 @@
         ignoreSpace = true;
         save = 15000;
         size = 15000;
-        path = "${config.xdg.dataHome}/.local/share/zsh/history";
+        path = "${config.xdg.dataHome}/zsh/history";
         share = true;
       };
 
@@ -90,12 +90,6 @@
         bindkey '^h' backward-delete-char
         bindkey '^w' backward-kill-word
 
-        # History substring search key bindings
-        # bindkey '^[[A' history-substring-search-up
-        # bindkey '^[[B' history-substring-search-down
-        # bindkey -M vicmd 'k' history-substring-search-up
-        # bindkey -M vicmd 'j' history-substring-search-down
-
         # Directory stack
         setopt AUTO_PUSHD
         setopt PUSHD_IGNORE_DUPS
@@ -103,30 +97,18 @@
         setopt EXTENDED_GLOB
         setopt NO_BEEP
         setopt MULTIOS
-        setopt CORRECT
-        setopt CORRECT_ALL
-        setopt DVORAK
         setopt NO_HUP
         setopt IGNORE_EOF
-        setopt PRINT_EIGHT_BIT
         setopt RC_QUOTES
         setopt RM_STAR_SILENT
         setopt SHORT_LOOPS
         setopt NO_FLOW_CONTROL
 
         # Lazy load Direnv
-        direnv() {
-          unset -f direnv
-          eval "$(direnv hook zsh)"
-          direnv "$@"
-        }
+        eval "$(${pkgs.direnv}/bin/direnv hook zsh)"
 
         # Lazy load Zoxide
-        z() {
-          unset -f z
-          eval "$(${pkgs.zoxide}/bin/zoxide init zsh)"
-          z "$@"
-        }
+        eval "$(${pkgs.zoxide}/bin/zoxide init zsh)"
 
         function extract() {
           if [ -f "$1" ] ; then

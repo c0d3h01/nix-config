@@ -1,7 +1,9 @@
 { pkgs, ... }:
 
 {
-  imports = [ ./development ];
+  imports = [
+    ./tools
+  ];
 
   # Flatpak apps support
   # flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
@@ -13,6 +15,17 @@
 
   # Allow running dynamically linked binaries
   programs.nix-ld.enable = true;
+
+  # My Coustom App, tools sets
+  myModules = {
+    # hackerMode = true;
+    # androidTools = true;
+    # dockerTools = true;
+    podmanTools = true;
+    pythonTools = true;
+    rustTools = true;
+    enableScientificTools = true;
+  };
 
   # Environment packages
   environment.systemPackages =
@@ -38,6 +51,7 @@
 
         # Common desktop apps
         anydesk
+        openboard
       ];
 
       unstablePkgs = with pkgs; [
