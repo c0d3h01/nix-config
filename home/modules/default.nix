@@ -1,9 +1,10 @@
 {
   imports = [
-    ./git
-    ./gtk
-    ./neovim
-    ./spicetify
-    ./zshell
+    ./git.nix
+    ./gtk.nix
+    ./nvim.nix
+    ./spicetify.nix
+    ./tmux.nix
+    ./zshell.nix
   ];
 }

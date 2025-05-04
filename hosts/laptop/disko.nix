@@ -8,9 +8,10 @@
           type = "gpt";
           partitions = {
             ESP = {
-              name = "nixos-boot";
+              priority = 1;
+              name = "nixos-esp";
               type = "EF00";
-              size = "512M";
+              size = "500M";
               content = {
                 type = "filesystem";
                 format = "vfat";
@@ -18,22 +19,29 @@
                 mountOptions = [ "umask=0077" ];
               };
             };
-            plainSwap = {
-              name = "nixos-swap";
-              size = "8G";
-              content = {
-                type = "swap";
-                discardPolicy = "both";
-                resumeDevice = true; # resume from hiberation from this device
-              };
-            };
             root = {
               name = "nixos-root";
               size = "100%";
               content = {
-                type = "filesystem";
-                format = "ext4";
-                mountpoint = "/";
+                type = "btrfs";
+                extraArgs = [ "-f" ];
+                subvolumes = {
+                  "/@" = {
+                    mountpoint = "/";
+                    mountOptions = [ "compress=zstd" "noatime" "discard=async" ];
+                  };
+                  "/@home" = {
+                    mountOptions = [ "compress=zstd" "noatime" ];
+                    mountpoint = "/home";
+                  };
+                  "/@nix" = {
+                    mountOptions = [
+                      "compress=zstd"
+                      "noatime"
+                    ];
+                    mountpoint = "/nix";
+                  };
+                };
               };
             };
           };

@@ -3,9 +3,10 @@
   pkgs,
   ...
 }:
+
 {
   imports = [
-    ./programs.nix
+    ./zshell-programs.nix
   ];
 
   programs = {

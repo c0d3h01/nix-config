@@ -11,10 +11,7 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  # Fstrim optimization
-  services.fstrim.enable = true;
-
-  # powerManagement.cpuFreqGovernor = "schedutil";
+  powerManagement.cpuFreqGovernor = "schedutil";
 
   # ZRAM Swap
   zramSwap = {
@@ -29,13 +26,17 @@
     extraModulePackages = [ ];
 
     tmp.cleanOnBoot = true;
-    # consoleLogLevel = 3;
-    kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
+    consoleLogLevel = 3;
 
     kernelParams = [
       "quiet"
       "splash"
     ];
+
+    kernel.sysctl = {
+      "vm.swappiness" = 10;
+      "vm.vfs_cache_pressure" = 50;
+    };
 
     loader = {
       efi.canTouchEfiVariables = true;
@@ -61,22 +62,16 @@
     };
   };
 
-  fileSystems = lib.mkForce {
-    "/boot" = {
-      device = "/dev/disk/by-partlabel/disk-nvme-nixos-boot";
-      fsType = "vfat";
-    };
-
-    "/" = {
-      device = "/dev/disk/by-partlabel/disk-nvme-nixos-root";
-      fsType = "ext4";
-    };
-
-    "/home" = {
-      device = "/dev/sda1";
-      fsType = "ext4";
-    };
-  };
+  # fileSystems = {
+  #   "/home" = {
+  #     device = "/dev/sda1";
+  #     fsType = "btrfs";
+  #     options = [
+  #       "compress=zstd"
+  #       "noatime"
+  #     ];
+  #   };
+  # };
 
   networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp2s0.useDHCP = lib.mkDefault true;

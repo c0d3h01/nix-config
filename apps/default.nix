@@ -16,15 +16,16 @@
   # Allow running dynamically linked binaries
   programs.nix-ld.enable = true;
 
-  # My Coustom App, tools sets
+  # My Custom ToolSets
   myModules = {
-    # hackerMode = true;
     # androidTools = true;
     # dockerTools = true;
+    # hackerMode = true;
+    # mysqlTools = true;
+    NotebookTools = true;
     podmanTools = true;
     pythonTools = true;
     rustTools = true;
-    enableScientificTools = true;
   };
 
   # Environment packages
@@ -32,7 +33,7 @@
     let
       stablePkgs = with pkgs.stable; [
         # Browser
-        firefox-esr
+        firefox
 
         # Notion Enhancer With patches
         (pkgs.callPackage ./notion-app-enhanced { })
@@ -51,7 +52,9 @@
 
         # Common desktop apps
         anydesk
-        openboard
+
+        # VirtualBox
+        qemu
       ];
 
       unstablePkgs = with pkgs; [

@@ -81,7 +81,6 @@
         # Environment files
         ".env"
         ".direnv/"
-        ".envrc"
         # Build artifacts
         "dist/"
         "build/"
