@@ -17,7 +17,7 @@
 
   config = lib.mkIf config.myModules.dockerTools {
 
-    users.users.${userConfig.username}.extraGroups = [ "docker" ];
+    users.users.userConfig.username.extraGroups = [ "docker" ];
     virtualisation.docker = {
       enable = true;
       enableOnBoot = false;
