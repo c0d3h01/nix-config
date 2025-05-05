@@ -1,4 +1,8 @@
+{ inputs, ... }:
+
 {
+  imports = [ inputs.disko.nixosModules.disko ];
+
   disko.devices = {
     disk = {
       nvme = {
@@ -8,7 +12,6 @@
           type = "gpt";
           partitions = {
             ESP = {
-              priority = 1;
               name = "nixos-esp";
               type = "EF00";
               size = "500M";
@@ -21,7 +24,7 @@
             };
             plainSwap = {
               name = "nixos-swap";
-              size = "8G";
+              size = "4G";
               content = {
                 type = "swap";
                 discardPolicy = "both";
@@ -32,27 +35,37 @@
               name = "nixos-root";
               size = "100%";
               content = {
-                type = "btrfs";
-                extraArgs = [ "-f" ];
-                subvolumes = {
-                  "/@" = {
-                    mountpoint = "/";
-                    mountOptions = [ "compress=zstd" "noatime" "discard=async" ];
-                  };
-                  "/@home" = {
-                    mountOptions = [ "compress=zstd" "noatime" ];
-                    mountpoint = "/home";
-                  };
-                  "/@nix" = {
-                    mountOptions = [
-                      "compress=zstd"
-                      "noatime"
-                    ];
-                    mountpoint = "/nix";
-                  };
-                };
+                type = "filesystem";
+                format = "ext4";
+                mountpoint = "/";
               };
             };
+            # # -*- BTRFS without luks -*-
+            # root = {
+            #   name = "nixos-root";
+            #   size = "100%";
+            #   content = {
+            #     type = "btrfs";
+            #     extraArgs = [ "-f" ];
+            #     subvolumes = {
+            #       "/@" = {
+            #         mountpoint = "/";
+            #         mountOptions = [ "compress=zstd" "noatime" "discard=async" ];
+            #       };
+            #       "/@home" = {
+            #         mountOptions = [ "compress=zstd" "noatime" ];
+            #         mountpoint = "/home";
+            #       };
+            #       "/@nix" = {
+            #         mountOptions = [
+            #           "compress=zstd"
+            #           "noatime"
+            #         ];
+            #         mountpoint = "/nix";
+            #       };
+            #     };
+            #   };
+            # };
           };
         };
       };
