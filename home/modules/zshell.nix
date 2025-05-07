@@ -111,6 +111,9 @@
         # Lazy load Zoxide
         eval "$(${pkgs.zoxide}/bin/zoxide init zsh)"
 
+        # Set up fzf key bindings and fuzzy completion
+        source <(fzf --zsh)
+
         function extract() {
           if [ -f "$1" ] ; then
             case "$1" in
