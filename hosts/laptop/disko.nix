@@ -34,6 +34,7 @@
                 type = "filesystem";
                 format = "ext4";
                 mountpoint = "/";
+                mountOptions = [ "noatime" ];
               };
             };
             # # -*- BTRFS without luks -*-
