@@ -54,6 +54,7 @@
 
       # Gnome extensions
       gnomeExtensions.gsconnect
+      gnomeExtensions.tiling-assistant
     ];
   };
 
@@ -63,6 +64,7 @@
         disable-user-extensions = false;
         enabled-extensions = [
           "gsconnect@andyholmes.github.io"
+          "tiling-assistant@leleat-on-github"
         ];
       };
 
