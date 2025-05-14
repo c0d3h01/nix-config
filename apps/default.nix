@@ -10,8 +10,8 @@
   # services.flatpak.enable = true;
 
   # VirtualMachine
-  virtualisation.libvirtd.enable = true;
-  users.users.${userConfig.username}.extraGroups = [ "libvirtd" ];
+  # virtualisation.libvirtd.enable = true;
+  # users.users.${userConfig.username}.extraGroups = [ "libvirtd" ];
 
   # Allow running dynamically linked binaries
   programs.nix-ld.enable = true;
@@ -24,10 +24,10 @@
   # My Custom ToolSets
   myModules = {
     # androidTools = true;
-    # dockerTools = true;
+    dockerTools = true;
     # hackerMode = true;
     # mysqlTools = true;
-    podmanTools = true;
+    # podmanTools = true;
     pythonTools = true;
     rustTools = true;
   };
