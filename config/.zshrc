@@ -172,22 +172,22 @@ colors() {
   done
 }
 
-# ===== Plugin Loading =====
-# Load zsh-autosuggestions (if available)
-[ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ] || \
-[ -f /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh ] || \
-[ -f "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" ] && \
-  source "$_"
+# # ===== Plugin Loading =====
+# # Load zsh-autosuggestions (if available)
+# [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ] || \
+# [ -f /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh ] || \
+# [ -f "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" ] && \
+#   source "$_"
 
-# Load zsh-syntax-highlighting (if available)
-[ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] || \
-[ -f /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] || \
-[ -f "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ] && \
-  source "$_"
+# # Load zsh-syntax-highlighting (if available)
+# [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] || \
+# [ -f /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] || \
+# [ -f "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ] && \
+#   source "$_"
 
-# Load fzf (if available)
-[ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
-[ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
+# # Load fzf (if available)
+# [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
+# [ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
 
 # ===== Tool Initialization =====
 # Initialize zoxide (if installed)
@@ -198,3 +198,26 @@ command -v direnv >/dev/null 2>&1 && eval "$(direnv hook zsh)"
 
 # ===== Starship Prompt =====
 command -v starship >/dev/null 2>&1 && eval "$(starship init zsh)"
+
+# ===== Custom Plugin Submodules =====
+ZSH_PLUGINS="${HOME}/dotfiles/zsh"
+
+# zsh-completions
+fpath+=("$ZSH_PLUGINS/zsh-completions")
+
+# zsh-autosuggestions
+source "$ZSH_PLUGINS/zsh-autosuggestions/zsh-autosuggestions.zsh"
+
+# pure prompt
+fpath+=("$ZSH_PLUGINS/pure")
+autoload -U promptinit; promptinit
+prompt pure
+
+# zsh-autopair
+source "$ZSH_PLUGINS/zsh-autopair/autopair.zsh"
+
+# fast-syntax-highlighting
+source "$ZSH_PLUGINS/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+
+# fzf-tab
+source "$ZSH_PLUGINS/fzf-tab/fzf-tab.plugin.zsh"
