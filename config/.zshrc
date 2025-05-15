@@ -1,6 +1,5 @@
 # ===== Core Configuration =====
-export ZDOTDIR="${ZDOTDIR:-$HOME/.config/zsh}"
-export HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/zsh/history"
+export ZDOTDIR="$HOME/.config/zsh"
 export EDITOR="nvim"
 export VISUAL="nvim"
 export MANPAGER="nvim +Man!"
@@ -12,7 +11,6 @@ export PATH="$HOME/go/bin:$PATH"
 
 # ===== Tool Configurations =====
 export LESS="-R -F -X -M"
-# export BAT_THEME="OneHalfDark"
 export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --preview 'bat --color=always --style=numbers {}'"
 export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --exclude .git"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -23,12 +21,16 @@ autoload -Uz colors && colors
 # History configuration
 HISTSIZE=20000
 SAVEHIST=20000
+HISTFILE=~/.zsh_history
 HISTORY_IGNORE="(rm *|pkill *|kill *|shutdown *|reboot *|exit)"
-setopt extended_history
+setopt append_history           # Append to history file instead of overwriting
+setopt extended_history         # Save timestamp and duration of commands
+setopt hist_expire_dups_first   # Delete duplicates first when history is full
 setopt hist_ignore_all_dups
-setopt hist_expire_dups_first
-setopt hist_ignore_space
-setopt share_history
+# setopt hist_ignore_space
+setopt hist_verify              # Show command before executing
+setopt inc_append_history       # Add commands to history immediately
+setopt share_history            # Share history between sessions
 
 # Completion system
 autoload -Uz compinit
@@ -113,9 +115,7 @@ alias mv='mv -iv'
 alias ln='ln -iv'
 
 # Modern alternatives
-alias cat='bat --paging=never --style=plain'
-alias catp='bat'
-alias less='bat --paging=always'
+alias cat='bat'
 alias vi='nvim'
 alias vim='nvim'
 
@@ -124,11 +124,11 @@ alias ff='fastfetch'
 alias cl='clear'
 alias x='exit'
 alias ts='date '\''+%Y-%m-%d %H:%M:%S'\'
-alias reload='source ${ZDOTDIR:-$HOME}/.zshrc'
+alias reload='source ~/.zshrc'
 
 # ===== Functions =====
 path() {
-  echo -e ${PATH//:/\\n} | bat --language=sh --style=plain
+  echo -e ${PATH//:/\\n} | bat
 }
 
 extract() {
@@ -172,23 +172,6 @@ colors() {
   done
 }
 
-# # ===== Plugin Loading =====
-# # Load zsh-autosuggestions (if available)
-# [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ] || \
-# [ -f /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh ] || \
-# [ -f "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" ] && \
-#   source "$_"
-
-# # Load zsh-syntax-highlighting (if available)
-# [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] || \
-# [ -f /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] || \
-# [ -f "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ] && \
-#   source "$_"
-
-# # Load fzf (if available)
-# [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
-# [ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
-
 # ===== Tool Initialization =====
 # Initialize zoxide (if installed)
 command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh --cmd j)"
@@ -196,8 +179,8 @@ command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh --cmd j)"
 # Initialize direnv (if installed)
 command -v direnv >/dev/null 2>&1 && eval "$(direnv hook zsh)"
 
-# ===== Starship Prompt =====
-command -v starship >/dev/null 2>&1 && eval "$(starship init zsh)"
+# ===== Starship Prompt ===== ( I dont use starship btw)
+# command -v starship >/dev/null 2>&1 && eval "$(starship init zsh)"
 
 # ===== Custom Plugin Submodules =====
 ZSH_PLUGINS="${HOME}/dotfiles/zsh"
