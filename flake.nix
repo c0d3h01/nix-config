@@ -76,6 +76,7 @@
           ./hosts/laptop # Host Modules <<-
           inputs.sops-nix.nixosModules.sops
           inputs.disko.nixosModules.disko
+
           home-manager.nixosModules.home-manager
           {
             home-manager = {
@@ -83,7 +84,9 @@
               useUserPackages = true;
               extraSpecialArgs = { inherit inputs outputs userConfig; };
               users.${userConfig.username} = {
-                imports = [ ./home/home.nix ];
+                imports = [
+                  ./home/home.nix
+                ];
               };
             };
           }
