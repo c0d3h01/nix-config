@@ -19,7 +19,7 @@
   myModules = {
     # androidTools = true;
     dockerTools = true;
-    hackerMode = true;
+    # hackerMode = true;
     # mysqlTools = true;
     # podmanTools = true;
     pythonTools = true;
