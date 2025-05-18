@@ -25,7 +25,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-
   outputs =
     {
       self,
@@ -36,14 +35,12 @@
     }@inputs:
     let
       inherit (self) outputs;
-
       supportedSystems = [
         "x86_64-linux"
         "aarch64-darwin"
         "x86_64-darwin"
       ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
-
       # User Configuations
       userConfig = {
         username = "c0d3h01";
@@ -65,18 +62,14 @@
           };
         };
       });
-
       overlays = import ./overlays { inherit inputs; };
-
       # NixOS configuration with home-manager.
       nixosConfigurations.${userConfig.hostname} = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = { inherit inputs outputs userConfig; };
         modules = [
-          ./hosts/laptop # Host Modules <<-
-          inputs.sops-nix.nixosModules.sops
+          ./hosts/c0d3h01
           inputs.disko.nixosModules.disko
-
           home-manager.nixosModules.home-manager
           {
             home-manager = {
@@ -92,7 +85,6 @@
           }
         ];
       };
-
       # Standalone home-manager configuration
       homeConfigurations = {
         "${userConfig.username}@${userConfig.hostname}" = home-manager.lib.homeManagerConfiguration {
