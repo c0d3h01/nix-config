@@ -127,6 +127,12 @@ alias x='exit'
 alias ts='date '\''+%Y-%m-%d %H:%M:%S'\'
 alias reload='source ~/.zshrc'
 
+# Fix session vars
+source "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+
+# Add Home Manager to XDG paths
+export XDG_DATA_DIRS="$HOME/.nix-profile/share:$XDG_DATA_DIRS"
+
 # ===== Functions =====
 path() {
   echo -e ${PATH//:/\\n} | bat
