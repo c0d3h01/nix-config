@@ -11,23 +11,12 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  # fileSystems."/home" = {
-  #   device = "/dev/disk/by-uuid/57913b7c-10d6-4c92-8fd8-e269758630db";
-  #   fsType = "ext4";
-  #   options = [
-  #     "defaults"
-  #     "noatime"
-  #     "nodiratime"
-  #     "discard"
-  #   ];
-  # };
-
-  # zramSwap = {
-  #   enable = true;
-  #   priority = 100;
-  #   algorithm = "zstd";
-  #   memoryPercent = 100;
-  # };
+  zramSwap = {
+    enable = true;
+    priority = 100;
+    algorithm = "zstd";
+    memoryPercent = 100;
+  };
 
   services.fstrim = {
     enable = true;
