@@ -16,13 +16,18 @@
 ## Installation 
 
 ```bash
-$ sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode destroy,format,mount ./hosts/laptop/disko.nix
+
+$ sudo nix --experimental-features "nix-command flakes" run \
+github:nix-community/disko/latest -- --mode destroy,format,mount ./machines/installer/disko-config.nix
 
 $ sudo nixos-install --flake .#NixOS
+
 ```
 
 ## Stow (Home configs)
 
 ```bash
+
 $ stow config
+
 ```
