@@ -30,7 +30,7 @@
     let
       Apps = with pkgs; [
         # Browser
-        firefox-esr
+        brave
 
         # -+ Common Developement tools
         nodejs
