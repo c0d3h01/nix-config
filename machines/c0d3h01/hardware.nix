@@ -15,41 +15,32 @@
     enable = true;
     priority = 100;
     algorithm = "zstd";
-    memoryPercent = 200;
+    memoryPercent = 100;
   };
 
-  services.fstrim = {
-    enable = true;
-    interval = "weekly";
-  };
+  # boot.loader.grub.efiSupport = lib.mkDefault true;
+  # boot.loader.grub.efiInstallAsRemovable = lib.mkDefault true;
+
+  boot.loader.systemd-boot.enable = lib.mkDefault true;
+  boot.loader.systemd-boot.configurationLimit = lib.mkDefault 5;
 
   boot = {
     kernelModules = [ "kvm-amd" ];
     extraModulePackages = [ ];
 
-    tmp.cleanOnBoot = true;
-    consoleLogLevel = 3;
     # kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
     kernelParams = [
-      "quiet"
-      "splash"
+      # "quiet"
       "nowatchdog"
       "loglevel=3"
       "mitigations=off"
-      "nohz_full=4-7"
     ];
 
     kernel.sysctl = { };
 
     loader = {
       efi.canTouchEfiVariables = true;
-      timeout = 3;
-      systemd-boot = {
-        enable = true;
-        configurationLimit = 5;
-        consoleMode = "auto";
-        editor = false;
-      };
+      timeout = 5;
     };
 
     initrd = {

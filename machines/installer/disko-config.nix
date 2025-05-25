@@ -7,19 +7,15 @@
         content = {
           type = "gpt";
           partitions = {
-            "boot" = {
-              size = "1M";
-              type = "EF02"; # for grub MBR
-              priority = 1;
-            };
-            "ESP" = {
+            ESP = {
               name = "nixos-esp";
+              end = "512M";
               type = "EF00";
-              size = "1G";
               content = {
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot";
+                mountOptions = [ "umask=0077" ];
               };
             };
             plainSwap = {
@@ -42,7 +38,6 @@
                   "-O"
                   "extra_attr,inode_checksum,sb_checksum,compression"
                 ];
-                # Recommendations for flash: https://wiki.archlinux.org/title/F2FS#Recommended_mount_options
                 mountOptions = [
                   "compress_algorithm=zstd:6,compress_chksum,atgc,gc_merge,lazytime,nodiscard"
                 ];
