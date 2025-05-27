@@ -80,11 +80,11 @@
       };
 
       # wallpaper
-      "org/gnome/desktop/background" = {
-        picture-uri = "file:///home/${userConfig.username}/dotfiles/assets/wallpapers/Space-Nebula.png";
-        picture-uri-dark = "file:///home/${userConfig.username}/dotfiles/assets/wallpapers/Space-Nebula.png";
-        picture-options = "zoom";
-      };
+      # "org/gnome/desktop/background" = {
+      #   picture-uri = "file:///home/${userConfig.username}/dotfiles/assets/wallpapers/Space-Nebula.png";
+      #   picture-uri-dark = "file:///home/${userConfig.username}/dotfiles/assets/wallpapers/Space-Nebula.png";
+      #   picture-options = "zoom";
+      # };
     };
 
     # Configure XDG portals for the user
