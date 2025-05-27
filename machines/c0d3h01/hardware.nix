@@ -28,9 +28,9 @@
     kernelModules = [ "kvm-amd" ];
     extraModulePackages = [ ];
 
-    # kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
+    kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [
-      # "quiet"
+      "quiet"
       "nowatchdog"
       "loglevel=3"
       "mitigations=off"
