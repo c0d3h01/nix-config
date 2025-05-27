@@ -4,17 +4,17 @@
   gtk = {
     enable = true;
 
-    theme = lib.mkDefault {
-      name = "Catppuccin-Mocha-Compact-Mauve-Dark";
-      package = lib.mkDefault (
-        pkgs.catppuccin-gtk.override {
-          accents = [ "mauve" ];
-          size = "compact";
-          tweaks = [ "rimless" ];
-          variant = "mocha";
-        }
-      );
-    };
+    # theme = lib.mkDefault {
+    #   name = "Catppuccin-Mocha-Compact-Mauve-Dark";
+    #   package = lib.mkDefault (
+    #     pkgs.catppuccin-gtk.override {
+    #       accents = [ "mauve" ];
+    #       size = "compact";
+    #       tweaks = [ "rimless" ];
+    #       variant = "mocha";
+    #     }
+    #   );
+    # };
 
     cursorTheme = lib.mkDefault {
       name = "Bibata-Modern-Ice";
