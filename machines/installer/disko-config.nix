@@ -64,7 +64,7 @@
                     ];
                   };
                   "/@swap" = {
-                    mountpoint = "/.swapvol";
+                    mountpoint = "/swap";
                     swap = {
                       swapfile.size = "4G";
                     };
