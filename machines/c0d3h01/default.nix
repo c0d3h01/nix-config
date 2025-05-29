@@ -1,4 +1,9 @@
-{ pkgs, userConfig, ... }:
+{
+  config,
+  pkgs,
+  userConfig,
+  ...
+}:
 
 {
   imports = [
@@ -6,8 +11,10 @@
     ./hardware.nix
     ../../nixos
     ../../apps
-    # ../../sops/secrets
+    ../../secrets
   ];
+
+  age.secrets.ssh.file = ../../secrets/ssh.age;
 
   time.timeZone = "Asia/Kolkata";
   i18n = {
@@ -42,19 +49,16 @@
     });
   '';
 
-  # programs.zsh = {
-  #   enable = true;
-  #   shellInit = ''
-  #     source ~/.zshrc
-  #   '';
-  # };
-
   users.users.${userConfig.username} = {
     description = userConfig.fullName;
     isNormalUser = true;
     shell = pkgs.zsh;
     ignoreShellProgramCheck = true;
+    hashedPasswordFile = config.age.secrets.ssh.path;
     home = "/home/${userConfig.username}";
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN7FuJyM0VDKj1ajyypGEHW6F/AN3mCCRL3bLCDcUaer harshalsawant.dev@gmail.com"
+    ];
     extraGroups = [
       "networkmanager"
       "wheel"
@@ -63,9 +67,6 @@
       "adbusers"
       "wireshark"
       "usbmon"
-    ];
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH7Sz5q/4YN3RJNe+WXXPWvNW+fEfYACYEBJQlxCQ/Bq harshalsawant.dev@gmail.com"
     ];
   };
 }
