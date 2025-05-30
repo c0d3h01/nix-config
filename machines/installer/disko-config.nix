@@ -11,7 +11,7 @@
               priority = 1;
               name = "nix-esp";
               start = "1MiB";
-              end = "513M";
+              end = "512M";
               type = "EF00";
               content = {
                 type = "filesystem";
@@ -21,28 +21,34 @@
               };
             };
             root = {
-              name = "nixos-root";
+              name = "nix-root";
               size = "100%";
               content = {
                 type = "btrfs";
-                extraArgs = [ "-f" ];
+                extraArgs = [ "-f" "-O" "no-holes" "-R" "free-space-tree" ];
                 subvolumes = {
                   "/@" = {
                     mountpoint = "/";
                     mountOptions = [
-                      "compress=zstd:1"
+                      "compress=zstd:3"
                       "discard=async"
                       "noatime"
                       "ssd"
+                      "space_cache=v2"
+                      "autodefrag"
+                      "commit=120"
                     ];
                   };
                   "/@home" = {
                     mountpoint = "/home";
                     mountOptions = [
-                      "compress=zstd:1"
+                      "compress=zstd:3"
                       "discard=async"
                       "noatime"
                       "ssd"
+                      "space_cache=v2"
+                      "autodefrag"
+                      "commit=120"
                     ];
                   };
                   "/@nix" = {
@@ -52,15 +58,43 @@
                       "discard=async"
                       "noatime"
                       "ssd"
+                      "space_cache=v2"
+                      "commit=300"
                     ];
                   };
                   "/@log" = {
                     mountpoint = "/var/log";
                     mountOptions = [
-                      "compress=zstd:1"
+                      "compress=zstd:6"
                       "discard=async"
                       "noatime"
                       "ssd"
+                      "space_cache=v2"
+                      "commit=300"
+                    ];
+                  };
+                  "/@tmp" = {
+                    mountpoint = "/tmp";
+                    mountOptions = [
+                      "compress=no"
+                      "discard=async"
+                      "noatime"
+                      "ssd"
+                      "space_cache=v2"
+                      "nosuid"
+                      "nodev"
+                    ];
+                  };
+                  "/@var" = {
+                    mountpoint = "/var";
+                    mountOptions = [
+                      "compress=zstd:3"
+                      "discard=async"
+                      "noatime"
+                      "ssd"
+                      "space_cache=v2"
+                      "autodefrag"
+                      "commit=300"
                     ];
                   };
                   "/@swap" = {
