@@ -24,7 +24,7 @@
 
   myModules = {
     docker.enable = true;
-    monitoring.enable = true;
+    # monitoring.enable = true;
     mysql.enable = true;
     # podman.enable = true;
     python.enable = true;
