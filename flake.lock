@@ -83,7 +83,9 @@
     },
     "flake-utils": {
       "inputs": {
-        "systems": "systems_2"
+        "systems": [
+          "systems"
+        ]
       },
       "locked": {
         "lastModified": 1731533236,
@@ -150,34 +152,47 @@
       "locked": {
         "lastModified": 1748570847,
         "narHash": "sha256-XU1a6wFctd+s3ZvBIFB6s4GhPJ+Oc6pkeOrEsbA2fMo=",
-        "ref": "master",
+        "owner": "nix-community",
+        "repo": "home-manager",
         "rev": "4e9efaa68b0be7e19127dad4f0506a9b89e28ef4",
-        "shallow": true,
-        "type": "git",
-        "url": "https://github.com/nix-community/home-manager"
+        "type": "github"
       },
       "original": {
-        "ref": "master",
-        "shallow": true,
-        "type": "git",
-        "url": "https://github.com/nix-community/home-manager"
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "nixos-hardware": {
+      "locked": {
+        "lastModified": 1747900541,
+        "narHash": "sha256-dn64Pg9xLETjblwZs9Euu/SsjW80pd6lr5qSiyLY1pg=",
+        "owner": "NixOS",
+        "repo": "nixos-hardware",
+        "rev": "11f2d9ea49c3e964315215d6baa73a8d42672f06",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixos-hardware",
+        "type": "github"
       }
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1748327641,
-        "narHash": "sha256-Y0khDrIGJ90I+HMyVAaP7fHMQOjUywGJDTYE3nKa6K4=",
+        "lastModified": 1748568828,
+        "narHash": "sha256-5O6tAGsPwQyh+0TjqxLRGQ3g0IrF8pTKa8M/W6hwWt0=",
         "ref": "master",
-        "rev": "f925522a7c5ee0e24d0b7d480896097f88695b8e",
+        "rev": "6bfd7663660ecf5336c1054e9e877824a4f84954",
         "shallow": true,
         "type": "git",
-        "url": "https://github.com/c0d3h01/nixpkgs"
+        "url": "https://github.com/NixOS/nixpkgs"
       },
       "original": {
         "ref": "master",
         "shallow": true,
         "type": "git",
-        "url": "https://github.com/c0d3h01/nixpkgs"
+        "url": "https://github.com/NixOS/nixpkgs"
       }
     },
     "nixpkgs_2": {
@@ -224,36 +239,17 @@
         "disko": "disko",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager_2",
+        "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "pre-commit-hooks": "pre-commit-hooks",
-        "sops-nix": "sops-nix",
-        "spicetify-nix": "spicetify-nix"
-      }
-    },
-    "sops-nix": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1747603214,
-        "narHash": "sha256-lAblXm0VwifYCJ/ILPXJwlz0qNY07DDYdLD+9H+Wc8o=",
-        "owner": "Mic92",
-        "repo": "sops-nix",
-        "rev": "8d215e1c981be3aa37e47aeabd4e61bb069548fd",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Mic92",
-        "repo": "sops-nix",
-        "type": "github"
+        "spicetify-nix": "spicetify-nix",
+        "systems": "systems_3"
       }
     },
     "spicetify-nix": {
       "inputs": {
         "nixpkgs": "nixpkgs_2",
-        "systems": "systems_3"
+        "systems": "systems_2"
       },
       "locked": {
         "lastModified": 1748147548,

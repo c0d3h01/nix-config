@@ -2,34 +2,27 @@
   description = "NixOS configuration with flakes";
 
   inputs = {
-    nixpkgs.url = "git+https://github.com/c0d3h01/nixpkgs?shallow=1&ref=master";
+    nixpkgs.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=master";
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
+    systems.url = "github:nix-systems/default";
+
     flake-utils.url = "github:numtide/flake-utils";
+    flake-utils.inputs.systems.follows = "systems";
 
-    home-manager = {
-      # url = "github:nix-community/home-manager";
-      url = "git+https://github.com/nix-community/home-manager?shallow=1&ref=master";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
 
-    pre-commit-hooks = {
-      url = "github:cachix/pre-commit-hooks.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
+    pre-commit-hooks.inputs.nixpkgs.follows = "nixpkgs";
 
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # sops-nix.url = "github:Mic92/sops-nix";
+    # sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
-    agenix = {
-      url = "github:ryantm/agenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    agenix.url = "github:ryantm/agenix";
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
 
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
   };
@@ -80,6 +73,8 @@
         modules = [
           ./machines/c0d3h01
           inputs.disko.nixosModules.disko
+          inputs.nixos-hardware.nixosModules.dell-inspiron-14-5420
+
           home-manager.nixosModules.home-manager
           {
             home-manager = {
