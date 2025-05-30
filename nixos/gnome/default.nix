@@ -25,6 +25,12 @@
       gnome-music
       gnome-remote-desktop
       gnome-usage
+      gnome-console
+      gnome-contacts
+      gnome-weather
+      gnome-maps
+      gnome-text-editor
+      gnome-connections
       gnome-system-monitor
     ];
 
@@ -34,6 +40,7 @@
       gnome-tweaks
       libreoffice
       transmission_4
+      micro
 
       # Gnome extensions
       gnomeExtensions.tiling-assistant
