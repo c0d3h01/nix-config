@@ -17,10 +17,12 @@ export ANDROID_SDK_ROOT="$ANDROID_HOME"
 export PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin"
 export PATH="$PATH:$ANDROID_HOME/platform-tools"
 export PATH="$PATH:$ANDROID_HOME/emulator"
+export PATH="$HOME/Android/flutter/bin:$PATH"
 
 # ===== Path Configuration =====
 path=(
     $HOME/.local/bin
+    $HOME/.rustup
     $HOME/.cargo/bin
     $HOME/go/bin
     $HOME/.npm-global/bin
@@ -35,7 +37,7 @@ path=($^path(N))  # remove nonexistent paths
 export PATH
 
 # ===== Tool Configurations =====
-export LESS="-R -F -X -M"
+export LESS="-R -F"
 export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --preview 'bat --color=always --style=numbers {}'"
 export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --exclude .git"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -194,7 +196,7 @@ path() {
 extract() {
   local file="$1" dir="${2:-.}"
   [[ ! -f "$file" ]] && echo "Error: '$file' not valid" >&2 && return 1
-  
+
   case "$file" in
     *.tar.bz2|*.tbz2)  tar -xjf "$file" -C "$dir" ;;
     *.tar.gz|*.tgz)    tar -xzf "$file" -C "$dir" ;;
