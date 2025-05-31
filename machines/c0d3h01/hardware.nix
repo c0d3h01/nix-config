@@ -14,11 +14,9 @@
   zramSwap = {
     enable = true;
     priority = 100;
-    algorithm = "zstd";
+    algorithm = "lz4";
     memoryPercent = 100;
   };
-
-  hardware.bluetooth.enable = true;
 
   environment.systemPackages = with pkgs; [
     mesa-demos
