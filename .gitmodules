@@ -1,18 +1,18 @@
-[submodule "zsh/zsh-completions"]
-	path = zsh/zsh-completions
+[submodule "home/.zsh-completions"]
+	path = home/.zsh-completions
 	url = https://github.com/zsh-users/zsh-completions.git
-[submodule "zsh/zsh-autosuggestions"]
-	path = zsh/zsh-autosuggestions
+[submodule "home/.zsh-autosuggestions"]
+	path = home/.zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions.git
-[submodule "zsh/pure"]
-	path = zsh/pure
+[submodule "home/.zsh-pure"]
+	path = home/.zsh-pure
 	url = https://github.com/sindresorhus/pure.git
-[submodule "zsh/zsh-autopair"]
-	path = zsh/zsh-autopair
+[submodule "home/.zsh-autopair"]
+	path = home/.zsh-autopair
 	url = https://github.com/hlissner/zsh-autopair.git
-[submodule "zsh/fast-syntax-highlighting"]
-	path = zsh/fast-syntax-highlighting
+[submodule "home/.zsh-fast-syntax-highlighting"]
+	path = home/.zsh-fast-syntax-highlighting
 	url = https://github.com/zdharma-continuum/fast-syntax-highlighting.git
-[submodule "zsh/fzf-tab"]
-	path = zsh/fzf-tab
+[submodule "home/.zsh-fzf-tab"]
+	path = home/.zsh-fzf-tab
 	url = https://github.com/Aloxaf/fzf-tab.git
