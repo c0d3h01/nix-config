@@ -3,6 +3,7 @@
     ./apps
     ./gnome
     # ./KDE
+    ./server
     ./audio.nix
     ./fonts.nix
     ./libvirt.nix

@@ -1,0 +1,11 @@
+scrape_url "pgscv" {
+	name = "pgscv"
+	url  = "localhost:9890"
+}
+
+// FIXME: Can't use the built-in postgres_exporter
+// See: https://github.com/grafana/alloy/issues/3181
+scrape_url "postgres" {
+	name = "postgres"
+	url  = "localhost:9003"
+}
