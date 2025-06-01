@@ -53,9 +53,7 @@
       userConfig = {
         username = "c0d3h01";
         fullName = "Harshal Sawant";
-        email = "harshalsawant.dev@gmail.com";
         hostname = "NixOS";
-        stateVersion = "25.05";
       };
     in
     {
