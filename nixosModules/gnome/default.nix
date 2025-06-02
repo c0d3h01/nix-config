@@ -37,10 +37,6 @@
       # Desktop common Apps
       gnome-photos
       gnome-tweaks
-      # Gnome extensions
-      gnomeExtensions.tiling-assistant
-      gnomeExtensions.dash-to-dock
-      gnomeExtensions.clipboard-indicator
     ];
   };
 
@@ -49,17 +45,8 @@
       "org/gnome/shell" = {
         disable-user-extensions = false;
         enabled-extensions = [
-          "tiling-assistant@leleat-on-github"
           "gsconnect@andyholmes.github.io"
-          "clipboard-indicator@tudmotu.com"
-          "dash-to-dock@micxgx.gmail.com"
         ];
-      };
-
-      # Dash-to-Dock
-      "org/gnome/shell/extensions/dash-to-dock" = {
-        dock-fixed = true;
-        custom-theme-shrink = true;
       };
 
       # interface
