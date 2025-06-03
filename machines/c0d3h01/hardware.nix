@@ -15,7 +15,7 @@
     enable = true;
     priority = 100;
     algorithm = "lz4";
-    memoryPercent = 100;
+    memoryPercent = 200;
   };
 
   services.fstrim = {
