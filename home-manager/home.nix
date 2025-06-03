@@ -90,6 +90,7 @@
       glances
       cheat
       tree-sitter
+      flake-checker
 
       # Language Servers
       lua-language-server
