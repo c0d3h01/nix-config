@@ -29,6 +29,10 @@
                   "no-holes"
                   "-R"
                   "free-space-tree"
+                  "-s"
+                  "4096"
+                  "-n"
+                  "4096"
                 ];
                 subvolumes = {
                   "/@" = {
@@ -39,6 +43,7 @@
                       "ssd"
                       "space_cache=v2"
                       "commit=120"
+                      "discard=async"
                     ];
                   };
                   "/@home" = {
@@ -49,6 +54,8 @@
                       "ssd"
                       "space_cache=v2"
                       "commit=120"
+                      "discard=async"
+                      "autodefrag"
                     ];
                   };
                   "/@nix" = {
@@ -59,6 +66,7 @@
                       "ssd"
                       "space_cache=v2"
                       "commit=300"
+                      "discard=async"
                     ];
                   };
                   "/@log" = {
@@ -69,6 +77,8 @@
                       "ssd"
                       "space_cache=v2"
                       "commit=300"
+                      "discard=async"
+                      "autodefrag"
                     ];
                   };
                   "/@tmp" = {
@@ -80,6 +90,7 @@
                       "space_cache=v2"
                       "nosuid"
                       "nodev"
+                      "discard=async"
                     ];
                   };
                   "/@var" = {
@@ -90,6 +101,8 @@
                       "ssd"
                       "space_cache=v2"
                       "commit=300"
+                      "discard=async"
+                      "autodefrag"
                     ];
                   };
                 };
