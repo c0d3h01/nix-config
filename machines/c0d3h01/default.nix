@@ -11,6 +11,7 @@
     ./hardware.nix
     ../../nixosModules
     ../../secrets
+    ./btrfs.nix
   ];
 
   age.secrets.ssh.file = ../../secrets/ssh.age;
