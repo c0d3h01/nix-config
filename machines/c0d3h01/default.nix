@@ -14,7 +14,12 @@
     ./btrfs.nix
   ];
 
-  age.secrets.ssh.file = ../../secrets/ssh.age;
+  age.secrets = {
+    ssh.file = ../../secrets/ssh.age;
+    userPassword.file = ../../secrets/userPassword.age;
+    sshPublicKeys.file = ../../secrets/sshPublicKeys.age;
+  };
+
   documentation.enable = false;
 
   time.timeZone = "Asia/Kolkata";
@@ -55,10 +60,10 @@
     isNormalUser = true;
     shell = pkgs.zsh;
     ignoreShellProgramCheck = true;
-    hashedPasswordFile = config.age.secrets.ssh.path;
+    hashedPasswordFile = config.age.secrets.userPassword.path;
     home = "/home/${declarative.username}";
     openssh.authorizedKeys.keys = [
-      (builtins.readFile ../../secrets/ssh.pub)
+      config.age.secrets.sshPublicKeys.path
     ];
     extraGroups = [
       "networkmanager"

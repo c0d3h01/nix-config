@@ -9,7 +9,9 @@
   imports = [
     inputs.agenix.nixosModules.default
   ];
-  age.identityPaths = [ "/home/${declarative.username}/.ssh/id_ed25519" ];
+  age.identityPaths = [
+    "/etc/ssh/ssh_host_ed25519_key"
+  ];
   environment.systemPackages = with pkgs; [
     inputs.agenix.packages.x86_64-linux.default
     age
