@@ -38,7 +38,7 @@ sudo nix --experimental-features "nix-command flakes" run \
 # Only for low ram devices!
 sudo mkdir /mnt/swap
 sudo chattr +C /mnt/swap
-sudo dd if=/dev/zero of=/mnt/swap/swapfile bs=1M count=4048 status=progress
+sudo dd if=/dev/zero of=/mnt/swap/swapfile bs=1M count=8048 status=progress
 sudo chmod 600 /mnt/swap/swapfile
 sudo mkswap /mnt/swap/swapfile
 sudo swapon /mnt/swap/swapfile
