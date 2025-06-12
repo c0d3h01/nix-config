@@ -1,3 +1,5 @@
+#!/usr/bin/env zsh
+
 # shellcheck disable=SC1036
 
 # ===== Core Configuration =====
@@ -6,6 +8,7 @@ export LC_ALL=en_IN.UTF-8
 export NIX_USER_PROFILE_DIR=${NIX_USER_PROFILE_DIR:-/nix/var/nix/profiles/per-user/${USER}}
 export NIX_PROFILES=${NIX_PROFILES:-$HOME/.nix-profile}
 export XDG_DATA_DIRS="$HOME/.nix-profile/share:$XDG_DATA_DIRS"
+export DEVENVSHELL=1
 
 if command -v nvim >/dev/null; then
   export EDITOR="nvim"
