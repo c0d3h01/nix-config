@@ -16,3 +16,12 @@
 [submodule "home/.zsh-fzf-tab"]
 	path = home/.zsh-fzf-tab
 	url = https://github.com/Aloxaf/fzf-tab.git
+[submodule "home/.oh-my-bash"]
+	path = home/.oh-my-bash
+	url = https://github.com/ohmybash/oh-my-bash.git
+[submodule "home/.bash-completion"]
+	path = home/.bash-completion
+	url = https://github.com/scop/bash-completion.git
+[submodule "home/.fzf"]
+	path = home/.fzf
+	url = https://github.com/junegunn/fzf.git
