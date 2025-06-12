@@ -7,10 +7,41 @@ repository:
   has_issues: true
   has_wiki: false
   has_projects: false
+  has_discussions: false
   allow_squash_merge: true
   allow_merge_commit: false
   allow_rebase_merge: false
+  allow_auto_merge: true
   delete_branch_on_merge: true
+  archived: false
+  topics: 
+    - nixos
+    - dotfiles
+    - flakes
+    - home-manager
+    - configuration
+
+branches:
+  - name: NixOS
+    protection:
+      required_status_checks:
+        strict: true
+        contexts: []
+      enforce_admins: true
+      required_pull_request_reviews:
+        required_approving_review_count: 1
+        dismiss_stale_reviews: true
+        require_code_owner_reviews: false
+        dismissal_restrictions: []
+      restrictions:
+        users: []
+        teams: []
+      required_linear_history: true
+      allow_force_pushes: false
+      allow_deletions: false
+      block_creations: false
+      required_conversation_resolution: true
+      lock_branch: false
 
 labels:
   - name: bug
@@ -22,7 +53,28 @@ labels:
   - name: auto-merge
     color: 1d76db
     description: Automatically merge this pull request when CI passes
+  - name: documentation
+    color: 0075ca
+    description: Improvements or additions to documentation
+  - name: question
+    color: d876e3
+    description: Further information is requested
+  - name: help wanted
+    color: 008672
+    description: Extra attention is needed
 
 collaborators:
   - username: c0d3h01
     permission: admin
+
+teams: []
+
+# templates:
+#   issue:
+#     - name: Bug report
+#       path: .github/ISSUE_TEMPLATE/bug_report.md
+#     - name: Feature request
+#       path: .github/ISSUE_TEMPLATE/feature_request.md
+#   pull_request:
+#     - name: Pull request template
+#       path: .github/PULL_REQUEST_TEMPLATE.md
