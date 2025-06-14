@@ -10,8 +10,8 @@
   ];
 
   # Enable Gnome, X server
-  services.xserver.desktopManager.gnome.enable = true;
-  services.xserver.displayManager.gdm.enable = true;
+  services.desktopManager.gnome.enable = true;
+  services.displayManager.gdm.enable = true;
   services.xserver.desktopManager.xterm.enable = false;
   services.gnome.gnome-initial-setup.enable = false;
 
@@ -50,7 +50,6 @@
     ++ (with pkgs; [
       gnome-photos
       gnome-tweaks
-      gradience
       gnome-chess
     ]);
 }
