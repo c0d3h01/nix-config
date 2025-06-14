@@ -3,6 +3,7 @@
 {
   home-manager.users."${declarative.username}" = {
     dconf.settings = {
+      # GNOME Shell extensions
       "org/gnome/shell" = {
         disable-user-extensions = false;
         enabled-extensions = [
@@ -12,14 +13,23 @@
         ];
       };
 
-      # "org/gnome/settings-daemon/plugins/power" = {
-      #   power-button-action = "Power Off"; # FIXME always showing suspend
-      #   sleep-inactive-ac-type = "Power Off";
-      # };
+      # Power settings
+      "org/gnome/settings-daemon/plugins/power" = {
+        power-button-action = "interactive";
+      };
+
+      # Night Light
+      "org/gnome/settings-daemon/plugins/color" = {
+        night-light-enabled = true;
+        night-light-temperature = 4000;
+        night-light-schedule-from = "20.0";
+        night-light-schedule-to = "8.0";
+      };
 
       # Dask to Dock
       "org/gnome/shell/extensions/dash-to-dock" = {
         dock-position = "BOTTOM";
+        intellihide-mode = "ALL_WINDOWS";
       };
 
       # interface
@@ -29,7 +39,8 @@
         clock-show-weekday = true;
         clock-show-date = true;
         clock-format = "12h";
-        enable-animations = true;
+        enable-animations = false;
+        show-battery-percentage = true;
       };
 
       # touchpad
@@ -48,6 +59,7 @@
       # workspaces
       "org/gnome/mutter" = {
         dynamic-workspaces = true;
+        edge-tiling = false;
         workspaces-only-on-primary = true;
       };
 
@@ -63,7 +75,7 @@
     xdg.portal = {
       enable = true;
       extraPortals = with pkgs; [ xdg-desktop-portal-gnome ];
-      config.common.default = "*";
+      config.common.default = "gnome";
     };
   };
 }
