@@ -1,9 +1,9 @@
 {
-  description = "NixOS Flake: workspace";
+  description = "NixOS Flake: WorkSpace";
 
   inputs = {
     # Use stable as the default nixpkgs
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     systems.url = "github:nix-systems/default";
     flake-utils.inputs.systems.follows = "systems";
@@ -25,7 +25,7 @@
     nixos-generators.url = "github:nix-community/nixos-generators";
     nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    catppuccin.url = "github:catppuccin/nix";
+    catppuccin.url = "github:c0d3h01/catppuccin-nix/main";
   };
 
   outputs =
@@ -98,7 +98,13 @@
         };
 
         devShells = builtins.mapAttrs (name: file: import file { inherit pkgs; }) devShellModules;
-        devenvShells = builtins.mapAttrs (name: file: import file { pkgs = pkgs; inputs = inputs; }) devenvShellModules;
+        devenvShells = builtins.mapAttrs (
+          name: file:
+          import file {
+            pkgs = pkgs;
+            inputs = inputs;
+          }
+        ) devenvShellModules;
 
         homeConfigurations."${declarative.username}@${declarative.hostname}" =
           home-manager.lib.homeManagerConfiguration
