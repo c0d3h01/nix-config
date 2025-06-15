@@ -16,10 +16,10 @@
 
   # <-- Coustom modules -->
   myModules = {
-    docker.enable = true;
+    # docker.enable = true;
     # monitoring.enable = true;
     mysql.enable = true;
-    # podman.enable = true;
+    podman.enable = true;
     python.enable = true;
     r.enable = true;
     rust.enable = true;
@@ -35,7 +35,7 @@
   # <-- Environment packages -->
   environment.systemPackages = with pkgs; [
     # <-- Desktop applications -->
-    brave
+    firefox
 
     # Notion Enhancer With patches
     (pkgs.callPackage ./notion-app-enhanced { })
@@ -44,12 +44,10 @@
     ghostty
 
     # Code editors
-    code-cursor
     figma-linux
     vscode-fhs
-    # jetbrains.pycharm-community-bin
+    jetbrains.pycharm-community-bin
     # android-studio
-    gnome-builder
 
     # Communication apps
     slack
