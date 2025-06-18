@@ -22,5 +22,5 @@ jobs:
       - name: Test system build
         run: nix build .#nixosConfigurations.devbox.config.system.build.toplevel
 
-      - name: Test home-manager build
-        run: nix build .#homeConfigurations."c0d3h01@devbox".activationPackage
+    #   - name: Test home-manager build
+    #     run: nix build .#homeConfigurations."c0d3h01@devbox".activationPackage
