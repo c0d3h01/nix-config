@@ -20,6 +20,6 @@ jobs:
             automated
 
       - if: steps.update.outputs.pull-request-number
-        run: gh pr merge ${{ steps.update.outputs.pull-request-number }} --merge --auto
+        run: gh pr merge ${{ steps.update.outputs.pull-request-number }} --squash --auto
         env:
           GH_TOKEN: ${{ secrets.DOTFILES }}
