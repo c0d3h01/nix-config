@@ -13,7 +13,7 @@
       nerd-fonts.jetbrains-mono
     ];
     fontconfig = {
-      # enable = true;
+      enable = true;
 
       defaultFonts = {
         serif = [
