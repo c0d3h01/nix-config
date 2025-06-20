@@ -13,7 +13,6 @@
     ../../nixosModules
     ../../secrets
     ../../sops
-    ./btrfs.nix
   ];
 
   documentation.enable = false;
