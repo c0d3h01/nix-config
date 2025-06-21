@@ -11,7 +11,6 @@
     myModules.monitoring.enable = lib.mkOption {
       type = lib.types.bool;
       default = false;
-      description = "Enable monitoring tools suite";
     };
   };
 

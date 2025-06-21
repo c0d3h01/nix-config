@@ -14,28 +14,11 @@
 
   programs.appimage.enable = true;
 
-  # <-- Coustom modules -->
-  myModules = {
-    docker.enable = true;
-    # monitoring.enable = true;
-    # mysql.enable = true;
-    # podman.enable = true;
-    python.enable = true;
-    # r.enable = true;
-    rust.enable = true;
-  };
-
-  programs.wireshark = {
-    enable = true;
-    package = pkgs.wireshark;
-    dumpcap.enable = true;
-    usbmon.enable = true;
-  };
-
   # <-- Environment packages -->
   environment.systemPackages = with pkgs; [
     # <-- Desktop applications -->
     firefox
+    chromium
 
     # Notion Enhancer With patches
     (pkgs.callPackage ./notion-app-enhanced { })
@@ -66,26 +49,8 @@
     qbittorrent
     obs-studio
     libreoffice-qt6-fresh
-    # blender-hip
+    blender
     # gimp
     obsidian
-
-    go
-    nodejs
-    electron
-    gdb
-    gcc
-    gnumake
-    cmake
-    ninja
-    clang
-    pkg-config
-    jdk24
-    gtk4
-    glib
-    pango
-    gdk-pixbuf
-    gobject-introspection
-    libepoxy
   ];
 }

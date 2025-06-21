@@ -1,23 +1,24 @@
 {
   config,
-  lib,
   pkgs,
+  lib,
   ...
 }:
 
 {
   options = {
-    myModules.rust.enable = lib.mkOption {
+    myModules.node.enable = lib.mkOption {
       type = lib.types.bool;
       default = false;
     };
   };
 
-  config = lib.mkIf config.myModules.rust.enable {
+  config = lib.mkIf config.myModules.node.enable {
     environment.systemPackages = with pkgs; [
-      rustup
-      rustfmt
-      rust-analyzer
+      nodejs
+      yarn
+      eslint
+      prettierd
     ];
   };
 }

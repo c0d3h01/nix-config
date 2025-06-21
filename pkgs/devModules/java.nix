@@ -1,23 +1,23 @@
 {
   config,
-  lib,
   pkgs,
+  lib,
   ...
 }:
 
 {
   options = {
-    myModules.rust.enable = lib.mkOption {
+    myModules.java.enable = lib.mkOption {
       type = lib.types.bool;
       default = false;
     };
   };
 
-  config = lib.mkIf config.myModules.rust.enable {
+  config = lib.mkIf config.myModules.java.enable {
     environment.systemPackages = with pkgs; [
-      rustup
-      rustfmt
-      rust-analyzer
+      jdk24
+      maven
+      gradle
     ];
   };
 }

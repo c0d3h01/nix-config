@@ -10,7 +10,6 @@
     myModules.python.enable = lib.mkOption {
       type = lib.types.bool;
       default = false;
-      description = "Install Python modules";
     };
   };
 
@@ -20,9 +19,11 @@
       (pkgs.python313.withPackages (
         ps: with ps; [
           pip
+          uv
           virtualenv
-          jupyter
+          jupyterlab
           sympy
+          pygame
           numpy
           scipy
           pandas

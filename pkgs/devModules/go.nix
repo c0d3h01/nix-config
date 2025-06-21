@@ -1,23 +1,24 @@
 {
   config,
-  lib,
   pkgs,
+  lib,
   ...
 }:
 
 {
   options = {
-    myModules.rust.enable = lib.mkOption {
+    myModules.go.enable = lib.mkOption {
       type = lib.types.bool;
       default = false;
     };
   };
 
-  config = lib.mkIf config.myModules.rust.enable {
+  config = lib.mkIf config.myModules.go.enable {
     environment.systemPackages = with pkgs; [
-      rustup
-      rustfmt
-      rust-analyzer
+      go
+      gopls
+      gotools
+      golangci-lint
     ];
   };
 }

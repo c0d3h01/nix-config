@@ -10,7 +10,6 @@
     myModules.r.enable = lib.mkOption {
       type = lib.types.bool;
       default = false;
-      description = "Enable R Development Environment";
     };
   };
 
