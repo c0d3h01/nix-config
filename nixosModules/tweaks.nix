@@ -1,12 +1,18 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   systemd.oomd.enable = true;
   services.acpid.enable = true;
+  services.power-profiles-daemon.enable = false;
 
   services.ananicy = {
     enable = true;
-    package = pkgs.ananicy-cpp
+    package = pkgs.ananicy-cpp;
   };
 
   services.tlp = {
