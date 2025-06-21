@@ -8,8 +8,9 @@
         disable-user-extensions = false;
         enabled-extensions = [
           "gsconnect@andyholmes.github.io"
+          "dash2dock-lite@icedman.github.com"
           # "forge@jmmaranan.com"
-          "dash-to-dock@micxgx.gmail.com"
+          # "dash-to-dock@micxgx.gmail.com"
         ];
       };
 
@@ -26,16 +27,24 @@
       #   night-light-schedule-to = "8.0";
       # };
 
-      # Dask to Dock
-      "org/gnome/shell/extensions/dash-to-dock" = {
-        dock-position = "BOTTOM";
-        intellihide-mode = "ALL_WINDOWS";
+      # # Dask to Dock
+      # "org/gnome/shell/extensions/dash-to-dock" = {
+      #   dock-position = "BOTTOM";
+      #   intellihide-mode = "ALL_WINDOWS";
+      # };
+
+      "org/gnome/shell/extensions/dash2dock-lite" = {
+        calendar-icon = true;
+        clock-icon = true;
+        mounted-icon = true;
+        open-app-animation = true;
+        edge-distance = 0.48837209302325579;
       };
 
       # interface
       "org/gnome/desktop/interface" = {
         color-scheme = "prefer-dark";
-        enable-hot-corners = false;
+        enable-hot-corners = true;
         clock-show-weekday = true;
         clock-show-date = true;
         clock-format = "12h";

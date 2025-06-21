@@ -12,7 +12,6 @@
   # Enable Gnome, X server
   services.desktopManager.gnome.enable = true;
   services.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.xterm.enable = false;
   services.gnome.gnome-initial-setup.enable = false;
 
   programs.kdeconnect = {
@@ -38,18 +37,19 @@
       gnome-connections
       gnome-system-monitor
       gnome-user-docs
+      geary
     ];
   };
 
   environment.systemPackages =
     with pkgs.gnomeExtensions;
     [
-      dash-to-dock
+      dash2dock-lite
+      # dash-to-dock
       # forge
     ]
     ++ (with pkgs; [
       gnome-photos
       gnome-tweaks
-      gnome-chess
     ]);
 }
