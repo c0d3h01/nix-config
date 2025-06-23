@@ -26,38 +26,60 @@
                   "/@" = {
                     mountpoint = "/";
                     mountOptions = [
-                      "compress-force=zstd:3"
+                      "compress=zstd:1"
                       "ssd"
                       "noatime"
+                      "lazytime"
                       "space_cache=v2"
-                      "commit=60"
-                      "discard=async"
-                      "autodefrag"
+                      "commit=120"
+                      "nodiscard"
                     ];
                   };
                   "/@home" = {
                     mountpoint = "/home";
                     mountOptions = [
-                      "compress-force=zstd:3"
+                      "compress=zstd:1"
                       "ssd"
                       "noatime"
+                      "lazytime"
                       "space_cache=v2"
-                      "commit=60"
-                      "discard=async"
-                      "autodefrag"
+                      "commit=120"
+                      "nodiscard"
                     ];
                   };
                   "/@nix" = {
                     mountpoint = "/nix";
                     mountOptions = [
-                      "compress-force=zstd:3"
+                      "compress=zstd:1"
                       "ssd"
                       "noatime"
                       "space_cache=v2"
                       "commit=60"
-                      "discard=async"
+                      "nodiscard"
                     ];
                   };
+                #   "/@log" = {
+                #     mountpoint = "/var/log";
+                #     mountOptions = [
+                #       "compress=zstd:1"
+                #       "ssd"
+                #       "noatime"
+                #       "space_cache=v2"
+                #       "commit=120"
+                #       "nodiscard"
+                #     ];
+                #   };
+                #   "/@tmp" = {
+                #     mountpoint = "/tmp";
+                #     mountOptions = [
+                #       "ssd"
+                #       "noatime"
+                #       "space_cache=v2"
+                #       "nodatacow"
+                #       "commit=120"
+                #       "nodiscard"
+                #     ];
+                #   };
                 };
               };
             };
