@@ -26,6 +26,15 @@ sudo swapon /mnt/swap/swapfile
 sudo nixos-install --flake .#devbox
 ```
 
+#### One-liner for fresh installation
+
+```bash
+sudo nix run \
+  'github:nix-community/disko/latest#disko-install' -- \
+  --flake github:c0d3h01/dotfiles#devbox \
+  --disk <disk-name> <disk-device>
+```
+
 ### Existing System
 
 ```bash
