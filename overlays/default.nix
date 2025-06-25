@@ -1,3 +1,0 @@
-[
-  (import ./hello-overlay.nix)
-]
