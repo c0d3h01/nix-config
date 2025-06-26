@@ -24,6 +24,7 @@
       efiSupport = true;
       efiInstallAsRemovable = true;
       device = "nodev"; # For UEFI
+      # useOSProber = true;
     };
     systemd-boot.enable = lib.mkDefault false;
     efi.canTouchEfiVariables = false;
@@ -35,7 +36,7 @@
     extraModulePackages = [ ];
     supportedFilesystems = [ "ntfs" ];
 
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_xanmod_stable;
     kernelParams = [
       "quiet"
       "nowatchdog"
@@ -45,10 +46,10 @@
     ];
 
     kernel.sysctl = {
-      "vm.swappiness" = 10;
-      "vm.vfs_cache_pressure" = 50;
-      "kernel.sched_autogroup_enabled" = 0;
-      "kernel.numa_balancing" = 0;
+      # "vm.swappiness" = 10;
+      # "vm.vfs_cache_pressure" = 50;
+      # "kernel.sched_autogroup_enabled" = 0;
+      # "kernel.numa_balancing" = 0;
     };
 
     initrd = {
