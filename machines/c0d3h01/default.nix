@@ -47,24 +47,35 @@
     });
   '';
 
-  users.users.${userConfig.username} = {
-    description = userConfig.fullName;
-    isNormalUser = true;
-    shell = pkgs.zsh;
-    ignoreShellProgramCheck = true;
-    home = "/home/${userConfig.username}";
-    hashedPasswordFile = config.sops.secrets.ssh-host.path;
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICSjL8HGjiSAnLHupMZin095bql7A8+UDfc7t9XCZs8l harshalsawant.dev@gmail.com"
-    ];
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-      "audio"
-      "video"
-      "adbusers"
-      "wireshark"
-      "usbmon"
-    ];
+  users.mutableUsers = false;
+
+  users.users = {
+
+    root = {
+      # Allow the user to log in as root without a password.
+      hashedPassword = "";
+    };
+
+    ${userConfig.username} = {
+      description = userConfig.fullName;
+      isNormalUser = true;
+      shell = pkgs.zsh;
+      ignoreShellProgramCheck = true;
+      home = "/home/${userConfig.username}";
+      # hashedPasswordFile = "/run/secrets/${userConfig.username}-passwd";
+      hashedPassword = "$6$kSA3b9/kB7OH7iC7$vLinn51U1LLTWo1BGIY6JhqKNrzZ7Xj6xOwhbQv4fZRQq99qkZBhqshW/5LjcAJygLH5G2XoK6dfkrwgKycUY0";
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICSjL8HGjiSAnLHupMZin095bql7A8+UDfc7t9XCZs8l harshalsawant.dev@gmail.com"
+      ];
+      extraGroups = [
+        "networkmanager"
+        "wheel"
+        "audio"
+        "video"
+        "adbusers"
+        "wireshark"
+        "usbmon"
+      ];
+    };
   };
 }
