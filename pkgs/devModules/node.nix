@@ -19,6 +19,8 @@
       yarn
       eslint
       prettierd
+      bun
+      pnpm
     ];
   };
 }
