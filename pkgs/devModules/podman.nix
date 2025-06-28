@@ -26,7 +26,7 @@
 
     environment.systemPackages = with pkgs; [
       dive
-      podman-compose
+      docker-compose
       podman-desktop
       kind
       kubectl
