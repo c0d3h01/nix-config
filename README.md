@@ -4,13 +4,11 @@
 
 ```bash
 # Clone the repository
-
 $ git clone https://github.com/c0d3h01/dotfiles.git
-
 $ cd dotfiles
+$ nix shell-p just
 
 # Partition and format disk with Disko
-
 $ just bootstrap
 ```
 
@@ -18,16 +16,14 @@ $ just bootstrap
 
 ```bash
 # Clone the repository
-
 $ git clone https://github.com/c0d3h01/dotfiles.git
-
 $ cd dotfiles
 
 # Apply NixOS system configuration
-
 $ just switch
 
-# Apply Home manager user configuration
+# OR
 
+# Apply Home manager user configuration
 $ just home
 ```
