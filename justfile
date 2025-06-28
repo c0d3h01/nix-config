@@ -1,7 +1,7 @@
 bootstrap:
     sudo nix --experimental-features "nix-command flakes" run \
         github:nix-community/disko/latest -- \
-        --mode destroy,format,mount ./machines/installer/disko-config.nix
+        --mode destroy,format,mount ./machines/installer/disko.nix
     just swapfileon
     sudo nixos-install --flake .#devbox
 
