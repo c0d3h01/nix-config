@@ -1,10 +1,12 @@
+{ pkgs, ... }:
+
 {
   # GTK theming
   gtk = {
     enable = true;
     theme = {
       name = "Catppuccin-Mocha-Dark";
-      package = catppuccin-gtk;
+      package = pkgs.catppuccin-gtk;
     };
     iconTheme = {
       name = "Papirus-Dark";

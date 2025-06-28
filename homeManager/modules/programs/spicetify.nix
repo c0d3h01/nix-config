@@ -29,11 +29,4 @@
         history
       ];
     };
-
-  dconf.settings."org/maliit/keyboard/maliit" = {
-    enabled-languages = [
-      "en"
-    ];
-    device = "tablet";
-  };
 }
