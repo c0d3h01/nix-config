@@ -7,7 +7,7 @@
     ./libvirt.nix
     ./networking.nix
     ./nix.nix
-    # ./printing.nix
+    ./printing.nix
     ./security.nix
   ];
 }
