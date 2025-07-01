@@ -7,9 +7,8 @@
         content = {
           type = "gpt";
           partitions = {
-
             ESP = {
-              size = "1G";
+              size = "512M";
               type = "EF00";
               content = {
                 type = "filesystem";
@@ -18,98 +17,17 @@
                 mountOptions = [ "umask=0077" ];
               };
             };
-
             root = {
               size = "100%";
               content = {
-                type = "btrfs";
-                extraArgs = [
-                  "-f"
-                  "--csum"
-                  "xxhash64"
-                  "--features"
-                  "extref,skinny-metadata"
+                type = "filesystem";
+                format = "ext4";
+                mountpoint = "/";
+                mountOptions = [
+                  "commit=60"
+                  "data=writeback"
+                  "journal_async_commit"
                 ];
-
-                subvolumes = {
-
-                  "/@" = {
-                    mountpoint = "/";
-                    mountOptions = [
-                      "compress=zstd:3"
-                      "ssd"
-                      "noatime"
-                      "space_cache=v2"
-                      "commit=120"
-                      "discard=async"
-                      "autodefrag"
-                    ];
-                  };
-
-                  "/@home" = {
-                    mountpoint = "/home";
-                    mountOptions = [
-                      "compress=zstd:3"
-                      "ssd"
-                      "noatime"
-                      "space_cache=v2"
-                      "commit=120"
-                      "discard=async"
-                      "autodefrag"
-                    ];
-                  };
-
-                  "/@nix" = {
-                    mountpoint = "/nix";
-                    mountOptions = [
-                      "compress=zstd:1"
-                      "ssd"
-                      "noatime"
-                      "space_cache=v2"
-                      "commit=30"
-                      "discard=async"
-                      "max_inline=2048"
-                    ];
-                  };
-
-                  "/@log" = {
-                    mountpoint = "/var/log";
-                    mountOptions = [
-                      "compress=zstd:6"
-                      "ssd"
-                      "noatime"
-                      "space_cache=v2"
-                      "commit=300"
-                      "discard=async"
-                    ];
-                  };
-
-                  "/@tmp" = {
-                    mountpoint = "/tmp";
-                    mountOptions = [
-                      "ssd"
-                      "noatime"
-                      "space_cache=v2"
-                      "nodatacow"
-                      "nodatasum"
-                      "commit=300"
-                      "discard=async"
-                    ];
-                  };
-
-                  "/@containers" = {
-                    mountpoint = "/var/lib/containers";
-                    mountOptions = [
-                      "compress=zstd:1"
-                      "ssd"
-                      "noatime"
-                      "space_cache=v2"
-                      "nodatacow"
-                      "commit=60"
-                      "discard=async"
-                    ];
-                  };
-                };
               };
             };
           };
