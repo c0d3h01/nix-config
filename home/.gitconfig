@@ -109,12 +109,12 @@
 # [imap]
 #   folder = "Drafts"
 #   host = imap://imap.
-#   user = 
+#   user =
 
 # [sendemail]
 #   from = harshalsawant.dev@gmail.com
-#   smtpserver = 
-#   smtpuser = 
+#   smtpserver =
+#   smtpuser =
 #   smtpencryption = tls
 #   chainreplyto = false
 #   smtpserverport = 587

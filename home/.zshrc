@@ -1,60 +1,57 @@
-# Core Configuration
+# Export Configuration
+export LANG="en_IN.UTF-8"
 export LC_ALL="en_IN.UTF-8"
+export EDITOR="nvim"
+export VISUAL="nvim"
+export TERMINAL="kitty"
+export BROWSER="firefox"
+export CHROME_EXECUTABLE="$(command -v "firefox")"
+export JAVA_HOME="$(dirname "$(dirname "$(readlink -f "$(command -v java)")")")"
 
-# The Go lang exports
-export GOPATH="$HOME/go"
-export GOBIN="$HOME/go/bin"
-export PATH="$PATH:$GOBIN"
+# SDK Configurations
+[ -d "$HOME/Android" ] && export ANDROID_HOME="$HOME/Android"
+[ -d "$ANDROID_HOME" ] && export ANDROID_SDK_ROOT="$ANDROID_HOME"
+[ -d "$ANDROID_HOME/cmdline-tools/latest/bin" ] && export PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin"
+[ -d "$ANDROID_HOME/platform-tools" ] && export PATH="$PATH:$ANDROID_HOME/platform-tools"
+[ -d "$ANDROID_HOME/emulator" ] && export PATH="$PATH:$ANDROID_HOME/emulator"
+[ -d "$HOME/Android/flutter/bin" ] && export PATH="$HOME/Android/flutter/bin:$PATH"
 
-# Set R_LIBS_USER for custom library path
-export R_LIBS_USER=~/R/x86_64-library/%v
-
-# Editor/Terminal/Browser Selection
-set_default() {
-  for cmd in "$@"; do
-    if command -v "$cmd" >/dev/null 2>&1; then
-      echo "$cmd"
-      return
-    fi
-  done
-}
-EDITOR_CMD="$(set_default nvim vim)"
-[ -n "$EDITOR_CMD" ] && export EDITOR="$EDITOR_CMD" VISUAL="$EDITOR_CMD"
-case "$EDITOR_CMD" in
-  nvim) export MANPAGER="nvim +Man!";;
-  vim)  export MANPAGER="vim +Man!";;
-esac
-
-TERMINAL_CMD="$(set_default ghostty kitty)"
-[ -n "$TERMINAL_CMD" ] && export TERMINAL="$TERMINAL_CMD"
-
-BROWSER_CMD="$(set_default firefox firefox-esr brave)"
-if [ -n "$BROWSER_CMD" ]; then
-  export BROWSER="$BROWSER_CMD"
-  export CHROME_EXECUTABLE="$(command -v "$BROWSER_CMD")"
-fi
-
-if command -v java >/dev/null 2>&1; then
-  export JAVA_HOME="$(dirname "$(dirname "$(readlink -f "$(command -v java)")")")"
-fi
-
-# Android SDK Configuration
-if [ -d "$HOME/Android" ]; then
-  export ANDROID_HOME="$HOME/Android"
-  export ANDROID_SDK_ROOT="$ANDROID_HOME"
-  for p in "$ANDROID_HOME/cmdline-tools/latest/bin" "$ANDROID_HOME/platform-tools" "$ANDROID_HOME/emulator"; do
-    [ -d "$p" ] && PATH="$PATH:$p"
-  done
-  [ -d "$HOME/Android/flutter/bin" ] && PATH="$HOME/Android/flutter/bin:$PATH"
-fi
+# Nix profile to PATH and XDG_DATA_DIRS
+[ -d "$HOME/.nix-profile/bin" ] && export PATH="$HOME/.nix-profile/bin:$PATH"
+[ -d "$HOME/.nix-profile/share" ] && XDG_DATA_DIRS="$HOME/.nix-profile/share:$XDG_DATA_DIRS"
+[ -d "/usr/share" ] && XDG_DATA_DIRS="/usr/share:$XDG_DATA_DIRS"
+export XDG_DATA_DIRS
 
 # Path Configuration
-for dir in "$HOME/.local/bin" "$HOME/.rustup" "$HOME/.cargo/bin" "$HOME/go/bin" \
-           "$HOME/.npm-global/bin" "$HOME/bin" "$HOME/.cabal/bin" "$HOME/.cargo/env"; do
-  [ -d "$dir" ] && PATH="$dir:$PATH"
-done
-typeset -U path
-export PATH
+[ -d "$HOME/.local/bin" ] && export PATH="$HOME/.local/bin:$PATH"
+[ -d "$HOME/.npm-global/bin" ] && export PATH="$HOME/.npm-global/bin:$PATH"
+[ -d "$HOME/bin" ] && export PATH="$HOME/bin:$PATH"
+
+# Rust | Cargo
+[ -d "$HOME/.rustup" ] && export PATH="$HOME/.rustup:$PATH"
+[ -d "$HOME/.cargo/bin" ] && export PATH="$HOME/.cargo/bin:$PATH"
+[ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
+
+# The Go lang exports
+[ -d "$HOME/go/bin" ] && export PATH="$HOME/go/bin:$PATH"
+
+# Home manager evironment
+if [ -f "/etc/profiles/per-user" ]; then
+  source /etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh
+elif [ -f "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ]; then
+  source $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
+fi
+
+# Nix environment
+if [ -f "/etc/profile.d/nix.sh" ]; then
+  source /etc/profile.d/nix.sh
+elif [ -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
+  source $HOME/.nix-profile/etc/profile.d/nix.sh
+fi
+
+# Darwin/Nix/Remote
+[[ $OSTYPE == darwin* ]] && export NIX_PATH="$NIX_PATH:darwin-config=$HOME/.config/nixpkgs/darwin-configuration.nix"
+[[ -S /nix/var/nix/daemon-socket/socket ]] && export NIX_REMOTE=daemon
 
 # Tool Configurations
 export LESS="-R -F"
@@ -108,14 +105,18 @@ bindkey '^e' end-of-line
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
-# ls/lsd
-alias l='lsd -l --group-dirs first --color auto'
-alias ls='lsd --group-dirs first --color auto'
-alias ll='lsd -l --header --classify --size short --group-dirs first --date "+%Y-%m-%d %H:%M" --all --color auto'
-alias la='lsd -a --group-dirs first --color auto'
-alias lt='lsd --tree --depth 2 --group-dirs first --color auto'
-alias lta='lsd --tree --depth 2 -a --group-dirs first --color auto'
-alias ltg='lsd --tree --depth 2 --ignore-glob ".git" --group-dirs first --color auto'
+
+if command -v lsd >/dev/null; then
+  # ls/lsd
+  alias l='lsd -l --group-dirs first --color auto'
+  alias ls='lsd --group-dirs first --color auto'
+  alias ll='lsd -l --header --classify --size short --group-dirs first --date "+%Y-%m-%d %H:%M" --all --color auto'
+  alias la='lsd -a --group-dirs first --color auto'
+  alias lt='lsd --tree --depth 2 --group-dirs first --color auto'
+  alias lta='lsd --tree --depth 2 -a --group-dirs first --color auto'
+  alias ltg='lsd --tree --depth 2 --ignore-glob ".git" --group-dirs first --color auto'
+fi
+
 # Git
 alias g='git'
 alias ga='git add'
@@ -126,11 +127,10 @@ alias gca='git commit --amend'
 alias gco='git checkout'
 alias gd='git diff'
 alias gds='git diff --staged'
-alias gph='git push'
-alias gpl='git pull --rebase'
+alias gp='git push'
+alias gpr='git pull --rebase'
 alias gl='git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset"'
-alias gst='git stash'
-alias gsp='git stash pop'
+
 # System
 alias df='df -h'
 alias du='du -h'
@@ -144,15 +144,16 @@ alias mkdir='mkdir -pv'
 alias ping='ping -c 5'
 alias wget='wget -c'
 alias ports='ss -tulpn'
+
 # Safety net
 alias rm='rm -Iv --one-file-system'
 alias cp='cp -iv'
 alias mv='mv -iv'
 alias ln='ln -iv'
-# Modern alternatives
+
+# Shortty Hand commands
 alias v='nvim'
 alias vi='nvim'
-# Handy
 alias cl='clear'
 alias x='exit'
 alias nc='nix-collect-garbage'
@@ -168,24 +169,6 @@ alias rscript="Rscript"
 alias rdev="R -q --no-save"
 alias rlint="Rscript -e 'lintr::lint_dir()'"
 alias rfmt="Rscript -e 'styler::style_dir()'"
-
-# Home manager evironment
-if [ -f "/etc/profiles/per-user" ]; then
-  . /etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh
-elif [ -f "~/.nix-profile/etc/profile.d/hm-session-vars.sh" ]; then
-  source ~/.nix-profile/etc/profile.d/hm-session-vars.sh
-fi
-
-# Nix environment
-if [ -f "/etc/profile.d/nix.sh" ]; then
-  . /etc/profile.d/nix.sh
-elif [ -f "~/.nix-profile/etc/profile.d/nix.sh" ]; then
-  . ~/.nix-profile/etc/profile.d/nix.sh
-fi
-
-# Darwin/Nix/Remote
-[[ $OSTYPE == darwin* ]] && export NIX_PATH="$NIX_PATH:darwin-config=$HOME/.config/nixpkgs/darwin-configuration.nix"
-[[ -S /nix/var/nix/daemon-socket/socket ]] && export NIX_REMOTE=daemon
 
 # ===== Functions =====
 
@@ -292,7 +275,7 @@ if (( $+commands[fzf] )); then
 fi
 
 # Zsh completions plugin
-fpath+=("$HOME/.zsh-completions/src" $fpath)
+fpath=("$HOME/.zsh-completions/src" $fpath)
 
 # zsh-autosuggestions
 source "$HOME/.zsh-autosuggestions/zsh-autosuggestions.zsh"
