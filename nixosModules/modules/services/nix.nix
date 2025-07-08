@@ -34,6 +34,7 @@
     };
 
     settings = {
+      build-dir = "/var/tmp/nix-build";
       warn-dirty = false;
       show-trace = true;
       keep-going = true;
