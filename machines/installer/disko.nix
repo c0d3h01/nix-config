@@ -8,6 +8,7 @@
           type = "gpt";
           partitions = {
             ESP = {
+              label = "nixos-efi";
               size = "512M";
               type = "EF00";
               content = {
@@ -21,6 +22,7 @@
               };
             };
             root = {
+              label = "nixos-root";
               size = "100%";
               content = {
                 type = "btrfs";
