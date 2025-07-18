@@ -5,6 +5,8 @@
     # keep-sorted start
     ./apparmor.nix # apparmor
     ./auditd.nix # auditd
+    ./fail2ban.nix
+    ./firewall.nix
     ./kernel.nix # kernel hardening
     ./polkit.nix # polkit configuration
     ./sudo.nix # sudo rules and configuration
