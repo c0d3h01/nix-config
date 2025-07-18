@@ -20,7 +20,7 @@ in
           gist # manage github gists
           # act # local github actions - littrally does not work
           gitflow # Extend git with the Gitflow branching model
-          git-lfs
+          # git-lfs
           mergiraf
           lazygit
           ;
@@ -42,36 +42,6 @@ in
         package = pkgs.gitMinimal;
         userName = "c0d3h01";
         userEmail = "harshalsawant.dev" + "@" + "gmail" + "." + "com";
-
-        # signing = {
-        #   format = "ssh";
-        #   signByDefault = true;
-        # };
-
-        delta = {
-          enable = true;
-
-          options = {
-            navigate = true;
-            side-by-side = true;
-            line-numbers = true;
-          };
-        };
-
-        aliases = {
-          index = "status -s";
-          graph = "log --oneline --graph";
-          ahead = "!git log --oneline @{u}..HEAD | grep -cE '.*'";
-
-          changelog = "-c pager.show=false show --format=' - %C(yellow)%h%C(reset) %<(80,trunc)%s' -q @@{1}..@@{0}";
-          amend = "commit --amend";
-
-          fpush = "push --force-with-lease";
-
-          # stash
-          spush = "stash push -a";
-          spop = "stash pop -q";
-        };
 
         ignores = [
           # system residue
@@ -107,6 +77,52 @@ in
         ];
 
         extraConfig = {
+          help.autocorrect = 10;
+          lfs.enable = true;
+          commit.verbose = true;
+
+          mergetool = {
+            prompt = false;
+            path = "nvim-open";
+          };
+
+          # signing = {
+          #   format = "ssh";
+          #   signByDefault = true;
+          # };
+
+          delta = {
+            enable = true;
+            options = {
+              navigate = true;
+              side-by-side = true;
+              line-numbers = true;
+            };
+          };
+
+          "filter \"lfs\"" = {
+            clean = "git-lfs clean -- %f";
+            smudge = "git-lfs smudge -- %f";
+            process = "git-lfs filter-process";
+            required = true;
+          };
+
+          aliases = {
+            clone = "clone --recursive";
+            blame = "-w -M";
+            update = "!git pull && git submodule update --init --recursive";
+            comma = "commit --amend";
+            uncommit = "reset --soft HEAD^";
+            backport = "cherry-pick -x";
+            checkout-pr = "!'pr() { git fetch origin pull/$1/head:pr-$1; git checkout pr-$1; }; pr'";
+            pick-pr = "!'am() { git fetch origin pull/$1/head:pr-$1; git cherry-pick HEAD..pr-$1; }; am'";
+            reset-pr = "reset --hard FETCH_HEAD";
+            force-push = "push --force-with-lease";
+            publish = "!git pull && git push";
+            # recover failed commit messages: https://stackoverflow.com/questions/9133526/git-recover-failed-commits-message
+            recommit = "!git commit -eF $(git rev-parse --git-dir)/COMMIT_EDITMSG";
+          };
+
           core.editor = config.garden.programs.defaults.editor;
 
           # Qol
@@ -134,6 +150,20 @@ in
           transfer.fsckObjects = true;
           fetch.fsckObjects = true;
           receive.fsckObjects = true;
+
+          magithub = {
+            online = false;
+            status = {
+              includeStatusHeader = false;
+              includePullRequestsSection = false;
+              includeIssuesSection = false;
+            };
+          };
+
+          http = {
+            "github.com".SSLCypherList = "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
+            cookiefile = "~/.gitcookies";
+          };
 
           url = mkMerge (
             map giturl [
