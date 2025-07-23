@@ -23,7 +23,7 @@
     let
       system = "x86_64-linux";
       username = "c0d3h01";
-      hostname = "neo";
+      hostname = "fedora";
       homeDirectory = "/home/${username}";
       homeModule = ./homeManager;
     in
