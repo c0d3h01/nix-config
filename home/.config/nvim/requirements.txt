@@ -1,5 +1,0 @@
-go
-nodejs
-npm
-tree-sitter
-gdu
