@@ -10,13 +10,13 @@ let
   inherit (config.lib.nixGL) wrap;
 in
 {
-  options.programs.custom.glApps.enable = mkEnableOption "Enable GL wrapped apps";
+  options.programs.hm-glApps.enable = mkEnableOption "Enable GL wrapped apps";
 
-  config = mkIf config.programs.custom.glApps.enable {
+  config = mkIf config.programs.hm-glApps.enable {
     # NixGL configuration for GPU support
     nixGL = {
       vulkan.enable = true;
-      packages = nixgl.packages;
+      inherit (nixgl) packages;
       defaultWrapper = "mesaPrime";
       offloadWrapper = "mesaPrime";
       installScripts = [ "mesaPrime" ];

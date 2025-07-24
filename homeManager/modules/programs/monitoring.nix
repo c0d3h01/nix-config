@@ -8,8 +8,8 @@ let
   inherit (lib) mkIf mkEnableOption;
 in
 {
-  options.programs.custom.monitoring.enable = mkEnableOption "Monitoring Tools CLI + GUI";
-  config = mkIf config.programs.custom.monitoring.enable {
+  options.programs.hm-monitoring.enable = mkEnableOption "Monitoring Tools CLI + GUI";
+  config = mkIf config.programs.hm-monitoring.enable {
 
     home.packages = with pkgs; [
 

@@ -1,32 +1,40 @@
 {
+  config,
+  lib,
   pkgs,
   ...
 }:
-
+let
+  inherit (lib) mkIf mkEnableOption;
+in
 {
-  home.packages = with pkgs; [
-    noto-fonts
-    noto-fonts-cjk-sans
-    noto-fonts-emoji
-    nerd-fonts.jetbrains-mono
-  ];
+  options.programs.hm-fonts.enable = mkEnableOption "Font config";
 
-  fonts.fontconfig = {
-    enable = true;
+  config = mkIf config.programs.hm-fonts.enable {
+    home.packages = with pkgs; [
+      noto-fonts
+      noto-fonts-cjk-sans
+      noto-fonts-emoji
+      nerd-fonts.jetbrains-mono
+    ];
 
-    defaultFonts = {
-      serif = [
-        "Noto Serif"
-      ];
-      sansSerif = [
-        "Noto Sans"
-      ];
-      monospace = [
-        "JetBrainsMono Nerd Font"
-      ];
-      emoji = [
-        "Noto Color Emoji"
-      ];
+    fonts.fontconfig = {
+      enable = true;
+
+      defaultFonts = {
+        serif = [
+          "Noto Serif"
+        ];
+        sansSerif = [
+          "Noto Sans"
+        ];
+        monospace = [
+          "JetBrainsMono Nerd Font"
+        ];
+        emoji = [
+          "Noto Color Emoji"
+        ];
+      };
     };
   };
 }
