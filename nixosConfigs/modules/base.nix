@@ -70,11 +70,13 @@
   # Fonts
   fonts.packages = with pkgs; [
     (lib.mkIf (userConfig.dev.terminalFont == "JetBrains Mono") jetbrains-mono)
+    (lib.mkIf (userConfig.dev.terminalFont == "Fira Code") fira-code)
+    corefonts
     noto-fonts
     noto-fonts-cjk-sans
-    noto-fonts-emoji
-    liberation_ttf
-    source-code-pro
-    fira-code
+    noto-fonts-cjk-serif
+    noto-fonts-color-emoji
+    noto-fonts-emoji # emoji fallback
+    liberation_ttf # Common document fonts
   ];
 }

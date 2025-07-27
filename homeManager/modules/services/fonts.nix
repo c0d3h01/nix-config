@@ -15,7 +15,7 @@ in
       defaultFonts = {
         serif = [ "Noto Serif" ];
         sansSerif = [ "Noto Sans" ];
-        monospace = [ "JetBrainsMono Nerd Font" ];
+        monospace = [ "JetBrains Mono" ];
         emoji = [ "Noto Color Emoji" ];
       };
     };
