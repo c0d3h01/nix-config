@@ -1,7 +1,6 @@
 {
   imports = [
     ./acpid.nix
-    ./ananicy.nix
     ./appImage.nix
     ./earlyoom.nix
     ./flatpak.nix

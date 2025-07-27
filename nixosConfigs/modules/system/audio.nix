@@ -1,4 +1,9 @@
 {
+  hardware = {
+    bluetooth.enable = true;
+    bluetooth.powerOnBoot = true;
+  };
+
   security.rtkit.enable = true;
   services = {
     pulseaudio.enable = false;

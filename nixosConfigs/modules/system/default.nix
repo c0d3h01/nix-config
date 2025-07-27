@@ -5,5 +5,6 @@
     ./docs.nix
     ./power.nix
     ./printing.nix
+    ./sudo.nix
   ];
 }

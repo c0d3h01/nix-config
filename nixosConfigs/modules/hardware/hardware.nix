@@ -14,6 +14,11 @@ let
   # Auto-detect GPU type (fallback to userConfig)
   gpuType = userConfig.machine.gpuType or "intel";
 
+  # Boot loader selection (default to grub if not specified)
+  bootloader = userConfig.machine.bootloader or "grub";
+  useSystemdBoot = bootloader == "systemd";
+  useGrub = bootloader == "grub";
+
   # Dynamic kernel modules based on hardware
   cpuKernelModules =
     lib.optionals isAMD [
@@ -54,6 +59,7 @@ let
   laptopKernelParams = lib.optionals isLaptop [
     "acpi_backlight=native"
     "pcie_aspm=force" # Power saving for PCIe
+    "processor.max_cstate=2" # Better responsiveness
   ];
 in
 {
@@ -69,21 +75,36 @@ in
     memoryPercent = if isLaptop then 150 else 100;
   };
 
+  # Hardware sensors service
+  systemd.services.lm-sensors = {
+    description = "Initialize hardware sensors";
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.lm_sensors}/bin/sensors-detect --auto";
+      RemainAfterExit = true;
+    };
+  };
+
   boot.loader = {
     timeout = lib.mkForce 5;
     efi = {
       canTouchEfiVariables = true;
       efiSysMountPoint = "/boot";
     };
+
+    # GRUB configuration - enabled when bootloader == "grub"
     grub = {
-      enable = true;
+      enable = useGrub;
       efiSupport = true;
       devices = [ "nodev" ]; # For UEFI
       useOSProber = true;
       memtest86.enable = true;
     };
+
+    # systemd-boot configuration - enabled when bootloader == "systemd"
     systemd-boot = {
-      enable = false;
+      enable = useSystemdBoot;
       configurationLimit = 15;
       memtest86.enable = true;
       consoleMode = "auto";

@@ -8,8 +8,28 @@ let
 in
 {
   # Performance optimizations
-  powerManagement = lib.mkIf isLaptop {
+  powerManagement = {
     enable = true;
-    cpuFreqGovernor = "schedutil";
+    cpuFreqGovernor = lib.mkDefault (
+      if isLaptop then
+        "schedutil" # Better balanced battery life
+      else
+        "performance" # Better performance for desktops
+    );
   };
+
+  # # Auto CPU frequency scaling for laptops
+  # services.auto-cpufreq = lib.mkIf isLaptop {
+  #   enable = true;
+  #   settings = {
+  #     battery = {
+  #       governor = "powersave";
+  #       turbo = "never";
+  #     };
+  #     charger = {
+  #       governor = "performance";
+  #       turbo = "auto";
+  #     };
+  #   };
+  # };
 }
