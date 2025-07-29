@@ -153,7 +153,6 @@ in
       "usbcore.autosuspend=-1"
       "pti=auto"
       "iommu=pt"
-      "nohz=on"
     ]
     ++ cpuKernelParams
     ++ laptopKernelParams;
