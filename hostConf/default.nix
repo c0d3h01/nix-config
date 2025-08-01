@@ -6,6 +6,13 @@
     fullName = "Harshal Sawant";
     system = "x86_64-linux";
 
+    hm = {
+      env = true;
+      alacritty = true;
+      chromium = true;
+      monitoring = false;
+    };
+
     machine = {
       type = "laptop";
       hasGUI = true;

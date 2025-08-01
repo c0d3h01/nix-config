@@ -1,0 +1,123 @@
+#!/bin/sh
+
+# rustup and cargo
+export CARGO_HOME="$HOME/.local/share/cargo"
+export PATH="$CARGO_HOME/bin:$PATH"
+[ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
+
+# android (FIXED: Removed duplicate and conflicting ANDROID_HOME definitions)
+export ANDROID_HOME="$HOME/.local/share/android"
+export ANDROID_SDK_ROOT="$ANDROID_HOME"
+export PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin"
+export PATH="$PATH:$ANDROID_HOME/platform-tools"
+export PATH="$PATH:$ANDROID_HOME/emulator"
+
+# Flutter & Dart (FIXED: Consolidated Flutter paths)
+export FLUTTER_HOME="$HOME/.local/share/flutter"
+PATH="$PATH:$FLUTTER_HOME/bin"
+PATH="$PATH:$FLUTTER_HOME/bin/cache/dart-sdk/bin"
+export PATH="$PATH":"$HOME/.pub-cache/bin"
+
+# dotnet
+export PATH="$PATH":"$HOME/.dotnet"
+
+# Path Configuration
+[ -d "$HOME/.local/bin" ] && export PATH="$HOME/.local/bin:$PATH"
+[ -d "$HOME/.npm-global/bin" ] && export PATH="$HOME/.npm-global/bin:$PATH"
+[ -d "$HOME/bin" ] && export PATH="$HOME/bin:$PATH"
+
+# Golang
+export GOPATH=$HOME/.local/share/go
+export GOBIN=$GOPATH/bin
+PATH=$PATH:$GOPATH/bin
+
+# Homebrew
+PATH=$PATH:/opt/homebrew/bin
+
+# Poetry (FIXED: Typo .loca -> .local)
+PATH="$HOME/.local/share/poetry/bin:$PATH"
+
+# pyenv
+export PYENV_ROOT="$HOME/.local/share/pyenv"
+PATH="$PYENV_ROOT/bin:$PATH"
+
+# Python
+export WORKON_HOME=$HOME/.local/share/virtual-envs
+
+# ruby
+export GEM_HOME=$HOME/.local/cache/gems
+export PATH=$HOME/.local/cache/gems/bin:$PATH
+
+# node
+export NVM_DIR="$HOME/.local/cache/nvm"
+
+# deno (FIXED: Changed hardcoded username to $HOME)
+export PATH="$HOME/.deno/bin:$PATH"
+
+# Latex (macos)
+PATH=/Library/TeX/texbin:$PATH
+
+# Nix profile to PATH and XDG_DATA_DIRS
+[ -d "$HOME/.nix-profile/bin" ] && export PATH="$HOME/.nix-profile/bin:$PATH"
+[ -d "$HOME/.nix-profile/share" ] && XDG_DATA_DIRS="$HOME/.nix-profile/share:$XDG_DATA_DIRS"
+[ -d "/usr/share" ] && XDG_DATA_DIRS="/usr/share:$XDG_DATA_DIRS"
+export XDG_DATA_DIRS
+
+# PATH (extras) - FIXED: Removed duplicate $HOME/.local/bin and consolidated npm path
+PATH=$HOME/.local/bin/random:$PATH
+PATH=$HOME/.local/bin/helpers:$PATH
+PATH=$HOME/.local/bin/utils:$PATH
+PATH=$HOME/.local/bin/backpocket:$PATH
+PATH=$HOME/.local/bin/macos:$PATH
+PATH=$HOME/.local/bin/git:$PATH
+PATH=$HOME/.local/bin/jj:$PATH
+PATH=$HOME/.local/bin/docker:$PATH
+PATH=$HOME/.local/bin/kubernetes:$PATH
+PATH=$HOME/.local/bin/music:$PATH
+PATH=$HOME/.local/bin/tmux:$PATH
+PATH=$HOME/.local/bin/ai:$PATH
+export PATH
+
+## =============================================================== :settings
+# add color to man pages  
+export MANROFFOPT='-c'
+export LESS_TERMCAP_mb=$(tput bold; tput setaf 2)
+export LESS_TERMCAP_md=$(tput bold; tput setaf 6)
+export LESS_TERMCAP_me=$(tput sgr0)
+export LESS_TERMCAP_so=$(tput bold; tput setaf 3; tput setab 4)
+export LESS_TERMCAP_se=$(tput rmso; tput sgr0)
+export LESS_TERMCAP_us=$(tput smul; tput bold; tput setaf 8)
+export LESS_TERMCAP_ue=$(tput rmul; tput sgr0)
+export LESS_TERMCAP_mr=$(tput rev)
+export LESS_TERMCAP_mh=$(tput dim)
+
+# task spooler
+export TS_MAXFINISHED="13"
+# export TS_ONFINISH="tscomplete"
+
+# fzf
+export FZF_DEFAULT_COMMAND='fd --type file --follow --hidden --exclude .git --color=always'
+export FZF_DEFAULT_OPTS='
+ -0
+ --prompt=" "
+ --inline-info
+ --reverse --height "40%"
+ --color fg:-1,hl:4,fg+:1,bg+:-1,hl+:4
+ --color info:108,prompt:242,spinner:108,pointer:1,marker:168
+'
+
+# nix
+export NIX_PATH=$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels${NIX_PATH:+:$NIX_PATH}
+
+# enable docker buildkit
+export DOCKER_BUILDKIT=1
+
+# open dlv breakpoint in Emacs
+export DELVE_EDITOR=",emacs-no-wait"
+
+# aider
+export AIDER_GITIGNORE=false # present in global gitignore
+export AIDER_CHECK_UPDATE=false # managed via nix
+
+# k9s
+export K9S_CONFIG_DIR="$HOME/.config/k9s"

@@ -1,0 +1,71 @@
+#!/bin/sh
+
+# Aliases
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+
+if command -v lsd >/dev/null; then
+  # ls/lsd
+  alias l='lsd -l --group-dirs first --color auto'
+  alias ls='lsd --group-dirs first --color auto'
+  alias ll='lsd -l --header --classify --size short --group-dirs first --date "+%Y-%m-%d %H:%M" --all --color auto'
+  alias la='lsd -a --group-dirs first --color auto'
+  alias lt='lsd --tree --depth 2 --group-dirs first --color auto'
+  alias lta='lsd --tree --depth 2 -a --group-dirs first --color auto'
+  alias ltg='lsd --tree --depth 2 --ignore-glob ".git" --group-dirs first --color auto'
+fi
+
+# Git
+alias g='git'
+alias ga='git add'
+alias gs='git status -sb'
+alias gc='git commit'
+alias gcm='git commit -m'
+alias gca='git commit --amend'
+alias gco='git checkout'
+alias gd='git diff'
+alias gds='git diff --staged'
+alias gp='git push'
+alias gpr='git pull --rebase'
+alias gl='git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset"'
+
+# System
+alias df='df -h'
+alias du='du -h'
+alias free='free -h'
+alias ps='ps auxf'
+alias top='htop'
+alias ip='ip -color=auto'
+alias diff='diff --color=auto'
+alias find='fd'
+alias mkdir='mkdir -pv'
+alias ping='ping -c 5'
+alias wget='wget -c'
+alias ports='ss -tulpn'
+
+# Safety net
+alias rm='rm -Iv --one-file-system'
+alias cp='cp -iv'
+alias mv='mv -iv'
+alias ln='ln -iv'
+
+# Shortty Hand commands
+alias v='nvim'
+alias vi='nvim'
+alias cl='clear'
+alias x='exit'
+alias nc='nix-collect-garbage'
+alias home-check='journalctl -u home-manager-$USER.service'
+alias hm='home-manager'
+alias ts='date "+%Y-%m-%d %H:%M:%S"'
+alias reload='source ~/.zshrc'
+alias k=kubectl
+alias grep='rg'
+
+# R aliases and helpers
+alias r="R --vanilla"
+alias rscript="Rscript"
+alias rdev="R -q --no-save"
+alias rlint="Rscript -e 'lintr::lint_dir()'"
+alias rfmt="Rscript -e 'styler::style_dir()'"

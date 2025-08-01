@@ -1,14 +1,21 @@
 {
+  self,
   userConfig,
   lib,
   pkgs,
   ...
 }:
-
+let
+  editor = "nvim";
+  browser = "firefox";
+  terminal = "ghostty";
+  pager = "less";
+  manpager = "less -R";
+  flakePath = "${self}";
+in
 {
   imports = [
     ./cli
-    ./environment
     ./programs
     ./services
     ./system
@@ -17,28 +24,28 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-  # Custom modulor programs.
-  programs = {
-    # hm-env.enable = true;
-    hm-glApps.enable = true;
-    hm-wezterm.enable = true;
-    # hm-alacritty.enable = true;
-    # hm-ghostty.enable = true;
-    hm-notion-app.enable = true;
-    hm-chromium.enable = true;
-    # hm-vscode.enable = true;
-    # hm-monitoring.enable = true;
-    # hm-fonts.enable = true;
-    hm-gnomeshell.enable = true;
-    hm-gtk.enable = true;
-    hm-nh.enable = true;
-  };
+  # lorri is a Nix development environment manager
+  services.lorri.enable = true;
 
   home = {
     inherit (userConfig) username;
     homeDirectory = "/home/${userConfig.username}";
     stateVersion = lib.trivial.release;
     shell.enableZshIntegration = true;
+
+    sessionVariables = {
+      EDITOR = editor;
+      GIT_EDITOR = editor;
+      VISUAL = editor;
+      BROWSER = browser;
+      TERMINAL = terminal;
+      SYSTEMD_PAGERSECURE = "true";
+      PAGER = pager;
+      MANPAGER = manpager;
+      FLAKE = flakePath;
+      NH_FLAKE = flakePath;
+      DO_NOT_TRACK = 1;
+    };
 
     packages = with pkgs; [
       # Secrets management tool
@@ -61,22 +68,21 @@
       stow
       zellij
       bat
-      zoxide
-      ripgrep
-      fd
       file
-      bash
-      bashInteractive
-      lsd
+      icdiff
       tea
       less
       procs
+      lsd
+      fd
+      ripgrep
+      zoxide
       glances
+      fzf
+      jj # JSON Stream Editor
       cheat # CheatSheet
       bottom
       just
-      just-formatter
-      fzf # fuzzy finder CLI
       tree-sitter # Parser generator tool
       gdu # Disk usage analyzer CLI
       seahorse # managing encryption keys
@@ -97,10 +103,8 @@
       # git
       git
       git-lfs
-      gh
       delta
       mergiraf
-      lazygit
     ];
   };
 }

@@ -1,18 +1,14 @@
 {
-  config,
   lib,
+  userConfig,
   pkgs,
   ...
 }:
-let
-  inherit (lib) mkIf mkEnableOption;
-in
-{
-  options.programs.hm-notion-app.enable = mkEnableOption "Notion Enhanced App";
 
-  config = mkIf config.programs.hm-notion-app.enable {
-    home.packages = with pkgs; [
+{
+  home.packages =
+    with pkgs;
+    lib.mkIf (userConfig.machine ? hasGUI && userConfig.machine.hasGUI) [
       (callPackage ./patch { })
     ];
-  };
 }

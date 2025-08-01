@@ -30,7 +30,7 @@ let
               inherit (inputs) nixgl;
             };
             users.${userConfig.username} = {
-              imports = [ ../homeManager/modules ];
+              imports = [ ../homeManager/modules/home.nix ];
             };
           };
         }

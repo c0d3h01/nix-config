@@ -1,160 +1,367 @@
-[core]
-  excludesfile = ~/.gitignore
-  attributesfile = ~/.gitattributes
-  pager = delta
-  editor = nvim
-
-[interactive]
-  singlekey = true
-  diffFilter = delta --color-only
-
-[format]
-  signoff = true
-
-[color]
-  branch = true
-  diff = true
-  status = true
-
-[push]
-  recurseSubmodules = on-demand
-
-[submodule]
-  fetchJobs = 0
-
-[delta]
-  navigate = true  # use n and N to move between diff sections
-	theme = TwoDark
-
-[am]
-  threeWay = true
-
 [user]
-  name = Harshal Sawant
-  email = harshalsawant.dev@gmail.com
-	signingkey = /home/c0d3h01/.ssh/id_ed25519.pub
+    name = Harshal Sawant
+    email = harshalsawant.dev@gmail.com
+    signingkey = ~/.ssh/id_ed25519.pub
 
-[github]
-  user = c0d3h01
+[core]
+    editor = nvim
+    pager = delta
+    autocrlf = false
+    safecrlf = true
+    excludesfile = ~/.gitignore_global
+    attributesfile = ~/.gitattributes_global
+    # Treat spaces before tabs and all kinds of trailing whitespace as an error
+    whitespace = space-before-tab,-indent-with-non-tab,trailing-space
+    # Speed up commands involving untracked files such as `git status`
+    preloadindex = true
+    # Enable parallel I/O for operations like `git diff`
+    precomposeunicode = false
 
 [init]
-  defaultBranch = main
+    defaultBranch = main
 
-[gpg]
-  format = ssh
+[color]
+    ui = auto
+    branch = auto
+    diff = auto
+    status = auto
+    interactive = auto
 
-[diff]
-  compactionHeuristic = true
-  renames = true
-  colorMoved = default
-  noprefix = true
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
 
-[merge]
-  tool = vimdiff
-  keepBackup = false
-  conflictstyle = zdiff3
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
 
-[mergetool "vimdiff"]
-  cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
 
-[merge "mergiraf"]
-  name = mergiraf
-  driver = mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L
+# Delta configuration for better diffs
+[delta]
+    navigate = true
+    light = false
+    side-by-side = false
+    line-numbers = true
+    syntax-theme = TwoDark
+    file-style = omit
+    hunk-header-style = file line-number syntax
 
-[alias]
-  clone = clone --recursive
-  blame = -w -M
-  update = !git pull && git submodule update --init --recursive
-  comma = commit --amend
-  uncommit = reset --soft HEAD^
-  backport = cherry-pick -x
-  checkout-pr = !"pr() { git fetch origin pull/$1/head:pr-$1; git checkout pr-$1; }; pr"
-  pick-pr = !"am() { git fetch origin pull/$1/head:pr-$1; git cherry-pick HEAD..pr-$1; }; am"
-  reset-pr = reset --hard FETCH_HEAD
-  force-push = push --force-with-lease
-  publish = !git pull && git push
-  # recover failed commit messages: https://stackoverflow.com/questions/9133526/git-recover-failed-commits-message
-  recommit = !git commit -eF $(git rev-parse --git-dir)/COMMIT_EDITMSG
+[interactive]
+    diffFilter = delta --color-only
 
+# Push/Pull configuration
 [push]
-  default = simple
-  autoSetupRemote = true
-
-[rerere]
-  autoUpdate = true
-  enabled = true
-
-[branch]
-  autoSetupRebase = always
-  autoSetupMerge = always
+    default = simple
+    autoSetupRemote = true
+    recurseSubmodules = on-demand
+    followTags = true
 
 [pull]
-  rebase = true
-  autostash = true
-  twohead = ort
+    rebase = true
+    autostash = true
 
-[rebase]
-  stat = true
-  autoStash = true
-  autoSquash = true
-  updateRefs = true
+[fetch]
+    prune = true
+    pruneTags = true
 
-[help]
-  autocorrect = 10
+# Merge configuration
+[merge]
+    tool = nvim
+    conflictstyle = zdiff3
+    keepBackup = false
+    # Include summaries of merged commits in newly created merge commit messages
+    log = true
 
 [mergetool]
-  prompt = false
-  path = nvim-open
+    prompt = false
+    keepBackup = false
 
-# [imap]
-#   folder = "Drafts"
-#   host = imap://imap.
-#   user =
+[mergetool "nvim"]
+    cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 
-# [sendemail]
-#   from = harshalsawant.dev@gmail.com
-#   smtpserver =
-#   smtpuser =
-#   smtpencryption = tls
-#   chainreplyto = false
-#   smtpserverport = 587
+# Diff configuration
+[diff]
+    tool = nvim
+    algorithm = patience
+    renames = copies
+    mnemonicPrefix = true
+    compactionHeuristic = true
+    colorMoved = default
+    colorMovedWS = allow-indentation-change
 
-[http "github.com"]
-  SSLCypherList = "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH"
+[difftool]
+    prompt = false
 
-[filter "lfs"]
-  clean = git-lfs clean -- %f
-  smudge = git-lfs smudge -- %f
-  process = git-lfs filter-process
-  required = true
+[difftool "nvim"]
+    cmd = nvim -d $LOCAL $REMOTE
 
-[magithub]
-  online = false
+# Rebase configuration
+[rebase]
+    autosquash = true
+    autoStash = true
+    updateRefs = true
+    stat = true
 
-[magithub "status"]
-  includeStatusHeader = false
-  includePullRequestsSection = false
-  includeIssuesSection = false
+# Branch configuration
+[branch]
+    autoSetupRebase = always
+    autoSetupMerge = always
+    sort = -committerdate
 
-[advice]
-  detachedHead = false
-  skippedCherryPicks = false
+# Status configuration
+[status]
+    showUntrackedFiles = all
+    submoduleSummary = true
 
-[credential]
-  helper = store
+# Log configuration
+[log]
+    abbrevCommit = true
+    decorate = short
+    date = relative
 
-# sucks with lazygit
-# [commit]
-#  gpgsign = true
+# Rerere (reuse recorded resolution)
+[rerere]
+    enabled = true
+    autoupdate = true
 
+# Submodule configuration
+[submodule]
+    fetchJobs = 4
+    recurse = true
+
+# Performance optimizations
+[feature]
+    manyFiles = true
+
+[index]
+    threads = true
+
+# Commit configuration
 [commit]
-  verbose = true
+    verbose = true
+    template = ~/.gitmessage
 
+[format]
+    signoff = false
+    pretty = fuller
+
+# Help configuration
+[help]
+    autocorrect = 10
+
+# Tag configuration
+[tag]
+    sort = -version:refname
+
+# URL shortcuts
+[url "git@github.com:"]
+    insteadOf = "gh:"
+    pushInsteadOf = "github:"
+    pushInsteadOf = "git://github.com/"
+
+[url "git://github.com/"]
+    insteadOf = "github:"
+
+[url "git@gist.github.com:"]
+    insteadOf = "gst:"
+    pushInsteadOf = "gist:"
+    pushInsteadOf = "git://gist.github.com/"
+
+[url "git://gist.github.com/"]
+    insteadOf = "gist:"
+
+# GitHub configuration
+[github]
+    user = c0d3h01
+
+# GPG signing
+[gpg]
+    format = ssh
+
+[gpg "ssh"]
+    program = "/Applications/1Password 7.app/Contents/Resources/op-ssh-sign"
+    allowedSignersFile = ~/.ssh/allowed_signers
+
+# Credential management
+[credential]
+    helper = 
 [credential "https://github.com"]
-	helper = !gh auth git-credential
-
+    helper = !gh auth git-credential
 [credential "https://gist.github.com"]
-	helper = !gh auth git-credential
+    helper = !gh auth git-credential
 
+# LFS configuration
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+
+# Security
+[transfer]
+    fsckobjects = true
+
+[receive]
+    fsckObjects = true
+
+[fetch]
+    fsckobjects = true
+
+# HTTP configuration
 [http]
-  cookiefile = ~/.gitcookies
+    cookiefile = ~/.gitcookies
+    lowSpeedLimit = 0
+    lowSpeedTime = 999999
+    postBuffer = 524288000
+
+[http "https://github.com"]
+    lowSpeedLimit = 0
+    lowSpeedTime = 999999
+
+# Advice configuration
+[advice]
+    statusHints = false
+    detachedHead = false
+    skippedCherryPicks = false
+    pushUpdateRejected = false
+    resolveConflict = false
+
+# Aliases - organized by category
+[alias]
+    # === BASIC OPERATIONS ===
+    a = add
+    aa = add --all
+    ap = add --patch
+    au = add --update
+    
+    s = status --short --branch
+    st = status
+    
+    c = commit
+    ca = commit --amend
+    can = commit --amend --no-edit
+    cm = commit --message
+    cv = commit --verbose
+    
+    co = checkout
+    cob = checkout -b
+    com = checkout main
+    cod = checkout develop
+    
+    # === BRANCHING ===
+    b = branch
+    ba = branch --all
+    bd = branch --delete
+    bD = branch --delete --force
+    bm = branch --move
+    br = branch --remote
+    bs = branch --show-current
+    
+    # === DIFFING ===
+    d = diff
+    dc = diff --cached
+    ds = diff --staged
+    dw = diff --word-diff
+    dt = difftool
+    
+    # === LOGGING ===
+    l = log --oneline --decorate --graph
+    la = log --oneline --decorate --graph --all
+    ll = log --graph --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ar%Creset'
+    lg = log --color --graph --pretty=format:'%C(bold white)%H %d%Creset%n%s%n%+b%C(bold blue)%an <%ae>%Creset %C(bold green)%cr (%ci)' --abbrev-commit
+    lol = log --graph --decorate --pretty=oneline --abbrev-commit
+    lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+    ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
+    ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+    
+    # === REMOTE OPERATIONS ===
+    f = fetch --all --prune
+    p = push
+    pf = push --force-with-lease
+    pu = push --set-upstream origin HEAD
+    pl = pull
+    pr = pull --rebase
+    
+    # === STASHING ===
+    ss = stash save
+    sp = stash pop
+    sa = stash apply
+    sl = stash list
+    sd = stash drop
+    sc = stash clear
+    
+    # === RESETTING ===
+    r = reset
+    r1 = reset HEAD^
+    r2 = reset HEAD^^
+    rh = reset --hard
+    rh1 = reset HEAD^ --hard
+    rh2 = reset HEAD^^ --hard
+    rs = reset --soft
+    rs1 = reset HEAD^ --soft
+    rs2 = reset HEAD^^ --soft
+    
+    # === REBASING ===
+    rb = rebase
+    rba = rebase --abort
+    rbc = rebase --continue
+    rbi = rebase --interactive
+    rbs = rebase --skip
+    
+    # === MERGING ===
+    m = merge
+    ma = merge --abort
+    mc = merge --continue
+    ms = merge --skip
+    
+    # === CHERRY PICKING ===
+    cp = cherry-pick
+    cpa = cherry-pick --abort
+    cpc = cherry-pick --continue
+    
+    # === WORKFLOW ALIASES ===
+    save = !git add -A && git commit -m 'SAVEPOINT'
+    wip = !git add -u && git commit -m "WIP"
+    undo = reset HEAD~1 --mixed
+    amend = commit -a --amend
+    wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
+    bclean = "!f() { git branch --merged ${1-master} | grep -v " ${1-master}$" | xargs -r git branch -d; }; f"
+    bdone = "!f() { git checkout ${1-master} && git up && git bclean ${1-master}; }; f"
+    
+    # === GITHUB/PR WORKFLOWS ===
+    clone = clone --recursive
+    update = !git pull && git submodule update --init --recursive
+    publish = !git push -u origin $(git branch --show-current)
+    unpublish = !git push origin :$(git branch --show-current)
+    
+    # PR aliases
+    pr-checkout = "!f() { git fetch origin pull/$1/head:pr-$1 && git checkout pr-$1; }; f"
+    pr-clean = "!git for-each-ref refs/heads/pr-* --format='%(refname)' | while read ref ; do branch=${ref#refs/heads/} ; git branch -D $branch ; done"
+    
+    # === INFORMATION ===
+    aliases = config --get-regexp alias
+    remotes = remote --verbose
+    contributors = shortlog --summary --numbered
+    filetrail = log --follow -p -w
+    mergetrail = log --ancestry-path --merges
+    unmerged = diff --name-only --diff-filter=U
+    
+    # === UTILITIES ===
+    ignore = "!gi() { curl -sL https://www.toptal.com/developers/gitignore/api/$@ ;}; gi"
+    root = rev-parse --show-toplevel
+    exec = "!exec "
+    
+    # === CLEANUP ===
+    trim = !git remote prune origin && git gc
+    cleanup = !git clean -df && git stash clear
+    
+    # === ADVANCED ===
+    snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
+    recent = branch --sort=-committerdate --format="%(committerdate:relative)%09%(refname:short)"

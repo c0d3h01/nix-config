@@ -1,18 +1,13 @@
 {
-  config,
+  userConfig,
   pkgs,
-  lib,
   ...
 }:
-let
-  inherit (lib) mkIf mkEnableOption;
-in
+
 {
-  options.programs.hm-monitoring.enable = mkEnableOption "Monitoring Tools CLI + GUI";
-  config = mkIf config.programs.hm-monitoring.enable {
-
-    home.packages = with pkgs; [
-
+  home.packages =
+    with pkgs;
+    lib.mkIf (userConfig.hm ? monitoring && userConfig.hm.monitoring) [
       # Recon & Scanning
       amass # DNS subdomain enumeration
       whois # Domain WHOIS lookup
@@ -79,5 +74,4 @@ in
       # Other Security Tools
       # deepsecrets  # Find secrets in code
     ];
-  };
 }

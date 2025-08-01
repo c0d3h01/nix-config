@@ -15,7 +15,7 @@ let
         inherit (inputs) self;
         inherit (inputs) nixgl;
       };
-      modules = [ ./modules ];
+      modules = [ ./modules/home.nix ];
     };
 
   # Generate homeConfigurations for all hosts

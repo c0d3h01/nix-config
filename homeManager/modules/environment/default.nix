@@ -1,5 +1,0 @@
-{
-  imports = [
-    ./variables.nix
-  ];
-}

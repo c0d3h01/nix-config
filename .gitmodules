@@ -1,24 +1,15 @@
-[submodule "home/.zsh-completions"]
-	path = home/.zsh-completions
-	url = https://github.com/zsh-users/zsh-completions.git
-[submodule "home/.zsh-autosuggestions"]
-	path = home/.zsh-autosuggestions
-	url = https://github.com/zsh-users/zsh-autosuggestions.git
-[submodule "home/.zsh-pure"]
-	path = home/.zsh-pure
-	url = https://github.com/sindresorhus/pure.git
-[submodule "home/.zsh-autopair"]
-	path = home/.zsh-autopair
-	url = https://github.com/hlissner/zsh-autopair.git
-[submodule "home/.zsh-fast-syntax-highlighting"]
-	path = home/.zsh-fast-syntax-highlighting
-	url = https://github.com/zdharma-continuum/fast-syntax-highlighting.git
 [submodule "gdb/gef-extras"]
 	path = gdb/gef-extras
 	url = https://github.com/hugsy/gef-extras
 [submodule "gdb/gef"]
 	path = gdb/gef
 	url = https://github.com/hugsy/gef
-[submodule "home/.fzf-tab"]
-	path = home/.fzf-tab
-	url = https://github.com/Aloxaf/fzf-tab
+[submodule "home/.config/zsh/.zsh-custom/plugins/zsh-autosuggestions"]
+	path = home/.config/zsh/.zsh-custom/plugins/zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions
+[submodule "home/.config/zsh/.zsh-custom/plugins/zsh-syntax-highlighting"]
+	path = home/.config/zsh/.zsh-custom/plugins/zsh-syntax-highlighting
+	url = https://github.com/zsh-users/zsh-syntax-highlighting
+[submodule "home/.config/zsh/.zsh-custom/plugins/fzf-tab"]
+	path = home/.config/zsh/.zsh-custom/plugins/fzf-tab
+	url = https://github.com/Aloxaf/fzf-tab.git
