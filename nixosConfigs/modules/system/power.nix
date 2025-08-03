@@ -18,12 +18,15 @@ in
     );
   };
 
+  # Power management
+  services.power-profiles-daemon.enable = lib.mkIf isLaptop true;
+
   # # Auto CPU frequency scaling for laptops
   # services.auto-cpufreq = lib.mkIf isLaptop {
   #   enable = true;
   #   settings = {
   #     battery = {
-  #       governor = "powersave";
+  #       governor = "schedutil";
   #       turbo = "never";
   #     };
   #     charger = {

@@ -7,24 +7,9 @@
 }:
 
 let
-  cfg = userConfig.machine;
-  isNvidiaSystem = lib.elem cfg.gpuType [
-    "nvidia"
-    "hybrid-intel"
-    "hybrid-amd"
-  ];
-  isHybridSystem = lib.elem cfg.gpuType [
-    "hybrid-intel"
-    "hybrid-amd"
-  ];
-  isIntelSystem = lib.elem cfg.gpuType [
-    "intel"
-    "hybrid-intel"
-  ];
-  isAmdSystem = lib.elem cfg.gpuType [
-    "amd"
-    "hybrid-amd"
-  ];
+  isNvidia = userConfig.machine.gpuType == "nvidia";
+  isIntel = userConfig.machine.gpuType == "intel";
+  isAmd = userConfig.machine.gpuType == "amd";
 in
 {
   # Graphics acceleration
@@ -43,23 +28,24 @@ in
       ]
 
       # Intel-specific packages
-      ++ lib.optionals isIntelSystem [
+      ++ lib.optionals isIntel [
         intel-media-driver
         intel-vaapi-driver
         libva-vdpau-driver
       ]
 
       # AMD-specific packages
-      ++ lib.optionals isAmdSystem [
+      ++ lib.optionals isAmd [
         amdvlk # AMD Vulkan driver
         rocmPackages.clr # AMD OpenCL support
         mesa
       ]
 
       # NVIDIA-specific packages
-      ++ lib.optionals isNvidiaSystem [
+      ++ lib.optionals isNvidia [
         libva-vdpau-driver
         nvidia-vaapi-driver
+        libvdpau-va-gl
       ];
 
     extraPackages32 =
@@ -71,11 +57,11 @@ in
         vulkan-loader
       ]
 
-      ++ lib.optionals isNvidiaSystem [
+      ++ lib.optionals isNvidia [
         nvidia-vaapi-driver
       ]
 
-      ++ lib.optionals isIntelSystem [
+      ++ lib.optionals isIntel [
         intel-media-driver
         libva-vdpau-driver
         intel-vaapi-driver
@@ -83,79 +69,60 @@ in
   };
 
   # NVIDIA configuration
-  hardware.nvidia = lib.mkIf isNvidiaSystem {
+  hardware.nvidia = lib.mkIf isNvidia {
     package = config.boot.kernelPackages.nvidiaPackages.stable;
     modesetting.enable = true;
     powerManagement.enable = false;
     powerManagement.finegrained = false;
     open = lib.mkDefault false; # Set based on GPU generation
     nvidiaSettings = true;
-
-    # PRIME configuration for hybrid systems
-    prime = lib.mkIf isHybridSystem {
-      offload = {
-        enable = lib.mkDefault true; # Better for laptops
-        enableOffloadCmd = lib.mkDefault true;
-      };
-      sync.enable = lib.mkDefault false;
-
-      # Bus IDs - these should be configured per machine
-      # Find with: lspci | grep -E "(VGA|3D)"
-      nvidiaBusId = lib.mkDefault "PCI:1:0:0";
-      intelBusId = lib.mkIf (cfg.gpuType == "hybrid-intel") (lib.mkDefault "PCI:0:2:0");
-      amdgpuBusId = lib.mkIf (cfg.gpuType == "hybrid-amd") (lib.mkDefault "PCI:6:0:0");
-    };
   };
 
-  # Merge kernel parameters properly to avoid conflicts
   boot.kernelParams = lib.mkMerge [
-    # Intel GPU optimizations
-    (lib.mkIf isIntelSystem [
+    # Intel GPU
+    (lib.mkIf isIntel [
       "i915.enable_fbc=1"
       "i915.enable_psr=1"
     ])
 
-    # AMD GPU optimizations
-    (lib.mkIf isAmdSystem [
+    # AMD GPU
+    (lib.mkIf isAmd [
       "amdgpu.si_support=1"
       "amdgpu.cik_support=1"
-      "radeon.si_support=0"
-      "radeon.cik_support=0"
     ])
 
     # NVIDIA DRM kernel mode setting
-    (lib.mkIf isNvidiaSystem [
+    (lib.mkIf isNvidia [
       "nvidia-drm.modeset=1"
     ])
   ];
 
   # Blacklist conflicting drivers
-  boot.blacklistedKernelModules = lib.mkIf isNvidiaSystem [ "nouveau" ];
+  boot.blacklistedKernelModules = lib.mkIf isNvidia [ "nouveau" ];
 
   # Environment variables for optimal GPU performance
   environment.sessionVariables = {
     # VA-API driver selection
     LIBVA_DRIVER_NAME =
-      if isIntelSystem then
+      if isIntel then
         "iHD"
-      else if isAmdSystem then
+      else if isAmd then
         "radeonsi"
-      else if isNvidiaSystem then
+      else if isNvidia then
         "vdpau"
       else
-        "auto";
+        "";
 
     # VDPAU driver selection
     VDPAU_DRIVER =
-      if isAmdSystem then
+      if isAmd then
         "radeonsi"
-      else if isNvidiaSystem then
+      else if isNvidia then
         "nvidia"
       else
-        "auto";
+        "";
   }
-  // lib.optionalAttrs (isHybridSystem && config.hardware.nvidia.prime.offload.enable) {
-    # PRIME offload variables (applied when using nvidia-offload script)
+  // lib.optionalAttrs config.hardware.nvidia.prime.offload.enable {
     __NV_PRIME_RENDER_OFFLOAD = "1";
     __NV_PRIME_RENDER_OFFLOAD_PROVIDER = "NVIDIA-G0";
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
@@ -171,25 +138,14 @@ in
       vulkan-tools # Vulkan information
       libva-utils # VA-API information
       vdpauinfo # VDPAU information
-
     ]
-    ++ lib.optionals isAmdSystem [
+    ++ lib.optionals isAmd [
       nvtopPackages.amd
     ]
-    ++ lib.optionals isIntelSystem [
+    ++ lib.optionals isIntel [
       nvtopPackages.intel
     ]
-    ++ lib.optionals isNvidiaSystem [
+    ++ lib.optionals isNvidia [
       nvtopPackages.nvidia
-    ]
-    ++ lib.optionals isHybridSystem [
-      # NVIDIA offload script for hybrid systems
-      (pkgs.writeShellScriptBin "nvidia-offload" ''
-        export __NV_PRIME_RENDER_OFFLOAD=1
-        export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
-        export __GLX_VENDOR_LIBRARY_NAME=nvidia
-        export __VK_LAYER_NV_optimus=NVIDIA_only
-        exec "$@"
-      '')
     ];
 }

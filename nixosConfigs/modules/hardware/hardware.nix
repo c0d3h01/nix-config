@@ -7,25 +7,21 @@
   ...
 }:
 let
-  # Auto-detect CPU vendor
-  isAMD = userConfig.machine.cpuType == "amd";
-  isIntel = userConfig.machine.cpuType == "intel";
+  # Get CPU & GPU types
+  inherit (userConfig.machine) gpuType;
+  inherit (userConfig.machine) cpuType;
 
-  # Auto-detect GPU type (fallback to userConfig)
-  gpuType = userConfig.machine.gpuType or "intel";
-
-  # Boot loader selection (default to grub if not specified)
-  bootloader = userConfig.machine.bootloader or "grub";
-  useSystemdBoot = bootloader == "systemd";
-  useGrub = bootloader == "grub";
+  # Boot loader selection
+  useSystemdBoot = userConfig.machine.bootloader == "systemd";
+  useGrub = userConfig.machine.bootloader == "grub";
 
   # Dynamic kernel modules based on hardware
   cpuKernelModules =
-    lib.optionals isAMD [
+    lib.optionals (cpuType == "amd") [
       "kvm-amd"
       "amd-pstate"
     ]
-    ++ lib.optionals isIntel [
+    ++ lib.optionals (cpuType == "intel") [
       "kvm-intel"
       "intel_pstate"
     ];
@@ -46,10 +42,10 @@ let
 
   # Dynamic kernel parameters
   cpuKernelParams =
-    lib.optionals isAMD [
+    lib.optionals (cpuType == "amd") [
       "amd_pstate=active"
     ]
-    ++ lib.optionals isIntel [
+    ++ lib.optionals (cpuType == "intel") [
       "intel_pstate=active"
     ];
 
@@ -58,7 +54,7 @@ let
   laptopKernelParams = lib.optionals isLaptop [
     "acpi_backlight=native"
     "pcie_aspm=force" # Power saving for PCIe
-    "processor.max_cstate=1" # Better responsiveness
+    "processor.max_cstate=2" # Better responsiveness
   ];
 in
 {
@@ -91,12 +87,13 @@ in
 
   boot.loader = {
     timeout = lib.mkForce 5;
+
     efi = {
       canTouchEfiVariables = true;
       efiSysMountPoint = "/boot";
     };
 
-    # GRUB configuration - enabled when bootloader == "grub"
+    # GRUB
     grub = {
       enable = useGrub;
       efiSupport = true;
@@ -105,7 +102,7 @@ in
       memtest86.enable = true;
     };
 
-    # systemd-boot configuration - enabled when bootloader == "systemd"
+    # systemd-boot
     systemd-boot = {
       enable = useSystemdBoot;
       configurationLimit = 15;
@@ -118,13 +115,12 @@ in
     # Clean tmp dir on boot
     tmp.cleanOnBoot = true;
 
-    # Kernel configuration
+    # Kernel version
     kernelPackages = pkgs.linuxPackages_latest;
 
-    # Dynamic kernel modules
     kernelModules = [
       "acpi_call"
-      "fuse" # Filesystem in Userspace
+      "fuse"
     ]
     ++ cpuKernelModules
     ++ gpuKernelModules;
@@ -140,7 +136,6 @@ in
       "nfs"
     ];
 
-    # Dynamic kernel parameters
     kernelParams = [
       "nowatchdog"
       "mitigations=off"
@@ -164,7 +159,6 @@ in
         "-T0"
       ];
 
-      # Dynamic initrd modules
       kernelModules = [
         "nvme"
         "btrfs"
@@ -195,13 +189,12 @@ in
   nixpkgs.hostPlatform = lib.mkDefault userConfig.system;
 
   # CPU microcode updates - dynamic based on CPU type
-  hardware.cpu.amd.updateMicrocode = lib.mkIf isAMD true;
-  hardware.cpu.intel.updateMicrocode = lib.mkIf isIntel true;
+  hardware.cpu.amd.updateMicrocode = lib.mkIf (cpuType == "amd") true;
+  hardware.cpu.intel.updateMicrocode = lib.mkIf (cpuType == "intel") true;
 
   # Enable firmware updates
   hardware.enableRedistributableFirmware = lib.mkDefault true;
 
-  # Laptop-specific hardware
-  services.thermald.enable = lib.mkIf isIntel true; # Intel thermal management
-  services.power-profiles-daemon.enable = lib.mkIf isLaptop true; # Power management
+  # Intel thermal management
+  services.thermald.enable = lib.mkIf (cpuType == "intel") true;
 }

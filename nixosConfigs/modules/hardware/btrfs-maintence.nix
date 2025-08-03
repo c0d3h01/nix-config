@@ -6,7 +6,7 @@
 }:
 let
   # Auto-detect if root filesystem is Btrfs
-  rootFilesystem = config.fileSystems."/".fsType or "";
+  rootFilesystem = config.fileSystems."/".fsType;
   isBtrfs = rootFilesystem == "btrfs";
 
   # Get all Btrfs filesystems for scrubbing
