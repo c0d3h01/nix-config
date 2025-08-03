@@ -1,8 +1,8 @@
 {
   imports = [
     ./dns.nix
-    ./network.nix
-    ./ssh.nix
+    ./networkManager.nix
+    ./openssh.nix
     ./wireless.nix
   ];
 }
