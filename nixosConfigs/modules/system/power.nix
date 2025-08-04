@@ -10,7 +10,7 @@ in
   # Performance optimizations
   powerManagement = {
     enable = true;
-    cpuFreqGovernor = lib.mkDefault (
+    cpuFreqGovernor = lib.mkForce (
       if isLaptop then
         "schedutil" # Better balanced battery life
       else
