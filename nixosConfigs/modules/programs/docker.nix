@@ -6,7 +6,7 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf;
 in
 {
   config = mkIf (userConfig.dev.container == "docker") {
