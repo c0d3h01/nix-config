@@ -36,8 +36,6 @@
       monitoring = false; # Monitoring grouped tools
       container = "podman"; # Options = "docker" | "podman"
       db = true; # Mysql - DBMS
-      defaultEditor = "nvim";
-      terminalFont = "JetBrains Mono";
     };
   };
 }
