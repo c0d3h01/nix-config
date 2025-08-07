@@ -7,7 +7,5 @@
     ./programs
     ./security
     ./system
-    ./base.nix
-    ./secrets.nix
   ];
 }

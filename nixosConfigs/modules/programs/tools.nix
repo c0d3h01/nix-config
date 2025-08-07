@@ -15,9 +15,20 @@
     rsync
     tig
     nodejs
+    glibc
+    glfw
+    clang-tools
+    zulu # Java JDK
+    julia
+    php
+    ruby
+    php84Packages.composer
+    gcc
+    uv
     python312
     zig
     go
+    go-tools
     strace
     bandwhich
     man-pages

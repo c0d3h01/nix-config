@@ -1,22 +1,25 @@
 {
+  lib,
   pkgs,
   userConfig,
   ...
 }:
 
 {
-  users.users.${userConfig.username}.extraGroups = [
-    "libvirtd"
-    "kvm"
-  ];
-  programs.virt-manager.enable = true;
+  config = lib.mkIf userConfig.devStack.virtualisation {
+    programs.virt-manager.enable = true;
+    users.users.${userConfig.username}.extraGroups = [
+      "libvirtd"
+      "kvm"
+    ];
 
-  virtualisation = {
-    libvirtd = {
-      enable = true;
-      qemu.package = pkgs.qemu_kvm;
-      onBoot = "ignore";
-      onShutdown = "shutdown";
+    virtualisation = {
+      libvirtd = {
+        enable = true;
+        qemu.package = pkgs.qemu_kvm;
+        onBoot = "ignore";
+        onShutdown = "shutdown";
+      };
     };
   };
 }

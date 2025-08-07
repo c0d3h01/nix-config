@@ -31,11 +31,16 @@
         libunwind
         libusb1
         libuuid
+        libsodium
+        libxml2
         nspr
         nss
         stdenv.cc.cc
         util-linux
+        systemd
         zlib
+        xz
+        cargo
         zstd
       ]
       ++ lib.optionals config.hardware.graphics.enable [

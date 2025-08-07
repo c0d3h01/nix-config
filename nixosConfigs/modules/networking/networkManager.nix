@@ -4,15 +4,9 @@
   userConfig,
   ...
 }:
-
 {
   # secrets management service
   services.gnome.gnome-keyring.enable = lib.mkForce true;
-
-  # I am getting errors related wifi card while enabling powersave
-  boot.extraModprobeConfig = ''
-    options rtw88_pci disable_aspm=1
-  '';
 
   networking = {
     # DNS servers (Cloudflare and Google DNS)

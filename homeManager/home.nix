@@ -53,6 +53,11 @@
       seahorse # managing encryption keys
       starship
 
+      imagemagick
+      git-spice
+      tectonic
+      mermaid-cli
+
       # Language Servers
       lua-language-server
       nil
@@ -69,6 +74,7 @@
       git
       git-lfs
       delta
+      lazygit
       mergiraf
     ];
   };

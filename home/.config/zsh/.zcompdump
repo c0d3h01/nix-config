@@ -1,4 +1,4 @@
-#files: 2015	version: 5.9
+#files: 2021	version: 5.9
 
 _comps=(
 '-' '_precommand'
@@ -158,6 +158,7 @@ _comps=(
 'caffeinate' '_caffeinate'
 'cal' '_cal'
 'calendar' '_calendar'
+'cargo' '_cargo'
 'cat' '_cat'
 'catchsegv' '_precommand'
 'cc' '_gcc'
@@ -292,6 +293,7 @@ _comps=(
 'defaults' '_defaults'
 'delta' '_delta'
 'designate' '_openstack'
+'devenv' '_devenv'
 'devtodo' '_devtodo'
 'df' '_df'
 'dhclient' '_dhclient'
@@ -1280,6 +1282,7 @@ _comps=(
 'run-help' '_run-help'
 'rup' '_hosts'
 'rusage' '_precommand'
+'rustup' '_rustup'
 'rview' '_vim'
 'rvim' '_vim'
 'rwho' '_hosts'
@@ -1579,6 +1582,7 @@ _comps=(
 'useradd' '_user_admin'
 'userdel' '_users'
 'usermod' '_user_admin'
+'uv' '_uv'
 'vacuumdb' '_postgresql'
 'val' '_sccs'
 'valgrind' '_valgrind'
@@ -1922,22 +1926,23 @@ bindkey '^[,' _history-complete-newer
 bindkey '^[/' _history-complete-older
 bindkey '^[~' _bash_complete-word
 
-autoload -Uz _bat _btm _cheat _delta _fastfetch \
-            _fd _ghostty _git-lfs _just _lsd \
-            _procs _rg _sops _starship _tree-sitter \
-            _zellij _zoxide _bandwhich _bluetoothctl _bootctl \
-            _busctl _coredumpctl _dive _hostnamectl _journalctl \
-            _k9s _kind _kubectl _localectl _loginctl \
-            _machinectl _networkctl _nix _nix-build _nix-channel \
-            _nix-collect-garbage _nix-common-options _nix-copy-closure _nix-env _nix-hash \
-            _nix-install-package _nix-instantiate _nixops _nixos-build-vms _nixos-container \
-            _nixos-generate-config _nixos-install _nixos-option _nixos-rebuild _nixos-version \
-            _nix-prefetch-url _nix-push _nix-shell _nix-store _oomctl \
-            _ouch _podman _podman-remote _powerprofilesctl _resolvectl \
-            _run0 _sd_hosts_or_user_at_host _sd_machines _sd_outputmodes _sd_unit_files \
-            _skopeo _systemctl _systemd _systemd-analyze _systemd-delta \
-            _systemd-inhibit _systemd-nspawn _systemd-path _systemd-run _systemd-tmpfiles \
-            _timedatectl _udevadm _udisks2 _varlinkctl _wpctl \
+autoload -Uz _devenv _devenv _bat _btm _cheat \
+            _delta _fastfetch _fd _git-lfs _just \
+            _lsd _procs _rg _sops _starship \
+            _tree-sitter _zellij _zoxide _bandwhich _bluetoothctl \
+            _bootctl _busctl _cargo _coredumpctl _dive \
+            _ghostty _hostnamectl _journalctl _k9s _kind \
+            _kubectl _localectl _loginctl _machinectl _networkctl \
+            _nix _nix-build _nix-channel _nix-collect-garbage _nix-common-options \
+            _nix-copy-closure _nix-env _nix-hash _nix-install-package _nix-instantiate \
+            _nixops _nixos-build-vms _nixos-container _nixos-generate-config _nixos-install \
+            _nixos-option _nixos-rebuild _nixos-version _nix-prefetch-url _nix-push \
+            _nix-shell _nix-store _oomctl _ouch _podman \
+            _podman-remote _powerprofilesctl _resolvectl _run0 _rustup \
+            _sd_hosts_or_user_at_host _sd_machines _sd_outputmodes _sd_unit_files _skopeo \
+            _systemctl _systemd _systemd-analyze _systemd-delta _systemd-inhibit \
+            _systemd-nspawn _systemd-path _systemd-run _systemd-tmpfiles _timedatectl \
+            _udevadm _udisks2 _uv _varlinkctl _wpctl \
             _ykman _a2ps _a2utils _aap _abcde \
             _absolute_command_paths _ack _acpi _acpitool _acroread \
             _adb _add-zle-hook-widget _add-zsh-hook _alias _aliases \

@@ -3,12 +3,14 @@
     ./appImage.nix
     ./audio.nix
     ./automount.nix
+    ./base.nix
     ./command-not-found.nix
     ./diff.nix
     ./docs.nix
     ./fhs-compact.nix
     ./firmware.nix
     ./flatpak.nix
+    ./fonts.nix
     ./graphical.nix
     ./libvirt.nix
     ./logind.nix
@@ -17,7 +19,9 @@
     ./pager.nix
     ./power.nix
     ./printing.nix
+    ./ryzen.nix
     ./scheduler.nix
+    ./secrets.nix
     ./touchpad.nix
     ./xdg-portals.nix
     ./yubikey.nix

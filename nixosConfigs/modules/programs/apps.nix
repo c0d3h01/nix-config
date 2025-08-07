@@ -6,8 +6,6 @@
   ...
 }:
 {
-  # System programs - only enable if GUI is available
-
   config = lib.mkIf userConfig.machineConfig.workstation {
     # Default browser
     programs.firefox.enable = true;
@@ -28,6 +26,7 @@
         neovim # Editor
 
         # Development tools
+        # android-studio-full
         vscode-fhs
         jetbrains.webstorm
         jetbrains.pycharm-community-bin

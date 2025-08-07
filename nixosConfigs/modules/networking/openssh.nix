@@ -1,5 +1,3 @@
-_:
-
 {
   # SSH Daemon
   services.openssh = {

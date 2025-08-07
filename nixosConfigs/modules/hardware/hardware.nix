@@ -64,8 +64,8 @@ in
     # Clean tmp dir on boot
     tmp.cleanOnBoot = true;
 
-    # Kernel version
-    kernelPackages = pkgs.linuxPackages_xanmod_stable;
+    # Latest Kernel Version
+    kernelPackages = pkgs.linuxPackages_latest;
 
     kernelModules = [
       "acpi_call"

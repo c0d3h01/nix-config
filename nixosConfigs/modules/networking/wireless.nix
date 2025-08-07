@@ -36,7 +36,6 @@
         Settings.AutoConnect = true;
 
         General = {
-          # more things that my uni hates me for
           # AddressRandomization = "network";
           # AddressRandomizationRange = "full";
 
