@@ -4,10 +4,6 @@
 
 ---
 
-_NixOs build status_  
-
-[![.github/workflows/build.yml](https://github.com/c0d3h01/dotfiles/actions/workflows/build.yml/badge.svg)](https://github.com/c0d3h01/dotfiles/actions/workflows/build.yml)
-
 ## Installation
 
 ### Apply Home Manager Configuration
@@ -22,7 +18,7 @@ $ nix run github:nix-community/home-manager -- switch \
 
 ```bash
 # clone to directory
-$ git clone https://github.com/c0d3h01/dotfiles.git \
+$ git clone https://github.com/c0d3h01/dotfiles.git &&
   cd dotfiles
 
 $ nix run github:nix-community/home-manager -- switch \
@@ -35,7 +31,7 @@ $ nix run github:nix-community/home-manager -- switch \
 
 ```bash
 # Clone the repository
-$ git clone https://github.com/c0d3h01/dotfiles.git \
+$ git clone https://github.com/c0d3h01/dotfiles.git &&
   cd dotfiles
 
 # Partition and format disk with Disko
@@ -45,7 +41,7 @@ $ sudo nix --experimental-features "nix-command flakes" run \
   ./systems/c0d3h01/disko-btrfs.nix
 
 # Only for low ram devices!
-$ sudo btrfs filesystem mkswapfile --size 8G /mnt/swapfile \
+$ sudo btrfs filesystem mkswapfile --size 8G /mnt/swapfile &&
   sudo swapon /mnt/swapfile
 
 # Install NixOS
