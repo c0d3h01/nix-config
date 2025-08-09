@@ -4,6 +4,8 @@
     rustup
     ouch
     psmisc
+    cmake
+    gnumake
     colordiff
     sipcalc
     iperf
