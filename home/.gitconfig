@@ -190,9 +190,11 @@
 [credential]
     helper = 
 [credential "https://github.com"]
-    helper = !gh auth git-credential
+	helper = 
+	helper = !/etc/profiles/per-user/c0d3h01/bin/gh auth git-credential
 [credential "https://gist.github.com"]
-    helper = !gh auth git-credential
+	helper = 
+	helper = !/etc/profiles/per-user/c0d3h01/bin/gh auth git-credential
 
 # LFS configuration
 [filter "lfs"]
