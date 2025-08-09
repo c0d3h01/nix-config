@@ -72,10 +72,17 @@
 
       # git
       git
+      git-extras
+      git-crypt
+      git-revise
+      ghq
+      hub
+      gh
       git-lfs
       delta
       lazygit
       mergiraf
+      pre-commit
     ];
   };
 }
