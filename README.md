@@ -30,22 +30,13 @@ $ nix run github:nix-community/home-manager -- switch \
 ## NixOS Clean Installation
 
 ```bash
-# Clone the repository
-$ git clone https://github.com/c0d3h01/dotfiles.git &&
-  cd dotfiles
-
 # Partition and format disk with Disko
 $ sudo nix --experimental-features "nix-command flakes" run \
   github:nix-community/disko/latest -- \
   --mode destroy,format,mount \
-  -- yes-wipe-all-disks \
-  ./systems/c0d3h01/disko-btrfs.nix
-
-# Only for low ram devices!
-$ sudo btrfs filesystem mkswapfile --size 8G /mnt/swapfile &&
-  sudo swapon /mnt/swapfile
+  --yes-wipe-all-disks \
+  --flake github:c0d3h01/dotfiles#c0d3h01
 
 # Install NixOS
-# In the dotfiles has no root pass
-$ sudo nixos-install --flake '.#c0d3h01' --no-root-passwd
+$ sudo nixos-install --flake github:c0d3h01/dotfiles#c0d3h01
 ```
