@@ -38,6 +38,7 @@ $ git clone https://github.com/c0d3h01/dotfiles.git &&
 $ sudo nix --experimental-features "nix-command flakes" run \
   github:nix-community/disko/latest -- \
   --mode destroy,format,mount \
+  -- yes-wipe-all-disks \
   ./systems/c0d3h01/disko-btrfs.nix
 
 # Only for low ram devices!
