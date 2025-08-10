@@ -8,31 +8,31 @@ let
   inherit (lib) mkIf;
 in
 {
-  programs.gnome-shell = mkIf (userConfig.desktopEnv.windowManager == "gnome") {
-    enable = true;
-    extensions = [
-      # {
-      #   id = "ding@rastersoft.com";
-      #   package = pkgs.gnomeExtensions.desktop-icons-ng-ding;
-      # }
-      {
-        id = "gsconnect@andyholmes.github.io";
-        package = pkgs.gnomeExtensions.gsconnect;
-      }
-      # {
-      #   id = "dash-to-dock@micxgx.gmail.com";
-      #   package = pkgs.gnomeExtensions.dash-to-dock;
-      # }
-      {
-        id = "dash2dock-lite@icedman.github.com";
-        package = pkgs.gnomeExtensions.dash2dock-lite;
-      }
-      # {
-      #   id = "forge@jmmaranan.com";
-      #   package = pkgs.gnomeExtensions.forge;
-      # }
-    ];
-  };
+  # programs.gnome-shell = mkIf (userConfig.desktopEnv.windowManager == "gnome") {
+  #   enable = true;
+  #   extensions = [
+  #     # {
+  #     #   id = "ding@rastersoft.com";
+  #     #   package = pkgs.gnomeExtensions.desktop-icons-ng-ding;
+  #     # }
+  #     {
+  #       id = "gsconnect@andyholmes.github.io";
+  #       package = pkgs.gnomeExtensions.gsconnect;
+  #     }
+  #     # {
+  #     #   id = "dash-to-dock@micxgx.gmail.com";
+  #     #   package = pkgs.gnomeExtensions.dash-to-dock;
+  #     # }
+  #     {
+  #       id = "dash2dock-lite@icedman.github.com";
+  #       package = pkgs.gnomeExtensions.dash2dock-lite;
+  #     }
+  #     # {
+  #     #   id = "forge@jmmaranan.com";
+  #     #   package = pkgs.gnomeExtensions.forge;
+  #     # }
+  #   ];
+  # };
 
   dconf.settings = {
     # Power settings

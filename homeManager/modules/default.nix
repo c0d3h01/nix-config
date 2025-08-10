@@ -1,7 +1,6 @@
 {
   imports = [
     ./notion-app
-    ./chromium.nix
     ./direnv.nix
     ./gnome.nix
     ./gtk.nix
