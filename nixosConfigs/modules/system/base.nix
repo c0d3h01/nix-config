@@ -17,7 +17,7 @@
   programs.zsh.enable = true;
   # Create the main user
   users.users.${userConfig.username} = {
-    # uid = lib.mkDefault 1000;
+    uid = lib.mkDefault 1000;
     isNormalUser = true;
     description = userConfig.fullName;
     shell = "/run/current-system/sw/bin/zsh";
