@@ -22,6 +22,7 @@
     ./scheduler.nix
     ./secrets.nix
     ./touchpad.nix
+    ./xdg-portals.nix
     ./xserver.nix
     ./yubikey.nix
   ];
