@@ -45,7 +45,6 @@ let
     commonEnvVars
     currentGpuConfig.envVars
   ];
-
 in
 {
   config = lib.mkIf userConfig.devStack.ollama {
@@ -58,28 +57,10 @@ in
       inherit (currentGpuConfig) acceleration;
 
       # Network configuration
-      host = "127.0.0.1";
-      port = 11434;
       openFirewall = true;
-
-      # Storage configuration
-      home = "/var/lib/ollama";
-      models = "/var/lib/ollama/models";
 
       # Environment variables
       inherit environmentVariables;
-    };
-
-    # Service optimization
-    systemd.services.ollama.serviceConfig = {
-      # Resource limits
-      CPUQuota = "400%";
-      # MemoryMax = "16G";
-      # I/O optimization
-      IOSchedulingClass = 1;
-      IOSchedulingPriority = 4;
-      # Process priority
-      Nice = -5;
     };
   };
 }
