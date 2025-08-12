@@ -13,6 +13,7 @@
     ./fonts.nix
     ./graphical.nix
     ./libvirt.nix
+    ./locale.nix
     ./logind.nix
     ./logs.nix
     ./oomd.nix
@@ -21,7 +22,7 @@
     ./scheduler.nix
     ./secrets.nix
     ./touchpad.nix
-    ./xdg-portals.nix
+    ./xserver.nix
     ./yubikey.nix
   ];
 }
