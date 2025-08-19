@@ -66,13 +66,13 @@ in
     interval = "weekly";
   };
 
-  # ZRAM configuration
-  zramSwap = lib.mkIf isLaptop {
-    enable = true;
-    priority = 100;
-    algorithm = "lzo-rle";
-    memoryPercent = 100;
-  };
+  # # ZRAM configuration
+  # zramSwap = lib.mkIf isLaptop {
+  #   enable = true;
+  #   priority = 100;
+  #   algorithm = "lzo-rle";
+  #   memoryPercent = 100;
+  # };
 
   boot = {
     # Clean tmp dir on boot
