@@ -105,11 +105,11 @@ in
 
       # This will conflict with scx maybe!
       /*
-      "kernel.sched_cfs_bandwidth_slice_us" = 3000;
-      "kernel.sched_latency_ns" = 6000000;  # 6ms
-      "kernel.sched_min_granularity_ns" = 750000;  # 0.75ms
-      "kernel.sched_wakeup_granularity_ns" = 1000000;  # 1ms
-      "kernel.sched_migration_cost_ns" = 250000;  # 0.25ms
+        "kernel.sched_cfs_bandwidth_slice_us" = 3000;
+        "kernel.sched_latency_ns" = 6000000;  # 6ms
+        "kernel.sched_min_granularity_ns" = 750000;  # 0.75ms
+        "kernel.sched_wakeup_granularity_ns" = 1000000;  # 1ms
+        "kernel.sched_migration_cost_ns" = 250000;  # 0.25ms
       */
 
       # File system performance
