@@ -4,7 +4,7 @@
   nix = {
 
     # Keep disable nix channels
-    channel.enable = false;
+    # channel.enable = false;
 
     # Enable garbage collection
     gc = {
