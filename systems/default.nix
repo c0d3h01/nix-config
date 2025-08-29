@@ -1,5 +1,3 @@
-_:
-
 let
   # List all entries in the current directory
   entries = builtins.attrNames (builtins.readDir ./.);
