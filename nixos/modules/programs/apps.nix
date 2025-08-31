@@ -8,7 +8,6 @@
   config = lib.mkIf userConfig.machineConfig.workstation.enable {
     # Default browser
     programs.firefox.enable = true;
-    programs.chromium.enable = true;
 
     programs.wireshark = {
       enable = true;
@@ -25,12 +24,11 @@
         android-studio
         vscode-fhs
         jetbrains.webstorm
-        jetbrains.pycharm-community-bin
         postman
         github-desktop
         drawio
         slack
-        vesktop
+        discord
         telegram-desktop
         zoom-us
         element-desktop
