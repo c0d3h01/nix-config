@@ -20,7 +20,6 @@
       with pkgs;
       [
         ghostty
-        figma-linux
         android-studio
         vscode-fhs
         jetbrains.webstorm
@@ -35,12 +34,9 @@
         obsidian
         anydesk
         qbittorrent
-        electrum
         ledger-live-desktop
         arduino
         rpi-imager
-      ]
-      ++ lib.optionals userConfig.devStack.wine.enable [
         wineWowPackages.stable
         winetricks
       ];
