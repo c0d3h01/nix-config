@@ -34,7 +34,6 @@ in
         gnome-music
         gnome-remote-desktop
         gnome-usage
-        gnome-console
         gnome-contacts
         gnome-weather
         gnome-maps

@@ -1,7 +1,0 @@
-snippet lib
-	library(${1:package})
-
-snippet fun
-	${1:function_name} <- function(${2:args}) {
-	  ${0}
-	}
