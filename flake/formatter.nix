@@ -14,6 +14,13 @@
           statix
           stylua
           taplo
+          mypy
+
+          (writeShellScriptBin "statix-fix" ''
+            for file in "$@"; do
+              ${lib.getExe statix} fix "$file"
+            done
+          '')
         ];
 
         settings = {
@@ -23,8 +30,11 @@
           excludes = [
             "secrets/*"
             "gdb/*"
-            "home/*"
+            "home/.shell/*"
             ".envrc"
+            "*.lock"
+            "*.patch"
+            "*.age"
           ];
 
           formatter = {
@@ -33,6 +43,18 @@
               includes = [
                 ".github/workflows/*.yml"
                 ".github/workflows/*.yaml"
+              ];
+            };
+
+            mypy = {
+              command = "mypy";
+              options = [
+                "--ignore-missing-imports"
+                "--show-error-codes"
+              ];
+              includes = [ "*.py" ];
+              excludes = [
+                "home/.jupyter/*"
               ];
             };
 
@@ -70,7 +92,11 @@
               ];
               includes = [
                 "*.sh"
-                "*.bash"
+                "*.bashrc"
+                "*.bash_profile"
+                "*.zshrc"
+                "*.envrc"
+                "*.envrc.private-template"
                 # direnv
               ];
             };
