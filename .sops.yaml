@@ -1,9 +1,9 @@
 keys:
-  - &harshal age1slc5p3prmn8hsldxezvsaz29luuhsjxsj7gspk8p506d4xw9rstqeyy0ls
-  - &eva age1eqd59l6ll6sjsqm4gj675kq52mnt6799jghzleaty0202ltk852qaxw7c8
+  - &harshal age164kg3fq0eaqjxtnc88zyyet5vj274epu3508sq2czfk8ae2wtgms0vj26t
+  - &eva age1slc5p3prmn8hsldxezvsaz29luuhsjxsj7gspk8p506d4xw9rstqeyy0ls
 
 creation_rules:
-  - path_regex: .*
+  - path_regex: secrets/c0d3h01.yaml
     key_groups:
       - age:
           - *harshal
