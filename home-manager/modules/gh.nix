@@ -8,11 +8,11 @@
   programs.gh = {
     enable = true;
 
-    extensions = {
+    extensions = [
       pkgs.gh-cal
       pkgs.gh-copilot
       pkgs.gh-eco
-    };
+    ];
 
     settings = {
       git_protocol = "ssh";
