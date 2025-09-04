@@ -6,7 +6,6 @@
   home.packages = with pkgs; [
     # Terminal Utilities
     tmux
-    fastfetch
     xclip
     curl
     wget

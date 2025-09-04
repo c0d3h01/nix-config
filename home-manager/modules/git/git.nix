@@ -1,32 +1,38 @@
-# {
-#   pkgs,
-#   ...
-# }:
-# {
-#   home.packages = with pkgs; [
-#     git
-#     git-lfs
-#     delta
-#     lazygit
-#     mergiraf
-#   ];
-# }
-
-{ lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+
+let
+  inherit (pkgs.stdenv) isDarwin;
+  inherit (pkgs.stdenv) isLinux;
+
+  ghCredHelper = "!${pkgs.gh}/bin/gh auth git-credential";
+
+  sshSignerProgram =
+    if isDarwin then "/Applications/1Password.app/Contents/MacOS/op-ssh-sign" else "op-ssh-sign";
+in
+{
+  home.file.".gitignore".source = ./gitignore;
+  home.file.".gitattributes".source = ./gitattributes;
+
   programs.git = {
     enable = true;
 
-    # --- Identity ---
+    package = pkgs.gitFull;
+
     userName = "Harshal Sawant";
     userEmail = "harshalsawant.dev@gmail.com";
+
     signing = {
       key = "~/.ssh/id_ed25519.pub";
       signByDefault = true;
     };
 
-    # --- Tools & Defaults ---
+    lfs.enable = true;
+
     delta = {
       enable = true;
       options = {
@@ -40,7 +46,7 @@
     aliases = {
       st = "status";
       br = "branch --all";
-      lg = ''log --graph --decorate --pretty=format:"%C(yellow)%h%Cred%d\ %Creset%s%Cblue\ [%cn]" --abbrev-commit'';
+      lg = ''log --graph --decorate --pretty=format:"%C(yellow)%h%Cred%d %Creset%s%Cblue [%cn]" --abbrev-commit'';
       f = "fetch --all --prune";
       pf = "push --force-with-lease";
       pl = "pull";
@@ -53,12 +59,11 @@
       trim = "!git remote prune origin && git gc";
     };
 
-    # --- Extra Configuration ---
     extraConfig = {
-      # Core
+      init.defaultBranch = "main";
+
       core = {
         editor = "nvim";
-        pager = "delta";
         autocrlf = false;
         safecrlf = true;
         excludesfile = "~/.gitignore";
@@ -66,12 +71,8 @@
         whitespace = "space-before-tab,-indent-with-non-tab,trailing-space";
         preloadindex = true;
       };
-      init.defaultBranch = "main";
 
-      # Color
-      color = {
-        ui = "auto";
-      };
+      color.ui = "auto";
 
       # Diff & Merge
       diff = {
@@ -82,12 +83,13 @@
         compactionHeuristic = true;
       };
       "difftool.nvim".cmd = "nvim -d $LOCAL $REMOTE";
+
       merge = {
         tool = "nvim";
         conflictstyle = "zdiff3";
         log = true;
-        keepBackup = false;
       };
+      mergetool.keepBackup = false;
       "mergetool.nvim".cmd = "nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'";
 
       # Push / Pull / Fetch
@@ -110,7 +112,7 @@
       # Rebase
       rebase = {
         autosquash = true;
-        autoStash = true;
+        autostash = true;
         updateRefs = true;
         stat = true;
       };
@@ -118,7 +120,6 @@
       # Branch & Status
       branch = {
         autoSetupRebase = "always";
-        autoSetupMerge = "always";
         sort = "-committerdate";
       };
       status = {
@@ -135,7 +136,7 @@
 
       # Performance
       feature.manyFiles = true;
-      index.threads = true;
+      index.threads = 0; # auto-select threads
 
       # Commit & Format
       commit = {
@@ -159,39 +160,25 @@
       help.autocorrect = 10;
       tag.sort = "-version:refname";
 
-      # GitHub
-      github.user = "c0d3h01";
-      credential = {
-        helper = "cache";
-        "https://github.com".helper = "!${pkgs.gh}/bin/gh auth git-credential";
-        "https://gist.github.com".helper = "!${pkgs.gh}/bin/gh auth git-credential";
-      };
+      # Auth (platform-aware default helper + gh for GitHub domains)
+      credential.helper = if isDarwin then "osxkeychain" else "libsecret";
+      "https://github.com".credential.helper = ghCredHelper;
+      "https://gist.github.com".credential.helper = ghCredHelper;
 
-      # GPG (SSH Signing)
+      # SSH signing
       gpg.format = "ssh";
-      "gpg.ssh" = {
-        program = "/Applications/1Password 7.app/Contents/Resources/op-ssh-sign";
-        allowedSignersFile = "~/.ssh/allowed_signers";
-      };
-
-      # LFS
-      "filter.lfs" = {
-        clean = "git-lfs clean -- %f";
-        smudge = "git-lfs smudge -- %f";
-        process = "git-lfs filter-process";
-        required = true;
-      };
+      "gpg.ssh".program = sshSignerProgram;
+      "gpg.ssh".allowedSignersFile = "~/.ssh/allowed_signers";
 
       # Security
       transfer.fsckobjects = true;
       receive.fsckObjects = true;
 
-      # HTTP
+      # HTTP (avoid deprecated postBuffer)
       http = {
         cookiefile = "~/.gitcookies";
         lowSpeedLimit = 0;
         lowSpeedTime = 999999;
-        postBuffer = 524288000;
       };
 
       # Advice

@@ -1,14 +1,15 @@
 {
   imports = [
+    ./git
     ./bat.nix
     ./bottom.nix
     ./common.nix
     ./direnv.nix
     ./extractors.nix
+    ./fastfetch.nix
     ./fd.nix
     ./fzf.nix
     ./gh.nix
-    ./git.nix
     ./gnome.nix
     ./gtk.nix
     ./monitoring.nix
