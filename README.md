@@ -15,7 +15,7 @@
 ```bash
 # Run Home Manager switch configs
 $ nix run github:nix-community/home-manager -- switch \
-  --flake 'github:c0d3h01/dotfiles#c0d3h01@nixos'
+  --flake 'github:c0d3h01/dotfiles#c0d3h01@eva'
 ```
 
 ---
