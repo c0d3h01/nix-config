@@ -3,24 +3,18 @@
   lib,
   pkgs,
   ...
-}:
-
-let
+}: let
   inherit (pkgs.stdenv) isDarwin;
-  ghCredHelper = "!${pkgs.gh}/bin/gh auth git-credential";
   sshSignerProgram =
-    if isDarwin then
-      "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
-    else
-      "${pkgs.openssh}/bin/ssh-keygen";
-in
-{
+    if isDarwin
+    then "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+    else "${pkgs.openssh}/bin/ssh-keygen";
+in {
   programs.git = {
     enable = true;
-    package = pkgs.git-extras;
 
     userName = "Harshal Sawant";
-    userEmail = "harshalsawant.dev@gmail.com";
+    userEmail = "harshalsawant" + "dev" + "@gmail.com";
 
     signing = {
       key = "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
@@ -66,37 +60,6 @@ in
       root = "rev-parse --show-toplevel";
     };
 
-    ignores = [
-      ".cache/"
-      ".DS_Store"
-      ".Trashes"
-      ".Trash-*"
-      "*.bak"
-      "*.swp"
-      "*.swo"
-      "*.elc"
-      ".~lock*"
-      "tmp/"
-      "target/"
-      "result"
-      "result-*"
-      "*.exe"
-      "*.exe~"
-      "*.dll"
-      "*.so"
-      "*.dylib"
-      ".direnv/"
-      "node_modules"
-      "vendor"
-      "*.log"
-      ".env"
-      ".env.*"
-      ".idea/"
-      ".vscode/"
-      "dist/"
-      "coverage/"
-    ];
-
     extraConfig = {
       init.defaultBranch = "main";
 
@@ -112,6 +75,8 @@ in
         whitespace = "space-before-tab,-indent-with-non-tab,trailing-space";
         preloadindex = true;
         untrackedCache = true;
+        excludesFile = "${config.home.homeDirectory}/.config/git/ignore";
+        attributesFile = "${config.home.homeDirectory}/.config/git/attributes";
       };
 
       diff = {
@@ -198,7 +163,7 @@ in
       commit = {
         verbose = true;
         cleanup = "strip";
-        template = "~/.gitmessage";
+        template = "${config.home.homeDirectory}/.config/git/message";
         status = true;
       };
 
