@@ -1,25 +1,29 @@
 {
-  # Nixpkgs configuration settings
   nixpkgs = {
     config = {
-      # Allow proprietary/unfree packages to be installed
+      # Unfree: allowed
       allowUnfree = true;
 
-      # Allow installation of packages with insecure status
-      allowInsecure = true;
+      # Narrow unfree scope.
+      # allowUnfreePredicate = pkg: builtins.elem (pkg.pname or pkg.name) [
+      #   "google-chrome"
+      #   "steam"
+      #   "nvidia-x11"
+      # ];
 
-      # Auto-accept Android SDK license agreements
+      # DO NOT allow all insecure packages globally.
+      allowInsecure = false;
+
+      # Explicit, reviewed insecure exceptions (keep minimal, annotate).
+      # Each entry should match the exact attribute's name (see evaluation error messages).
+      permittedInsecurePackages = [
+        "openssl-1.1.1u"
+      ];
+
       android_sdk.accept_license = true;
 
-      # Permit all insecure packages (should be more specific in production)
-      permittedInsecurePackages = [ ];
-
-      # A funny little hack to make sure that *everything* is permitted
-      allowUnfreePredicate = _: true;
-
-      # I allow packages that are not supported by my system
-      # since I sometimes need to try and build those packages that are not directly supported
-      allowUnsupportedSystem = true;
+      # Usually leave false; enabling hides unsupported attrpaths that may break differently.
+      allowUnsupportedSystem = false;
     };
   };
 }
