@@ -3,7 +3,7 @@ keys:
   - &eva age1slc5p3prmn8hsldxezvsaz29luuhsjxsj7gspk8p506d4xw9rstqeyy0ls
 
 creation_rules:
-  - path_regex: secrets/c0d3h01.yaml
+  - path_regex: .*
     key_groups:
       - age:
           - *harshal
