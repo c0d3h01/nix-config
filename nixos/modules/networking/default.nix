@@ -2,7 +2,7 @@
   imports = [
     ./fail2ban.nix
     ./networkManager.nix
-    ./openssh.nix
+    ./ssh.nix
     ./optimizations.nix
     ./systemd.nix
     ./tcpcrypt.nix
