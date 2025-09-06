@@ -1,114 +1,166 @@
--- AstroLSP allows you to customize the features in AstroNvim's LSP configuration engine
--- Configuration documentation can be found with `:h astrolsp`
--- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
---       as this provides autocomplete and documentation while editing
-
 ---@type LazySpec
 return {
   "AstroNvim/astrolsp",
-  ---@type AstroLSPOpts
-  opts = {
-    file_operations = {
-      timeout = 10000, -- default timeout in ms for completing LSP operations
-      operations = {
-        willCreate = true,
-        didCreate = true,
-        willRename = true,
-        didRename = true,
-        willDelete = true,
-        didDelete = true,
-      },
-    },
-    -- Configuration table of features provided by AstroLSP
-    features = {
-      codelens = true, -- enable/disable codelens refresh on start
-      inlay_hints = false, -- enable/disable inlay hints on start
-      semantic_tokens = true, -- enable/disable semantic token highlighting
-    },
-    -- customize lsp formatting options
-    formatting = {
-      -- control auto formatting on save
-      format_on_save = {
-        enabled = true, -- enable or disable format on save globally
-        allow_filetypes = { -- enable format on save for specified filetypes only
-          -- "go",
-        },
-        ignore_filetypes = { -- disable format on save for specified filetypes
-          -- "python",
-        },
-      },
-      disabled = { -- disable formatting capabilities for the listed language servers
-        -- disable lua_ls formatting capability if you want to use StyLua to format your lua code
-        -- "lua_ls",
-      },
-      timeout_ms = 1000, -- default format timeout
-      -- filter = function(client) -- fully override the default formatting function
-      --   return true
-      -- end
-    },
-    -- enable servers that you already have installed without mason
-    servers = {
-      "pyright",
-    },
-    -- customize language server configuration options passed to `lspconfig`
-    ---@diagnostic disable: missing-fields
-    config = {
-      clangd = { capabilities = { offsetEncoding = "utf-8" } },
-    },
-    -- customize how language servers are attached
-    handlers = {
-      -- a function without a key is simply the default handler, functions take two parameters, the server name and the configured options table for that server
-      -- function(server, opts) require("lspconfig")[server].setup(opts) end
-
-      -- the key is the server that is being setup with `lspconfig`
-      -- rust_analyzer = false, -- setting a handler to false will disable the set up of that language server
-      -- pyright = function(_, opts) require("lspconfig").pyright.setup(opts) end -- or a custom handler function can be passed
-    },
-    -- Configure buffer local auto commands to add when attaching a language server
-    autocmds = {
-      -- first key is the `augroup` to add the auto commands to (:h augroup)
-      lsp_codelens_refresh = {
-        -- Optional condition to create/delete auto command group
-        -- can either be a string of a client capability or a function of `fun(client, bufnr): boolean`
-        -- condition will be resolved for each client on each execution and if it ever fails for all clients,
-        -- the auto commands will be deleted for that buffer
-        cond = "textDocument/codeLens",
-        -- cond = function(client, bufnr) return client.name == "lua_ls" end,
-        -- list of auto commands to set
-        {
-          -- events to trigger
-          event = { "InsertLeave", "BufEnter" },
-          -- the rest of the autocmd options (:h nvim_create_autocmd)
-          desc = "Refresh codelens (buffer)",
-          callback = function(args)
-            if require("astrolsp").config.features.codelens then vim.lsp.codelens.refresh { bufnr = args.buf } end
-          end,
-        },
-      },
-    },
-    -- mappings to be set up on attaching of a language server
-    mappings = {
-      n = {
-        -- a `cond` key can provided as the string of a server capability to be required to attach, or a function with `client` and `bufnr` parameters from the `on_attach` that returns a boolean
-        gD = {
-          function() vim.lsp.buf.declaration() end,
-          desc = "Declaration of current symbol",
-          cond = "textDocument/declaration",
-        },
-        ["<Leader>uY"] = {
-          function() require("astrolsp.toggles").buffer_semantic_tokens() end,
-          desc = "Toggle LSP semantic highlight (buffer)",
-          cond = function(client)
-            return client.supports_method "textDocument/semanticTokens/full" and vim.lsp.semantic_tokens ~= nil
-          end,
-        },
-      },
-    },
-    -- A custom `on_attach` function to be run after the default `on_attach` function
-    -- takes two parameters `client` and `bufnr`  (`:h lspconfig-setup`)
-    on_attach = function(client, bufnr)
-      -- this would disable semanticTokensProvider for all clients
-      -- client.server_capabilities.semanticTokensProvider = nil
-    end,
+  dependencies = {
+    { "b0o/SchemaStore.nvim", version = false },
   },
+  opts = function(_, opts)
+    -- Merge feature toggles
+    opts.features = vim.tbl_deep_extend("force", opts.features or {}, {
+      codelens = false,
+      inlay_hints = false,
+      semantic_tokens = false,
+    })
+
+    -- Formatting settings
+    opts.formatting = vim.tbl_deep_extend("force", opts.formatting or {}, {
+      format_on_save = {
+        enabled = true,
+        allow_filetypes = {},
+        ignore_filetypes = { "markdown" },
+      },
+      timeout_ms = 1500,
+    })
+
+    -- Ensure a base set of servers (non-destructive)
+    local ensure = {
+      "lua_ls",
+      "pyright",
+      "ts_ls",
+      "jsonls",
+      "bashls",
+      "html",
+      "cssls",
+      "yamlls",
+      "marksman",
+      "dockerls",
+      -- "gopls",
+      -- "clangd",
+    }
+    opts.servers = opts.servers or {}
+    local present = {}
+    for _, s in ipairs(opts.servers) do present[s] = true end
+    for _, s in ipairs(ensure) do if not present[s] then table.insert(opts.servers, s) end end
+
+    -- Helper to safely fetch schemastore schemas
+    local function get_schemas(kind)
+      local ok, schemastore = pcall(require, "schemastore")
+      if not ok then return {} end
+      if kind == "json" then
+        return schemastore.json.schemas()
+      elseif kind == "yaml" then
+        return schemastore.yaml.schemas()
+      end
+      return {}
+    end
+
+    -- Merge per-server config as tables (NO functions)
+    opts.config = vim.tbl_deep_extend("force", opts.config or {}, {
+      lua_ls = {
+        settings = {
+          Lua = {
+            completion = { callSnippet = "Replace" },
+            diagnostics = { globals = { "vim" } },
+            workspace = { checkThirdParty = false },
+            telemetry = { enable = false },
+          },
+        },
+      },
+      tsserver = { single_file_support = false },
+      gopls = {
+        settings = {
+          gopls = {
+            analyses = { unusedparams = true },
+            staticcheck = true,
+          },
+        },
+      },
+      jsonls = {
+        settings = {
+          json = {
+            validate = { enable = true },
+            schemas = get_schemas("json"),
+          },
+        },
+      },
+      yamlls = {
+        settings = {
+          yaml = {
+            keyOrdering = false,
+            schemaStore = { enable = false, url = "" }, -- we supply schemas ourselves
+            schemas = get_schemas("yaml"),
+          },
+        },
+      },
+      -- clangd = { capabilities = { offsetEncoding = "utf-8" } },
+    })
+
+    -- Extend mappings instead of replacing
+    opts.mappings = opts.mappings or {}
+    opts.mappings.n = opts.mappings.n or {}
+    opts.mappings.v = opts.mappings.v or {}
+
+    local function map_once(mode, lhs, rhs)
+      opts.mappings[mode] = opts.mappings[mode] or {}
+      if not opts.mappings[mode][lhs] then opts.mappings[mode][lhs] = rhs end
+    end
+
+    map_once("n", "<Leader>lf", {
+      function() vim.lsp.buf.format { async = true } end,
+      desc = "LSP Format buffer",
+    })
+    map_once("v", "<Leader>lf", {
+      function() vim.lsp.buf.format { async = true } end,
+      desc = "LSP Format selection",
+    })
+
+    map_once("n", "K",  { function() vim.lsp.buf.hover() end, desc = "LSP Hover" })
+    map_once("n", "gd", { function() vim.lsp.buf.definition() end, desc = "Go to definition" })
+    map_once("n", "gD", { function() vim.lsp.buf.declaration() end, desc = "Go to declaration", cond = "textDocument/declaration" })
+    map_once("n", "gr", { function() vim.lsp.buf.references() end, desc = "References" })
+    map_once("n", "gi", { function() vim.lsp.buf.implementation() end, desc = "Go to implementation" })
+    map_once("n", "gt", { function() vim.lsp.buf.type_definition() end, desc = "Type definition" })
+    map_once("n", "gl", { function() vim.diagnostic.open_float() end, desc = "Line diagnostics" })
+    map_once("n", "<Leader>rn", { function() vim.lsp.buf.rename() end, desc = "Rename symbol" })
+    map_once("n", "<Leader>ca", { function() vim.lsp.buf.code_action() end, desc = "Code action" })
+
+    map_once("n", "<Leader>uh", {
+      function()
+        local ih = vim.lsp.inlay_hint
+        if ih then
+          local enabled = ih.is_enabled and ih.is_enabled(0)
+          ih.enable(not enabled, { 0 })
+          vim.notify("Inlay hints " .. (enabled and "disabled" or "enabled"))
+        end
+      end,
+      desc = "Toggle Inlay Hints",
+    })
+
+    map_once("n", "<Leader>uS", {
+      function() require("astrolsp.toggles").buffer_semantic_tokens() end,
+      desc = "Toggle semantic tokens (buffer)",
+      cond = function(client)
+        return client.supports_method "textDocument/semanticTokens/full" and vim.lsp.semantic_tokens
+      end,
+    })
+
+    if not opts.mappings.n["<Leader>l"] then
+      opts.mappings.n["<Leader>l"] = { desc = "LSP" }
+    end
+    if not opts.mappings.n["<Leader>f"] then
+      opts.mappings.n["<Leader>f"] = { desc = "Find" }
+    end
+
+    -- on_attach wrapper
+    local previous_on_attach = opts.on_attach
+    opts.on_attach = function(client, bufnr)
+      if not opts.features.semantic_tokens and client.server_capabilities.semanticTokensProvider then
+        client.server_capabilities.semanticTokensProvider = nil
+      end
+      vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+      if type(previous_on_attach) == "function" then previous_on_attach(client, bufnr) end
+    end
+
+    return opts
+  end,
 }
