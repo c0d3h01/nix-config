@@ -1,9 +1,4 @@
 {
-  networking.networkmanager.enable = true;
-
-  # Hand DNS to systemd-resolved
-  networking.networkmanager.dns = "systemd-resolved";
-
   services.resolved = {
     enable = true;
     dnssec = "allow-downgrade"; # Use DNSSEC when upstream supports it

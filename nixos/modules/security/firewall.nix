@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   networking.firewall = {
@@ -9,6 +9,9 @@
     # make a much smaller and easier to read log
     logReversePathDrops = true;
     logRefusedConnections = false;
+
+    # Don't filter DHCP packets, according to nixops-libvirtd
+    checkReversePath = lib.mkForce false;
 
     # TCP Ports
     allowedTCPPorts = [
