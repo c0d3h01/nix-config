@@ -7,19 +7,17 @@ return {
       -- Get the astrolsp config safely
       local astrolsp_ok, astrolsp = pcall(require, "astrolsp")
       if astrolsp_ok and astrolsp.config and astrolsp.config.formatting then
-        if not astrolsp.config.formatting.format_on_save.enabled then
-          return
-        end
+        if not astrolsp.config.formatting.format_on_save.enabled then return end
       end
-      
+
       -- Safe format configuration
-      return { 
-        timeout_ms = 2000, 
+      return {
+        timeout_ms = 2000,
         lsp_format = "fallback",
         quiet = true, -- Don't show errors for missing formatters
       }
     end,
-    
+
     formatters_by_ft = {
       lua = { "stylua" },
       python = { "black" },
@@ -39,11 +37,11 @@ return {
       bash = { "shfmt" },
       zsh = { "shfmt" },
     },
-    
+
     -- Formatter configurations
     formatters = {
       stylua = {
-        prepend_args = { "--config-path", vim.fn.expand("~/.config/nvim/.stylua.toml") },
+        prepend_args = { "--config-path", vim.fn.expand "~/.config/nvim/.stylua.toml" },
       },
       black = {
         prepend_args = { "--line-length", "88", "--fast" },
@@ -55,16 +53,16 @@ return {
         prepend_args = { "-i", "2", "-ci", "-sr" },
       },
     },
-    
+
     -- Notify on format errors but don't block
     notify_on_error = false,
     notify_no_formatters = false,
   },
-  
+
   config = function(_, opts)
-    local conform = require("conform")
+    local conform = require "conform"
     conform.setup(opts)
-    
+
     -- Add a command to format current buffer manually
     vim.api.nvim_create_user_command("Format", function(args)
       local range = nil
@@ -75,7 +73,7 @@ return {
           ["end"] = { args.line2, end_line:len() },
         }
       end
-      conform.format({ async = true, lsp_format = "fallback", range = range })
+      conform.format { async = true, lsp_format = "fallback", range = range }
     end, { range = true })
   end,
 }

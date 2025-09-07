@@ -51,16 +51,16 @@ return {
         settings = {
           Lua = {
             completion = { callSnippet = "Replace" },
-            diagnostics = { 
+            diagnostics = {
               globals = { "vim" },
-              disable = { "missing-fields" }
+              disable = { "missing-fields" },
             },
-            workspace = { 
+            workspace = {
               checkThirdParty = false,
               library = {
                 vim.env.VIMRUNTIME,
                 "${3rd}/luv/library",
-              }
+              },
             },
             telemetry = { enable = false },
             format = { enable = false }, -- Use stylua instead
@@ -81,7 +81,7 @@ return {
         settings = {
           json = {
             validate = { enable = true },
-            schemas = get_schemas("json"),
+            schemas = get_schemas "json",
           },
         },
       },
@@ -89,11 +89,11 @@ return {
         settings = {
           yaml = {
             keyOrdering = false,
-            schemaStore = { 
-              enable = false, 
-              url = "" 
+            schemaStore = {
+              enable = false,
+              url = "",
             },
-            schemas = get_schemas("yaml"),
+            schemas = get_schemas "yaml",
           },
         },
       },
@@ -108,46 +108,44 @@ return {
 
     local function map_once(mode, lhs, rhs)
       opts.mappings[mode] = opts.mappings[mode] or {}
-      if not opts.mappings[mode][lhs] then 
-        opts.mappings[mode][lhs] = rhs 
-      end
+      if not opts.mappings[mode][lhs] then opts.mappings[mode][lhs] = rhs end
     end
 
     -- Core LSP mappings
-    map_once("n", "K", { 
-      function() vim.lsp.buf.hover() end, 
-      desc = "LSP Hover" 
+    map_once("n", "K", {
+      function() vim.lsp.buf.hover() end,
+      desc = "LSP Hover",
     })
-    map_once("n", "gd", { 
-      function() vim.lsp.buf.definition() end, 
-      desc = "Go to definition" 
+    map_once("n", "gd", {
+      function() vim.lsp.buf.definition() end,
+      desc = "Go to definition",
     })
-    map_once("n", "gD", { 
-      function() vim.lsp.buf.declaration() end, 
-      desc = "Go to declaration" 
+    map_once("n", "gD", {
+      function() vim.lsp.buf.declaration() end,
+      desc = "Go to declaration",
     })
-    map_once("n", "gr", { 
-      function() vim.lsp.buf.references() end, 
-      desc = "References" 
+    map_once("n", "gr", {
+      function() vim.lsp.buf.references() end,
+      desc = "References",
     })
-    map_once("n", "gi", { 
-      function() vim.lsp.buf.implementation() end, 
-      desc = "Go to implementation" 
+    map_once("n", "gi", {
+      function() vim.lsp.buf.implementation() end,
+      desc = "Go to implementation",
     })
-    map_once("n", "<Leader>rn", { 
-      function() vim.lsp.buf.rename() end, 
-      desc = "Rename symbol" 
+    map_once("n", "<Leader>rn", {
+      function() vim.lsp.buf.rename() end,
+      desc = "Rename symbol",
     })
-    map_once("n", "<Leader>ca", { 
-      function() vim.lsp.buf.code_action() end, 
-      desc = "Code action" 
+    map_once("n", "<Leader>ca", {
+      function() vim.lsp.buf.code_action() end,
+      desc = "Code action",
     })
     map_once("n", "<Leader>lf", {
-      function() 
-        vim.lsp.buf.format({ 
+      function()
+        vim.lsp.buf.format {
           async = true,
           timeout_ms = 2000,
-        }) 
+        }
       end,
       desc = "Format buffer",
     })
@@ -160,25 +158,21 @@ return {
           vim.lsp.inlay_hint.enable(not current_state, { 0 })
           vim.notify("Inlay hints " .. (current_state and "disabled" or "enabled"))
         else
-          vim.notify("Inlay hints not available")
+          vim.notify "Inlay hints not available"
         end
       end,
       desc = "Toggle Inlay Hints",
     })
 
     -- Group labels
-    if not opts.mappings.n["<Leader>l"] then
-      opts.mappings.n["<Leader>l"] = { desc = "LSP" }
-    end
+    if not opts.mappings.n["<Leader>l"] then opts.mappings.n["<Leader>l"] = { desc = "LSP" } end
 
     -- Safe on_attach function
     local previous_on_attach = opts.on_attach
     opts.on_attach = function(client, bufnr)
       -- Safely handle semantic tokens
       if client.server_capabilities.semanticTokensProvider then
-        if not opts.features.semantic_tokens then
-          client.server_capabilities.semanticTokensProvider = nil
-        end
+        if not opts.features.semantic_tokens then client.server_capabilities.semanticTokensProvider = nil end
       end
 
       -- Set buffer options safely
@@ -189,11 +183,9 @@ return {
       end
 
       -- Call previous on_attach if it exists
-      if type(previous_on_attach) == "function" then 
+      if type(previous_on_attach) == "function" then
         local ok, err = pcall(previous_on_attach, client, bufnr)
-        if not ok then
-          vim.notify("Error in previous on_attach: " .. tostring(err), vim.log.levels.WARN)
-        end
+        if not ok then vim.notify("Error in previous on_attach: " .. tostring(err), vim.log.levels.WARN) end
       end
     end
 

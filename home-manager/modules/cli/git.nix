@@ -3,13 +3,16 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (pkgs.stdenv) isDarwin;
   sshSignerProgram =
-    if isDarwin
-    then "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
-    else "${pkgs.openssh}/bin/ssh-keygen";
-in {
+    if isDarwin then
+      "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+    else
+      "${pkgs.openssh}/bin/ssh-keygen";
+in
+{
   programs.git = {
     enable = true;
 

@@ -23,7 +23,7 @@ return {
 
         -- Diagnostics/Linters (optional, install only if available)
         -- "shellcheck", -- Uncomment if you want shell linting
-        
+
         -- Debug adapters
         "debugpy", -- Python debugger
 
@@ -43,10 +43,10 @@ return {
         icons = {
           package_installed = "✓",
           package_pending = "➜",
-          package_uninstalled = "✗"
-        }
+          package_uninstalled = "✗",
+        },
       },
-      install_root_dir = vim.fn.stdpath("data") .. "/mason",
+      install_root_dir = vim.fn.stdpath "data" .. "/mason",
       pip = {
         upgrade_pip = false, -- Don't upgrade pip automatically for stability
       },

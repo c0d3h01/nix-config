@@ -26,7 +26,7 @@ return {
     opts = {
       bind = true,
       handler_opts = {
-        border = "rounded"
+        border = "rounded",
       },
       floating_window = false, -- Use virtual text instead
       hint_enable = true,
@@ -35,14 +35,12 @@ return {
       max_height = 12,
       max_width = 80,
       transparency = nil,
-      shadow_guibg = 'Black',
+      shadow_guibg = "Black",
       shadow_blend = 36,
       timer_interval = 200,
       toggle_key = nil,
     },
-    config = function(_, opts)
-      require("lsp_signature").setup(opts)
-    end,
+    config = function(_, opts) require("lsp_signature").setup(opts) end,
   },
 
   -- Enhanced dashboard
@@ -65,7 +63,12 @@ return {
             { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
             { icon = " ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
             { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
-            { icon = " ", key = "c", desc = "Config", action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
+            {
+              icon = " ",
+              key = "c",
+              desc = "Config",
+              action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})",
+            },
             { icon = " ", key = "s", desc = "Restore Session", section = "session" },
             { icon = "󰒲 ", key = "l", desc = "Lazy", action = ":Lazy", enabled = package.loaded.lazy ~= nil },
             { icon = " ", key = "q", desc = "Quit", action = ":qa" },
@@ -89,12 +92,12 @@ return {
     build = "make install_jsregexp",
     config = function(plugin, opts)
       -- Include default AstroNvim config
-      require("astronvim.plugins.configs.luasnip")(plugin, opts)
-      
-      local luasnip = require("luasnip")
-      
+      require "astronvim.plugins.configs.luasnip"(plugin, opts)
+
+      local luasnip = require "luasnip"
+
       -- Extend filetypes
-      luasnip.config.setup({
+      luasnip.config.setup {
         history = true,
         updateevents = "TextChanged,TextChangedI",
         delete_check_events = "TextChanged",
@@ -105,12 +108,12 @@ return {
             },
           },
         },
-      })
-      
+      }
+
       -- Load snippets
       require("luasnip.loaders.from_vscode").lazy_load()
       require("luasnip.loaders.from_lua").load()
-      
+
       -- Filetype extensions
       luasnip.filetype_extend("javascript", { "javascriptreact" })
       luasnip.filetype_extend("typescript", { "typescriptreact" })
@@ -123,38 +126,34 @@ return {
     "windwp/nvim-autopairs",
     config = function(plugin, opts)
       -- Include default AstroNvim config
-      require("astronvim.plugins.configs.nvim-autopairs")(plugin, opts)
-      
-      local npairs = require("nvim-autopairs")
-      local Rule = require("nvim-autopairs.rule")
-      local cond = require("nvim-autopairs.conds")
-      
+      require "astronvim.plugins.configs.nvim-autopairs"(plugin, opts)
+
+      local npairs = require "nvim-autopairs"
+      local Rule = require "nvim-autopairs.rule"
+      local cond = require "nvim-autopairs.conds"
+
       -- Add custom rules
-      npairs.add_rules({
+      npairs.add_rules {
         -- LaTeX rules
         Rule("$", "$", { "tex", "latex" })
-          :with_pair(cond.not_after_regex("%%"))
+          :with_pair(cond.not_after_regex "%%")
           :with_move(cond.none())
           :with_cr(cond.none()),
-        
+
         -- Python f-string rules
         Rule("f'", "'", "python"),
         Rule('f"', '"', "python"),
-        
+
         -- Markdown code blocks
-        Rule("```", "```", "markdown")
-          :with_cr(cond.none())
-          :with_move(cond.done()),
-      })
-      
+        Rule("```", "```", "markdown"):with_cr(cond.none()):with_move(cond.done()),
+      }
+
       -- Integration with treesitter
-      local ts_conds = require("nvim-autopairs.ts-conds")
-      npairs.add_rules({
-        Rule("%", "%", "lua")
-          :with_pair(ts_conds.is_ts_node({'string','comment'})),
-        Rule("$", "$", "lua")
-          :with_pair(ts_conds.is_not_ts_node({'function'}))
-      })
+      local ts_conds = require "nvim-autopairs.ts-conds"
+      npairs.add_rules {
+        Rule("%", "%", "lua"):with_pair(ts_conds.is_ts_node { "string", "comment" }),
+        Rule("$", "$", "lua"):with_pair(ts_conds.is_not_ts_node { "function" }),
+      }
     end,
   },
 

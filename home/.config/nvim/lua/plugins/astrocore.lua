@@ -14,38 +14,38 @@ return {
       wrap = false,
       termguicolors = true,
       lazyredraw = true, -- Don't redraw while executing macros
-      
+
       -- Window behavior
       splitbelow = true,
       splitright = true,
-      
+
       -- Performance timing
       timeoutlen = 300, -- Faster which-key popup
       updatetime = 100, -- Faster CursorHold events
       redrawtime = 1500, -- Limit redraw time for large files
-      
+
       -- File handling (optimized)
       undofile = true,
       undolevels = 1000, -- Limit undo history for performance
       swapfile = false, -- Disable swap for speed (use undofile instead)
       backup = false,
       writebackup = false,
-      
+
       -- System integration
       clipboard = "unnamedplus",
       mouse = "a", -- Enable mouse for productivity
-      
+
       -- Search optimizations
       ignorecase = true,
       smartcase = true,
       incsearch = true,
       hlsearch = true,
-      
+
       -- Scrolling performance
       scrolloff = 4, -- Reduced for performance
       sidescrolloff = 8,
       scroll = 10, -- Smooth scrolling
-      
+
       -- Indentation (coding optimized)
       expandtab = true,
       shiftwidth = 2,
@@ -54,24 +54,24 @@ return {
       smartindent = true,
       autoindent = true,
       shiftround = true, -- Round indent to multiple of shiftwidth
-      
+
       -- Visual indicators (minimal for performance)
       list = true,
-      listchars = { 
-        tab = "→ ", 
-        trail = "·", 
-        extends = "»", 
-        precedes = "«", 
-        nbsp = "⦸" 
+      listchars = {
+        tab = "→ ",
+        trail = "·",
+        extends = "»",
+        precedes = "«",
+        nbsp = "⦸",
       },
-      fillchars = { 
-        vert = "│", 
-        fold = "·", 
-        eob = " ", 
-        msgsep = "─", 
-        diff = "╱" 
+      fillchars = {
+        vert = "│",
+        fold = "·",
+        eob = " ",
+        msgsep = "─",
+        diff = "╱",
       },
-      
+
       -- Folding (optimized for code)
       foldmethod = "expr",
       foldexpr = "v:lua.vim.treesitter.foldexpr()", -- Modern API
@@ -79,19 +79,19 @@ return {
       foldlevelstart = 99,
       foldenable = true,
       foldcolumn = "1", -- Show fold column
-      
+
       -- Completion performance
       completeopt = "menu,menuone,noselect,noinsert",
       pumheight = 15, -- Limit completion menu height
-      
+
       -- Advanced editor features
       conceallevel = 2, -- Hide markup in markdown, etc.
       concealcursor = "nc", -- Hide concealed text in normal/command mode
       virtualedit = "block", -- Allow cursor beyond end of line in visual block
-      
+
       -- Session and file handling
       sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions",
-      
+
       -- Performance for large files
       synmaxcol = 300, -- Limit syntax highlighting for long lines
       maxmempattern = 20000, -- Increase pattern matching memory
@@ -102,7 +102,7 @@ return {
       large_buf = { size = 1024 * 256, lines = 10000 }, -- More aggressive large file detection
       autopairs = true,
       cmp = true,
-      diagnostics = { 
+      diagnostics = {
         virtual_text = { severity = vim.diagnostic.severity.ERROR }, -- Only show errors inline
         virtual_lines = false,
         signs = true,
@@ -127,9 +127,7 @@ return {
     map_once("[b", { function() require("astrocore.buffer").nav(-vim.v.count1) end, desc = "Previous buffer" })
     map_once("<Leader>bd", {
       function()
-        require("astroui.status.heirline").buffer_picker(function(bufnr)
-          require("astrocore.buffer").close(bufnr)
-        end)
+        require("astroui.status.heirline").buffer_picker(function(bufnr) require("astrocore.buffer").close(bufnr) end)
       end,
       desc = "Close buffer (picker)",
     })
@@ -160,7 +158,7 @@ return {
     map_once("<C-u>", { "<C-u>zz", desc = "Half page up (center)" })
     map_once("n", { "nzzzv", desc = "Next search (center)" })
     map_once("N", { "Nzzzv", desc = "Prev search (center)" })
-    
+
     -- SMART LINE MOVEMENT
     map_once("j", { function() return vim.v.count == 0 and "gj" or "j" end, expr = true, desc = "Down (wrap aware)" })
     map_once("k", { function() return vim.v.count == 0 and "gk" or "k" end, expr = true, desc = "Up (wrap aware)" })
@@ -183,11 +181,20 @@ return {
     map_once("#", { "#zz", desc = "Search word backward (center)" })
 
     -- DIAGNOSTICS (Quick access)
-    map_once("[d", { function() vim.diagnostic.goto_prev({ float = false }) end, desc = "Prev diagnostic" })
-    map_once("]d", { function() vim.diagnostic.goto_next({ float = false }) end, desc = "Next diagnostic" })
-    map_once("[e", { function() vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR }) end, desc = "Prev error" })
-    map_once("]e", { function() vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR }) end, desc = "Next error" })
-    map_once("<Leader>e", { function() vim.diagnostic.open_float(nil, { focus = false, border = "rounded" }) end, desc = "Line diagnostics" })
+    map_once("[d", { function() vim.diagnostic.goto_prev { float = false } end, desc = "Prev diagnostic" })
+    map_once("]d", { function() vim.diagnostic.goto_next { float = false } end, desc = "Next diagnostic" })
+    map_once(
+      "[e",
+      { function() vim.diagnostic.goto_prev { severity = vim.diagnostic.severity.ERROR } end, desc = "Prev error" }
+    )
+    map_once(
+      "]e",
+      { function() vim.diagnostic.goto_next { severity = vim.diagnostic.severity.ERROR } end, desc = "Next error" }
+    )
+    map_once(
+      "<Leader>e",
+      { function() vim.diagnostic.open_float(nil, { focus = false, border = "rounded" }) end, desc = "Line diagnostics" }
+    )
 
     -- QUICKFIX & LOCATION LIST
     map_once("<Leader>cq", { "<Cmd>copen<CR>", desc = "Open quickfix" })
@@ -255,50 +262,36 @@ return {
 
     -- VISUAL MODE ENHANCEMENTS
     opts.mappings.v = opts.mappings.v or {}
-    if not opts.mappings.v["<Leader>y"] then
-      opts.mappings.v["<Leader>y"] = { '"+y', desc = "Yank to system" }
-    end
-    if not opts.mappings.v["<Leader>p"] then
-      opts.mappings.v["<Leader>p"] = { '"+p', desc = "Paste from system" }
-    end
-    if not opts.mappings.v[">"] then
-      opts.mappings.v[">"] = { ">gv", desc = "Indent and reselect" }
-    end
-    if not opts.mappings.v["<"] then
-      opts.mappings.v["<"] = { "<gv", desc = "Outdent and reselect" }
-    end
-    if not opts.mappings.v["J"] then
-      opts.mappings.v["J"] = { ":m '>+1<CR>gv=gv", desc = "Move selection down" }
-    end
-    if not opts.mappings.v["K"] then
-      opts.mappings.v["K"] = { ":m '<-2<CR>gv=gv", desc = "Move selection up" }
-    end
+    if not opts.mappings.v["<Leader>y"] then opts.mappings.v["<Leader>y"] = { '"+y', desc = "Yank to system" } end
+    if not opts.mappings.v["<Leader>p"] then opts.mappings.v["<Leader>p"] = { '"+p', desc = "Paste from system" } end
+    if not opts.mappings.v[">"] then opts.mappings.v[">"] = { ">gv", desc = "Indent and reselect" } end
+    if not opts.mappings.v["<"] then opts.mappings.v["<"] = { "<gv", desc = "Outdent and reselect" } end
+    if not opts.mappings.v["J"] then opts.mappings.v["J"] = { ":m '>+1<CR>gv=gv", desc = "Move selection down" } end
+    if not opts.mappings.v["K"] then opts.mappings.v["K"] = { ":m '<-2<CR>gv=gv", desc = "Move selection up" } end
 
     -- INSERT MODE IMPROVEMENTS
     opts.mappings.i = opts.mappings.i or {}
-    if not opts.mappings.i["jk"] then
-      opts.mappings.i["jk"] = { "<Esc>", desc = "Exit insert mode" }
-    end
+    if not opts.mappings.i["jk"] then opts.mappings.i["jk"] = { "<Esc>", desc = "Exit insert mode" } end
     if not opts.mappings.i["<C-s>"] then
       opts.mappings.i["<C-s>"] = { "<Esc><Cmd>w<CR>a", desc = "Save and continue" }
     end
 
     -- PERFORMANCE-OPTIMIZED AUTOCMDS
     opts.autocmds = opts.autocmds or {}
-    
+
     opts.autocmds.yank_highlight = {
       {
         event = "TextYankPost",
         desc = "Highlight yanked text",
-        callback = function() 
-          vim.highlight.on_yank { 
-            higroup = "IncSearch", 
-            timeout = 200  -- Faster timeout
-          } 
+        callback = function()
+          vim.highlight.on_yank {
+            higroup = "IncSearch",
+            timeout = 200, -- Faster timeout
+          }
         end,
       },
     }
-    
+
     opts.autocmds.trim_trailing_ws = {
       {
         event = "BufWritePre",
@@ -308,24 +301,22 @@ return {
           local exclude_ft = { "markdown", "diff", "gitcommit", "text" }
           if not vim.tbl_contains(exclude_ft, ft) then
             local view = vim.fn.winsaveview()
-            vim.cmd([[silent! %s/\s\+$//e]])
+            vim.cmd [[silent! %s/\s\+$//e]]
             vim.fn.winrestview(view)
           end
         end,
       },
     }
-    
+
     opts.autocmds.auto_create_dir = {
       {
         event = "BufWritePre",
         desc = "Auto create directories",
         callback = function(event)
           local file = event.match
-          if file:match("^%w%w+://") then return end
+          if file:match "^%w%w+://" then return end
           local dir = vim.fn.fnamemodify(file, ":p:h")
-          if not (vim.uv or vim.loop).fs_stat(dir) then 
-            vim.fn.mkdir(dir, "p") 
-          end
+          if not (vim.uv or vim.loop).fs_stat(dir) then vim.fn.mkdir(dir, "p") end
         end,
       },
     }
@@ -341,7 +332,7 @@ return {
           if vim.api.nvim_buf_is_valid(buf) then
             local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
             if ok and stats and stats.size > max_filesize then
-              vim.cmd("syntax off")
+              vim.cmd "syntax off"
               vim.opt_local.foldmethod = "manual"
               vim.opt_local.spell = false
             end
@@ -351,9 +342,7 @@ return {
       {
         event = "WinEnter",
         desc = "Auto resize splits",
-        callback = function()
-          vim.cmd("wincmd =")
-        end,
+        callback = function() vim.cmd "wincmd =" end,
       },
     }
 
@@ -365,9 +354,7 @@ return {
         callback = function()
           local mark = vim.api.nvim_buf_get_mark(0, '"')
           local lcount = vim.api.nvim_buf_line_count(0)
-          if mark[1] > 0 and mark[1] <= lcount then
-            pcall(vim.api.nvim_win_set_cursor, 0, mark)
-          end
+          if mark[1] > 0 and mark[1] <= lcount then pcall(vim.api.nvim_win_set_cursor, 0, mark) end
         end,
       },
     }
