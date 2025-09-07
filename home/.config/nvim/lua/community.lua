@@ -1,27 +1,48 @@
--- AstroCommunity: import any community modules here
--- We import this file in `lazy_setup.lua` before the `plugins/` folder.
--- This guarantees that the specs are processed before any user plugins.
-
 ---@type LazySpec
 return {
   "AstroNvim/astrocommunity",
+  
+  -- Core language packs
   { import = "astrocommunity.pack.lua" },
-  { import = "astrocommunity.colorscheme.catppuccin" },
   { import = "astrocommunity.pack.python" },
-  { import = "astrocommunity.pack.rust" },
-  { import = "astrocommunity.completion.copilot-lua" },
-  { import = "astrocommunity.pack.cpp" },
+  
+  {
+    import = "astrocommunity.colorscheme.catppuccin",
+    enabled = true,
+  },
+  {
+    import = "astrocommunity.completion.copilot-lua",
+    enabled = true,
+  },
+  
+  -- Copilot configuration with safe defaults
   {
     "zbirenbaum/copilot.lua",
+    enabled = true,
     opts = {
+      panel = { enabled = false },
       suggestion = {
+        enabled = true,
         auto_trigger = true,
         keymap = {
-          accept = "<TAB>",
+          accept = "<Tab>",
+          accept_word = false,
+          accept_line = false,
+          next = "<M-]>",
+          prev = "<M-[>",
+          dismiss = "<C-]>",
         },
       },
       filetypes = {
+        yaml = false,
+        markdown = true,
+        help = false,
         gitcommit = true,
+        gitrebase = false,
+        hgcommit = false,
+        svn = false,
+        cvs = false,
+        ["."] = false,
       },
     },
   },

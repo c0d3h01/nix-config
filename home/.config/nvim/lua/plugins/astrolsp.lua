@@ -5,11 +5,10 @@ return {
     { "b0o/SchemaStore.nvim", version = false },
   },
   opts = function(_, opts)
-    -- Merge feature toggles - disable problematic features for stability
     opts.features = vim.tbl_deep_extend("force", opts.features or {}, {
       codelens = true,
       inlay_hints = true,
-      semantic_tokens = true, -- Enable but handle safely
+      semantic_tokens = true,
     })
 
     -- Formatting settings
@@ -20,10 +19,10 @@ return {
         ignore_filetypes = { "markdown", "text" },
       },
       timeout_ms = 2000,
-      disabled = { "lua_ls" }, -- Let stylua handle Lua formatting
+      disabled = { "lua_ls" },
     })
 
-    -- Essential servers only for stability
+    -- Essential servers
     opts.servers = {
       "lua_ls",
       "pyright",
@@ -45,7 +44,7 @@ return {
       return {}
     end
 
-    -- Safe server configurations
+    -- Server configurations
     opts.config = {
       lua_ls = {
         settings = {
@@ -63,7 +62,7 @@ return {
               },
             },
             telemetry = { enable = false },
-            format = { enable = false }, -- Use stylua instead
+            format = { enable = false },
           },
         },
       },
