@@ -7,6 +7,6 @@
     ./ssh.nix
     ./systemd.nix
     ./tcpcrypt.nix
-    # ./wireless.nix
+    ./wireless.nix
   ];
 }

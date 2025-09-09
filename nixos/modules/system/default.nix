@@ -12,6 +12,7 @@
     ./firmware.nix
     ./flatpak.nix
     ./fonts.nix
+    ./gnome.nix
     ./gnupg.nix
     ./libvirt.nix
     ./locale.nix

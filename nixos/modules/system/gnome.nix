@@ -16,6 +16,15 @@ in
     services.displayManager.gdm.enable = true;
     xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gnome ];
 
+    # Gnome Keyring - secrets
+    services.gnome.gnome-keyring.enable = true;
+    security.pam.services.gdm.enableGnomeKeyring = true;
+
+    networking.firewall = {
+      allowedTCPPorts = [ 1716 ]; # gsconnect / KDE
+      allowedUDPPorts = [ 1716 ];
+    };
+
     # Exclude unwanted GNOME packages
     environment = {
       systemPackages = with pkgs; [
