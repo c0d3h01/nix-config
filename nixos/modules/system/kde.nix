@@ -21,6 +21,7 @@ in
       kate
       konsole
       plasma-browser-integration
+      partitionmanager
     ];
   };
 }
