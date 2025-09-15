@@ -19,6 +19,7 @@ in
     # Exclude unwanted KDE packages
     environment.plasma6.excludePackages = with pkgs.kdePackages; [
       kate
+      kcalc
       konsole
       plasma-browser-integration
       partitionmanager
