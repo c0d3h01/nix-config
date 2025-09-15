@@ -4,15 +4,23 @@
   pkgs,
   ...
 }:
-
+let
+  inherit (lib) mkIf;
+in
 {
-  config = lib.mkIf userConfig.machineConfig.workstation.enable {
+  config = mkIf userConfig.machineConfig.workstation.enable {
     home.pointerCursor = {
       gtk.enable = true;
       x11.enable = true;
       name = "Bibata-Modern-Ice";
       package = pkgs.bibata-cursors;
       size = 24;
+    };
+
+    # QT theming
+    qt = {
+      enable = true;
+      platformTheme.name = "gtk";
     };
 
     # GTK theming
