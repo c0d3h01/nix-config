@@ -1,6 +1,5 @@
 {
   imports = [
-    ./fail2ban.nix
     ./firewall.nix
     ./networkManager.nix
     ./optimizations.nix

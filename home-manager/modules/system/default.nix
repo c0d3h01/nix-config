@@ -1,7 +1,7 @@
 {
   imports = [
     # ./fonts.nix
-    # ./gnome.nix
+    ./gnome.nix
     ./nix-your-shell.nix
     ./secrets.nix
     # ./theming.nix
