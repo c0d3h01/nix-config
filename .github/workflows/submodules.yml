@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: true
-          token: ${{ secrets.DOTFILES }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - run: |
           git submodule update --init --recursive --remote
@@ -25,9 +25,9 @@ jobs:
         uses: peter-evans/create-pull-request@v7
         with:
           title: Update SubModules
-          token: ${{ secrets.DOTFILES }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - if: steps.pr.outputs.pull-request-number
         run: gh pr merge ${{ steps.pr.outputs.pull-request-number }} --squash --auto
         env:
-          GH_TOKEN: ${{ secrets.DOTFILES }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
