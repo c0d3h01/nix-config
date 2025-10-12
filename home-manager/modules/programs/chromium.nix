@@ -12,6 +12,16 @@ let
     concatMapStrings
     enableFeature
     ;
+
+    # Path where you store your icons (update this path if different)
+    iconBasePath = "${osConfig.home.homeDirectory}/.local/share/icons/dashboard";
+
+    webApps = [
+      { name = "Telegram Web"; url = "https://web.telegram.org/"; icon = "${iconBasePath}/telegram.svg"; }
+      { name = "Discord"; url = "https://discord.com/app"; icon = "${iconBasePath}/discord.svg"; }
+      { name = "Slack Web"; url = "https://slack.com/signin"; icon = "${iconBasePath}/slack.svg"; }
+      { name = "Zoom Web"; url = "https://zoom.us/signin"; icon = "${iconBasePath}/zoom.svg"; }
+    ];
 in
 {
   programs.chromium = lib.mkIf userConfig.machineConfig.workstation.enable {
@@ -154,4 +164,18 @@ in
       ];
     };
   };
+
+  # Generate launchers for web apps
+  home.packages = optionals userConfig.machineConfig.workstation.enable (
+    map
+      (app: pkgs.makeDesktopItem {
+        name = lib.strings.escapeName app.name;
+        exec = "${pkgs.chromium}/bin/chromium --app='${app.url}'";
+        icon = app.icon;
+        comment = "Web App for ${app.name}";
+        desktopName = app.name;
+        categories = [ "Network" ];
+      })
+      webApps
+  );
 }
