@@ -78,7 +78,7 @@
                     mountpoint = "/var/cache";
                     mountOptions = [
                       "noatime"
-                      "nocompress"
+                      "nodatacow"
                       "ssd"
                       "space_cache=v2"
                       "commit=120"
