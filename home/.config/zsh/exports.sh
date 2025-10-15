@@ -4,11 +4,27 @@
 add_to_path() { [[ -d "$1" && ":$PATH:" != *":$1:"* ]] && path=("$1" $path) }
 ifsource() { [[ -f "$1" ]] && source "$1" }
 
-# Rust
-ifsource "$HOME/.local/share/cargo/env"
-export RUSTFLAGS="-C link-arg=-fuse-ld=mold"
-export CARGO_BUILD_JOBS=8
+# Rust Build Environment
+export CARGO_HOME="$HOME/.cargo"
+ifsource "$HOME/.cargo/env"
+ifsource "$HOME/.cargo/bin"
+export CARGO_BUILD_JOBS=4
+export CARGO_INCREMENTAL=1
+export RUSTFLAGS="-C link-arg=-fuse-ld=mold -C target-cpu=native"
 export CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER=clang
+export CARGO_PROFILE_DEV_CODEGEN_UNITS=16
+export CARGO_PROFILE_DEV_DEBUG=1
+export CARGO_PROFILE_DEV_INCREMENTAL=true
+export CARGO_PROFILE_DEV_BUILD_OVERRIDE_OPT_LEVEL=3
+export CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1
+export CARGO_PROFILE_RELEASE_LTO="thin"
+export CARGO_PROFILE_RELEASE_OPT_LEVEL=3
+export CARGO_PROFILE_RELEASE_STRIP="symbols"
+export CARGO_PROFILE_RELEASE_DEBUG=0
+export CARGO_PROFILE_RELEASE_INCREMENTAL=false
+export CARGO_PROFILE_RELEASE_PANIC="abort"
+export CARGO_NET_RETRY=2
+export CARGO_TERM_PROGRESS_WHEN=auto
 
 # Java
 command -v mise &>/dev/null && export JAVA_HOME="$(mise where java 2>/dev/null)"
