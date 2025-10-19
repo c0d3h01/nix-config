@@ -1,5 +1,6 @@
 {
   imports = [
+    ./git
     ./bat.nix
     ./bottom.nix
     ./direnv.nix

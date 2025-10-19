@@ -1,7 +1,7 @@
 {
   imports = [
     ./chromium.nix
-    ./monitoring.nix
+    # ./monitoring.nix
     ./packages.nix
     ./spicetify.nix
   ];
