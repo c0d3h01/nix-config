@@ -38,6 +38,15 @@
       };
     };
 
+    chaotic-unstable = {
+      type = "github";
+      owner = "chaotic-cx";
+      repo = "nyx";
+      rev = "nyxpkgs-unstable";
+
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     disko = {
       type = "github";
       owner = "nix-community";

@@ -1,4 +1,5 @@
 {
+  inputs,
   lib,
   userConfig,
   ...
@@ -10,8 +11,11 @@ let
 in
 {
   imports = [
+    inputs.chaotic.nixosModules.default
     ./hardware.nix
   ];
+
+  chaotic.mesa-git.enable = true;
 
   users.users = lib.mkIf isC0d3h01 {
     root = {
