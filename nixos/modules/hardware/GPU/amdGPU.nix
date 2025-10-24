@@ -16,28 +16,20 @@ in
     # xorg drivers
     services.xserver.videoDrivers = [ "amdgpu" ];
 
+    # auto-epp for amd active pstate.
+    services.auto-epp.enable = true;
+
     hardware.graphics = lib.mkIf isWorskstaion {
       enable = true;
 
       extraPackages = with pkgs; [
         mesa
-        amdvlk
-        libva-vdpau-driver
       ];
 
       enable32Bit = true;
       extraPackages32 = with pkgs.pkgsi686Linux; [
         mesa
-        amdvlk
-        libva-vdpau-driver
       ];
-    };
-
-    # Environment variables
-    environment.sessionVariables = {
-      LIBVA_DRIVER_NAME = "radeonsi";
-      VDPAU_DRIVER = "radeonsi";
-      MOZ_X11_EGL = "1"; # For Firefox
     };
   };
 }
