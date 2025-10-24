@@ -1,21 +1,9 @@
 {
   description = "Harshal (c0d3h01)'s dotfiles";
 
-  outputs =
-    inputs:
-    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [
-        ./flake
-        ./home-manager/flake-module.nix
-        ./nixos/flake-module.nix
-      ];
-    };
-
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
-    # jovian.follows = "chaotic/jovian";
 
     systems = {
       type = "github";
@@ -34,11 +22,7 @@
       type = "github";
       owner = "nix-community";
       repo = "NixOS-WSL";
-
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-compat.follows = "";
-      };
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     disko = {
@@ -79,11 +63,19 @@
       type = "github";
       owner = "Gerg-L";
       repo = "spicetify-nix";
-
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        systems.follows = "systems";
-      };
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.systems.follows = "systems";
     };
   };
+
+  outputs = inputs:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [
+        ./flake
+        ./home-manager/flake-module.nix
+        ./nixos/flake-module.nix
+      ];
+    } // {
+      inherit (inputs) chaotic;
+    };
 }
