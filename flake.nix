@@ -43,8 +43,6 @@
       owner = "chaotic-cx";
       repo = "nyx";
       rev = "nyxpkgs-unstable";
-
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     disko = {
