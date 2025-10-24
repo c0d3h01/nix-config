@@ -19,6 +19,7 @@
 
   home = {
     inherit (userConfig) username;
+    shell.enableShellIntegration = false;
     homeDirectory = "/home/${userConfig.username}";
     stateVersion = lib.trivial.release;
   };
