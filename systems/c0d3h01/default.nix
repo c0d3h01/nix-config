@@ -12,7 +12,6 @@ in
 {
   imports = [
     inputs.chaotic.nixosModules.default
-    inputs.chaotic.nixosModules.default # Cache binary pkgs
     ./hardware.nix
   ];
 
