@@ -4,12 +4,7 @@
   fonts = {
     packages = with pkgs; [
       # Mono space
-      nerd-fonts.jetbrains-mono
       nerd-fonts.caskaydia-mono
-
-      # Other regular fonts
-      inter
-      liberation_ttf
 
       # Emoji & Symbols
       noto-fonts
@@ -27,8 +22,8 @@
       };
 
       defaultFonts = {
-        sansSerif = [ "Inter" ];
-        serif = [ "Liberation Serif" ];
+        sansSerif = [ "Noto Sans" ];
+        serif = [ "Noto Serif" ];
         monospace = [ "Caskaydia Nerd Font" ];
         emoji = [ "Noto Color Emoji" ];
       };
