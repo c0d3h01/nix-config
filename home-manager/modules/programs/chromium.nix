@@ -7,32 +7,7 @@
 }:
 
 let
-  inherit (lib) optionals concatLists concatStringsSep;
-
-  iconBasePath = "${config.home.homeDirectory}/.local/share/icons/dashboard";
-
-  webApps = [
-    {
-      name = "Telegram";
-      url = "https://web.telegram.org/";
-      icon = "${iconBasePath}/telegram.png";
-    }
-    {
-      name = "Discord";
-      url = "https://discord.com/app";
-      icon = "${iconBasePath}/discord.png";
-    }
-    {
-      name = "Slack";
-      url = "https://slack.com/signin";
-      icon = "${iconBasePath}/slack.png";
-    }
-    {
-      name = "Zoom";
-      url = "https://zoom.us/signin";
-      icon = "${iconBasePath}/zoom.png";
-    }
-  ];
+  inherit (lib) optionals concatStringsSep;
 
   enableFeaturesList = [
     "PartitionVisitedLinkDatabase"
@@ -118,21 +93,8 @@ let
   '';
 in
 {
-  home.packages = optionals userConfig.machineConfig.workstation.enable (
-    [
-      pkgs.google-chrome
-      chromeWrapper
-    ]
-    ++ (map (
-      app:
-      pkgs.makeDesktopItem {
-        inherit (app) name;
-        exec = "${chromeWrapper}/bin/google-chrome-custom --app=${app.url}";
-        inherit (app) icon;
-        comment = "Web App for ${app.name}";
-        desktopName = app.name;
-        categories = [ "Network" ];
-      }
-    ) webApps)
-  );
+  home.packages = optionals userConfig.machineConfig.workstation.enable [
+    pkgs.google-chrome
+    chromeWrapper
+  ];
 }
