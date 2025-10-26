@@ -33,7 +33,6 @@ jobs:
       - name: Format files
         run: |
           nix fmt
-          nix run .#treefmt
 
       - name: Check for changes
         id: check_changes
