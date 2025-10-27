@@ -74,9 +74,6 @@ jobs:
       - name: Validate flake.lock
         run: nix flake check
 
-      - name: Check flake lock integrity
-        run: nix run github:tgirlcloud/pkgs#locker
-
   merge:
     name: Merge Pull Request
     needs: [update-lockfile, check, check-lock]

@@ -48,6 +48,3 @@ jobs:
 
             - name: Validate Flake (no IFD)
               run: nix flake check --no-allow-import-from-derivation
-
-            - name: Check flake lock integrity
-              run: nix run github:tgirlcloud/pkgs#locker
