@@ -26,7 +26,7 @@ jobs:
                   persist-credentials: false
 
             - name: Install Nix
-              uses: DeterminateSystems/nix-installer-action@v15
+              uses: DeterminateSystems/nix-installer-action@v20
 
             - name: Update Lockfile
               id: pr
