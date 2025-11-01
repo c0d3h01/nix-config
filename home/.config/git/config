@@ -1,7 +1,7 @@
 [user]
     name = Harshal Sawant
     email = harshalsawant.dev@gmail.com
-    signingkey = ~/.ssh/id_ed25519.pub
+    signingkey = B4242C21BAF74B7C
 
 [core]
     editor = nvim
@@ -127,6 +127,7 @@
 
 [commit]
     verbose = true
+    gpgsign = true
 
 [format]
     signoff = false
@@ -137,6 +138,7 @@
 
 [tag]
     sort = -version:refname
+    gpgsign = true
 
 [url "git@github.com:"]
     insteadOf = "gh:"
@@ -158,20 +160,17 @@
     user = c0d3h01
 
 [gpg]
-    format = ssh
-
-[gpg "ssh"]
-    allowedSignersFile = ~/.ssh/allowed_signers
+    program = gpg
 
 [credential]
     helper = 
     helper = "!f() { command -v gh >/dev/null 2>&1 && gh auth git-credential; }; f"
 
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
 
 [transfer]
     fsckobjects = true
