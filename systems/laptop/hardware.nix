@@ -3,7 +3,6 @@
     disk.main = {
       type = "disk";
       device = "/dev/nvme0n1";
-
       content = {
         type = "gpt";
         partitions = {
@@ -19,13 +18,13 @@
             };
           };
 
-          swap = {
+          encryptedSwap = {
             label = "nixos-swap";
             size = "8G";
             content = {
               type = "swap";
-              discardPolicy = "both";
-              resumeDevice = true;
+              randomEncryption = true;
+              priority = 100;
             };
           };
 
@@ -36,18 +35,17 @@
               type = "luks";
               name = "crypted";
               settings = {
-                bypassWorkqueues = true;
+                allowDiscards = true;
               };
               content = {
                 type = "btrfs";
                 extraArgs = [ "-f" ];
                 subvolumes = {
-
                   "/@" = {
                     mountpoint = "/";
                     mountOptions = [
                       "noatime"
-                      "compress=zstd:3"
+                      "compress=zstd:1"
                       "ssd"
                       "space_cache=v2"
                     ];
@@ -57,7 +55,7 @@
                     mountpoint = "/home";
                     mountOptions = [
                       "noatime"
-                      "compress=zstd:3"
+                      "compress=zstd:1"
                       "ssd"
                       "space_cache=v2"
                     ];
@@ -67,7 +65,7 @@
                     mountpoint = "/nix";
                     mountOptions = [
                       "noatime"
-                      "compress=zstd:3"
+                      "compress=zstd:1"
                       "ssd"
                       "space_cache=v2"
                     ];
@@ -77,7 +75,7 @@
                     mountpoint = "/var/tmp";
                     mountOptions = [
                       "noatime"
-                      "compress=zstd:3"
+                      "compress=zstd:1"
                       "ssd"
                       "space_cache=v2"
                     ];
