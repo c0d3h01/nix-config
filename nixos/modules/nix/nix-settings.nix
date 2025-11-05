@@ -12,6 +12,7 @@
     optimise.automatic = true;
 
     settings = {
+
       # Core Features
       experimental-features = [
         "nix-command"
@@ -19,23 +20,36 @@
         "auto-allocate-uids"
       ];
 
-      # Build Performance
-      max-jobs = "auto"; # Parallel builds based on CPU
-      cores = 0; # Use all cores per job when sensible
+      # Parallel builds based on CPU
+      max-jobs = "auto";
+
+      # Use all cores per job when sensible
+      cores = 0;
+
+      # use xdg base directories for all the nix things
       use-xdg-base-directories = true;
+
+      # build inside sandboxed environments
+      # we only enable this on linux because it servirly breaks on darwin
       sandbox = pkgs.stdenv.hostPlatform.isLinux;
-      build-dir = "/var/tmp"; # Avoid tmpfs exhaustion
-      auto-optimise-store = true; # Hard-link identical paths immediately
-      builders-use-substitutes = true; # Remote builders (if any) may use caches
+
+      # Avoid tmpfs exhaustion
+      build-dir = "/var/tmp"; 
+
+      # Hard-link identical paths immediately
+      auto-optimise-store = true; 
 
       # Output / Debug
       show-trace = true; # Better error diagnostics
       log-lines = 50;
+      
+      # continue building derivations even if one fails
+      # this is important for keeping a nice cache of derivations, usually because I walk away
+      # from my PC when building and it would be annoying to deal with nothing saved
+      keep-going = true;
 
-      # Network / Fetch Tuning
-      http-connections = 50; # More parallel narinfo fetches
-      connect-timeout = 10;
-      download-attempts = 4;
+      # maximum number of parallel TCP connections used to fetch imports and binary caches, 0 means no limit
+      http-connections = 50;
 
       # Substituters (Caches)
       substituters = [

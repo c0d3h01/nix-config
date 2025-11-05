@@ -65,7 +65,7 @@
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         ./flake-modules
-        ./nixos/home-flake.nix
+        ./home-manager/home-flake.nix
         ./nixos/nixos-flake.nix
       ];
     };
