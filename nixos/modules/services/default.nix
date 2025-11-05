@@ -1,6 +1,6 @@
 {
   imports = [
-    ./application-services
-    ./virtualization-services
+    ./application
+    ./virtualization
   ];
 }

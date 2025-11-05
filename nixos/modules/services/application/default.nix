@@ -1,6 +1,6 @@
 {
   imports = [
-    ../../system/services
+    ./mysql.nix
     ./ollama.nix
     ./syncthing.nix
     ./tabby.nix

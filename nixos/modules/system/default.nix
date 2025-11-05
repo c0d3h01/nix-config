@@ -3,7 +3,6 @@
     ./media
     ./base
     ./desktop
-    ./virtualization
     ./services
     ./apps
     ./input

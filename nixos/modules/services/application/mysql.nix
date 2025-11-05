@@ -56,7 +56,7 @@
 
     environment.systemPackages = with pkgs; [
       mysql-workbench
-      mariadb-client
+      mariadb.client
       mycli
     ];
   };
