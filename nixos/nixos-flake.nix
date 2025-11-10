@@ -1,20 +1,27 @@
-{ inputs, ... }:
+{
+  inputs,
+  self,
+  config,
+  ...
+}:
 let
-  hosts = import ../systems/config.nix;
-
-  # Function to create a NixOS configuration for a host
+  hosts = import (self + /systems/config.nix);
   mkNixosSystem =
     hostName: userConfig:
     inputs.nixpkgs.lib.nixosSystem {
       inherit (userConfig) system;
       specialArgs = {
-        inherit inputs userConfig hostName;
-        inherit (inputs) self;
+        inherit
+          self
+          inputs
+          userConfig
+          hostName
+          ;
       };
       modules = [
-        # Import all NixOS modules
-        ./modules
-        ../systems
+        # Import modules
+        (self + /nixos/modules)
+        (self + /systems)
 
         # Disko integration for disk partitioning
         inputs.disko.nixosModules.disko
@@ -27,11 +34,15 @@ let
             useUserPackages = true;
             backupFileExtension = "bak";
             extraSpecialArgs = {
-              inherit inputs userConfig hostName;
-              inherit (inputs) self;
+              inherit
+                self
+                inputs
+                userConfig
+                hostName
+                ;
             };
             users.${userConfig.username} = {
-              imports = [ ../home-manager/home.nix ];
+              imports = [ (self + /home-manager/home.nix) ];
             };
           };
         }

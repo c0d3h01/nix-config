@@ -1,7 +1,7 @@
 {
   laptop = {
-    username = "harshal";
-    hostname = "firuslab";
+    username = "c0d3h01";
+    hostname = "DESKTOP-LC0BNI9";
     fullName = "Harshal Sawant";
     system = "x86_64-linux";
 
@@ -14,6 +14,9 @@
       gpuType = "amd"; # Options = "amd" | "nvidia" | "intel"
       networking.backend = "wpa_supplicant"; # Options = "iwd" | "wpa_supplicant"
       windowManager = "gnome"; # Options = "gnome" | "kde"
+      theme = false;
+      montools = false;
+      glApps = false;
     };
 
     devStack = {

@@ -4,10 +4,6 @@
   pkgs,
   ...
 }:
-let
-  inherit (lib) optionals;
-  isWorkstation = userConfig.machineConfig.workstation.enable;
-in
 {
   imports = [
     ./git
@@ -25,10 +21,5 @@ in
     inherit (userConfig) username;
     homeDirectory = "/home/${userConfig.username}";
     stateVersion = lib.trivial.release;
-    packages =
-      with pkgs;
-      optionals isWorkstation [
-        notion-app-enhanced
-      ];
   };
 }
