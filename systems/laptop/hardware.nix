@@ -18,12 +18,13 @@
             };
           };
 
-          encryptedSwap = {
+          plainSwap = {
             label = "nixos-swap";
-            size = "8G";
+            size = "100%";
             content = {
               type = "swap";
-              randomEncryption = true;
+              discardPolicy = "both";
+              resumeDevice = true;
               priority = 100;
             };
           };
