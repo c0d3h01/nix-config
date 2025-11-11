@@ -4,30 +4,22 @@
   userConfig,
   ...
 }:
+let
+  inherit (lib) mkIf;
+  cfg = userConfig.machineConfig.workstation.apps;
+in
 {
-  config = lib.mkIf userConfig.machineConfig.workstation.enable {
-    programs.wireshark = {
-      enable = true;
-      package = pkgs.wireshark;
-      dumpcap.enable = true;
-      usbmon.enable = true;
-    };
-
+  config = mkIf cfg {
     environment.systemPackages = with pkgs; [
-      code-cursor
       ghostty
       vscode-fhs
       postman
       github-desktop
       drawio
-      slack
-      discord-ptb
+      vesktop
       telegram-desktop
-      zoom-us
-      libreoffice
-      obsidian
-      anydesk
-      arduino
+      libreoffice-still
+      arduino-core
     ];
   };
 }

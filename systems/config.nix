@@ -9,6 +9,7 @@
       server.enable = false;
       laptop.enable = true;
       workstation.enable = true;
+      workstation.apps = true;
       bootloader = "systemd"; # Options = "systemd" | "grub"
       cpuType = "amd"; # Options = "amd" | "intel"
       gpuType = "amd"; # Options = "amd" | "nvidia" | "intel"
