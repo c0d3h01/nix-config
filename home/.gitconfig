@@ -141,7 +141,7 @@
   gpgsign = true
 
 [url "git@github.com:"]
-  insteadOf = "gh:"
+	insteadOf = http://github.com/
   pushInsteadOf = "github:"
   pushInsteadOf = "git://github.com/"
 
@@ -167,10 +167,10 @@
   helper = "!f() { command -v gh >/dev/null 2>&1 && gh auth git-credential; }; f"
 
 [filter "lfs"]
-  clean = git-lfs clean -- %f
-  smudge = git-lfs smudge -- %f
-  process = git-lfs filter-process
-  required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
 
 [transfer]
   fsckobjects = true
@@ -189,11 +189,11 @@
   lowSpeedTime = 999999
 
 [advice]
-  statusHints = false
+  statusHints = true
   detachedHead = false
   skippedCherryPicks = false
   pushUpdateRejected = false
-  resolveConflict = false
+  resolveConflict = true
 
 [alias]     
   aliases = config --get-regexp alias
