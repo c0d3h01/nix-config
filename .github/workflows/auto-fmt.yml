@@ -1,13 +1,12 @@
 name: Auto-Format
 
 on:
-  workflow_dispatch:
   push:
     branches: [master]
     paths-ignore:
-      - "**.lock"
+      - "**/*.lock"
       - "home/**"
-      - "*.md"
+      - "**/*.md"
 
 concurrency:
   group: format-${{ github.ref }}
@@ -15,27 +14,19 @@ concurrency:
 
 permissions:
   contents: write
-  pull-requests: write
 
 jobs:
   format:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-
       - uses: DeterminateSystems/nix-installer-action@v20
       - uses: DeterminateSystems/magic-nix-cache-action@v1
-
       - run: nix fmt
-
       - run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-      - uses: peter-evans/create-pull-request@v7
-        with:
-          commit-message: "chore: auto-format"
-          title: "chore: auto-format"
-          branch: auto-format
-          delete-branch: true
-          labels: automerge
+          git add .
+          git diff --quiet && exit 0
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'chore: auto-format'
+          git push
