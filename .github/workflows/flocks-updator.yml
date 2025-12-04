@@ -1,4 +1,4 @@
-name: Bump Flake Inputs
+name: Update flake locks
 
 on:
   workflow_dispatch:
@@ -13,16 +13,17 @@ jobs:
   update-lockfile:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-      - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@v20
-      - name: Update Lockfile
-        uses: DeterminateSystems/update-flake-lock@v27
+      - uses: actions/checkout@v5
+      - uses: DeterminateSystems/nix-installer-action@v20
+      - uses: DeterminateSystems/update-flake-lock@v27
+
+      - id: pr
+        uses: peter-evans/create-pull-request@v7
         with:
-          commit-msg: "chore: flake.lock update"
-          pr-title: "chore: flake.lock update"
-          branch: update-flake-inputs
-          pr-body: "Automated flake.lock update"
-          pr-merge-method: squash
-          pr-merge: true
+          title: chore:update flake locks
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - if: steps.pr.outputs.pull-request-number
+        run: gh pr merge ${{ steps.pr.outputs.pull-request-number }} --squash --auto
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
