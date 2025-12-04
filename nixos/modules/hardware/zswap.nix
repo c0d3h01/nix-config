@@ -7,7 +7,7 @@ in
   zramSwap = lib.mkIf isLaptop {
     enable = true;
     priority = 1000;
-    algorithm = "lzo-rle";
+    algorithm = "zstd";
     memoryPercent = 200;
   };
 }

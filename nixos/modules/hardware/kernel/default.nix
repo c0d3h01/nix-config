@@ -1,6 +1,5 @@
 {
   imports = [
-    ./appimage.nix
     ./sysctl.nix
     ./security.nix
     ./boot-params.nix

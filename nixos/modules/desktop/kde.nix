@@ -15,6 +15,12 @@ in
     services.displayManager.sddm.enable = true;
     xdg.portal.extraPortals = [ pkgs.kdePackages.xdg-desktop-portal-kde ];
 
+    # Enable hardware bluetooth
+    hardware = {
+      bluetooth.enable = true;
+      bluetooth.powerOnBoot = true;
+    };
+
     # Exclude unwanted KDE packages
     environment.plasma6.excludePackages = with pkgs.kdePackages; [
       kate

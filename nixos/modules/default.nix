@@ -1,7 +1,6 @@
 {
   imports = [
     ./desktop
-    ./hardening
     ./hardware
     ./networking
     ./nix

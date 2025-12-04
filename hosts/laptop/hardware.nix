@@ -25,7 +25,7 @@
               type = "swap";
               discardPolicy = "both";
               resumeDevice = true;
-              priority = 100;
+              # priority = 100;
             };
           };
 
@@ -42,6 +42,7 @@
                     "noatime"
                     "compress=zstd:3"
                     "ssd"
+                    "discard=async"
                     "space_cache=v2"
                   ];
                 };
@@ -52,6 +53,7 @@
                     "noatime"
                     "compress=zstd:3"
                     "ssd"
+                    "discard=async"
                     "space_cache=v2"
                   ];
                 };
@@ -62,6 +64,7 @@
                     "noatime"
                     "compress=zstd:3"
                     "ssd"
+                    "discard=async"
                     "space_cache=v2"
                   ];
                 };
@@ -72,6 +75,7 @@
                     "noatime"
                     "compress=zstd:3"
                     "ssd"
+                    "discard=async"
                     "space_cache=v2"
                   ];
                 };
@@ -82,6 +86,7 @@
                     "noatime"
                     "compress=zstd:3"
                     "ssd"
+                    "discard=async"
                     "space_cache=v2"
                   ];
                 };

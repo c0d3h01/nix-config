@@ -7,7 +7,6 @@
 }:
 {
   imports = [
-    ./firefox.nix
     ./gnome.nix
     ./htop.nix
     ./nix-your-shell.nix
@@ -16,8 +15,6 @@
     ./secrets.nix
     ./spicetify.nix
     ./themes.nix
-    ./variables.nix
-    ./xdg.nix
   ];
 
   # Let Home Manager install and manage itself.

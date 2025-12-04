@@ -1,7 +1,7 @@
 {
   laptop = {
-    username = "harshal";
-    hostname = "firuslab";
+    username = "c0d3h01";
+    hostname = "nixos";
     fullName = "Harshal Sawant";
     system = "x86_64-linux";
 

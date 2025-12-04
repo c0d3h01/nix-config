@@ -1,11 +1,11 @@
 {
   imports = [
+    ./apparmor.nix
     ./appImage.nix
     ./console.nix
     ./dbus.nix
     ./diff.nix
     ./fhs-compact.nix
-    ./firmware.nix
     ./flatpak.nix
     ./gnupg.nix
     ./irqbalance.nix
@@ -15,5 +15,6 @@
     ./logs.nix
     ./printing.nix
     ./serial.nix
+    ./sudo.nix
   ];
 }
