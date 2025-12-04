@@ -1,31 +1,33 @@
-name: "CI: Update submodules"
-
+name: "Update submodules"
 on:
+  repository_dispatch:
   workflow_dispatch:
   schedule:
     - cron: "51 2 * * *"
 
-permissions:
-  contents: write
-  pull-requests: write
-
 jobs:
-  update:
+  update-submodules:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
         with:
-          submodules: recursive
-      - name: Update submodules
-        run: |
-          git submodule update --remote
+          submodules: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: |
+          git submodule update --init --recursive --remote
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-      - uses: peter-evans/create-pull-request@v7
+          git add .
+          git commit -m "Update submodules" || exit 0
+
+      - id: pr
+        uses: peter-evans/create-pull-request@v7
         with:
-          commit-message: "chore: update submodules"
-          title: "chore: update submodules"
-          branch: update-submodules
-          delete-branch: true
-          auto-merge: true
-          merge-method: squash
+          title: Update SubModules
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - if: steps.pr.outputs.pull-request-number
+        run: gh pr merge ${{ steps.pr.outputs.pull-request-number }} --squash --auto
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
