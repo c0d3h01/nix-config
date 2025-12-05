@@ -4,8 +4,7 @@ let
 
   # Keep only those entries whose type is "directory"
   dirs = builtins.filter (name: (builtins.readDir ./.)."${name}" == "directory") entries;
-in
-{
+in {
   # Import each directory under ./ as a Nix file
   imports = builtins.map (name: ././${name}) dirs;
 }

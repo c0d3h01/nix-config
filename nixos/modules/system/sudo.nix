@@ -1,8 +1,10 @@
-{ lib, pkgs, ... }:
-let
-  inherit (lib) mkDefault getExe';
-in
 {
+  lib,
+  pkgs,
+  ...
+}: let
+  inherit (lib) mkDefault getExe';
+in {
   security.sudo = {
     enable = true;
 
@@ -14,27 +16,27 @@ in
 
     extraRules = [
       {
-        groups = [ "wheel" ];
+        groups = ["wheel"];
 
         commands = [
           # nixos-rebuild work without password
           {
             command = getExe' pkgs.nixos-rebuild "nixos-rebuild";
-            options = [ "NOPASSWD" ];
+            options = ["NOPASSWD"];
           }
 
           # allow reboot and shutdown without password
           {
             command = getExe' pkgs.systemd "systemctl";
-            options = [ "NOPASSWD" ];
+            options = ["NOPASSWD"];
           }
           {
             command = getExe' pkgs.systemd "reboot";
-            options = [ "NOPASSWD" ];
+            options = ["NOPASSWD"];
           }
           {
             command = getExe' pkgs.systemd "shutdown";
-            options = [ "NOPASSWD" ];
+            options = ["NOPASSWD"];
           }
         ];
       }

@@ -3,17 +3,14 @@
   config,
   lib,
   ...
-}:
-let
+}: let
   # Auto-detect if root filesystem is Btrfs
   rootFilesystem = config.fileSystems."/".fsType;
   isBtrfs = rootFilesystem == "btrfs";
-in
-{
+in {
   # Only install Btrfs tools if we have Btrfs filesystems
   environment.systemPackages = lib.mkIf isBtrfs (
-    with pkgs;
-    [
+    with pkgs; [
       btrfs-assistant
       btrfs-progs
       compsize
@@ -24,7 +21,7 @@ in
   services.btrfs.autoScrub = lib.mkIf isBtrfs {
     enable = true;
     interval = "weekly";
-    fileSystems = [ "/" ];
+    fileSystems = ["/"];
   };
 
   # Lightweight balance to prevent metadata fragmentation
@@ -45,7 +42,7 @@ in
       RandomizedDelaySec = "2h"; # Spread load
       Persistent = true;
     };
-    wantedBy = [ "timers.target" ];
+    wantedBy = ["timers.target"];
   };
 
   # Scheduled fstrim

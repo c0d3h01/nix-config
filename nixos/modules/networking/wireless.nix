@@ -2,13 +2,11 @@
   lib,
   userConfig,
   ...
-}:
-let
+}: let
   inherit (lib) mkIf;
   isenable = userConfig.machineConfig.networking.backend;
   iftrue = userConfig.machineConfig.server.enable;
-in
-{
+in {
   config = mkIf iftrue {
     # enable wireless database, it helps keeping wifi speedy
     hardware.wirelessRegulatoryDatabase = true;

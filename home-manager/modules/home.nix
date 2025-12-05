@@ -4,8 +4,7 @@
   lib,
   pkgs,
   ...
-}:
-{
+}: {
   imports = [
     ./gnome.nix
     ./htop.nix
@@ -23,7 +22,9 @@
   home = {
     inherit (userConfig) username;
     homeDirectory =
-      if pkgs.stdenv.isDarwin then "/Users/${config.home.username}" else "/home/${config.home.username}";
+      if pkgs.stdenv.isDarwin
+      then "/Users/${config.home.username}"
+      else "/home/${config.home.username}";
     stateVersion = lib.trivial.release;
   };
 }

@@ -2,11 +2,9 @@
   lib,
   userConfig,
   ...
-}:
-let
+}: let
   inherit (lib) mkDefault;
-in
-{
+in {
   # Set hostname
   networking.hostName = userConfig.hostname;
 

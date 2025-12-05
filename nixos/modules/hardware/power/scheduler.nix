@@ -3,8 +3,7 @@
   userConfig,
   lib,
   ...
-}:
-{
+}: {
   services.scx = lib.mkIf userConfig.machineConfig.workstation {
     enable = true;
     scheduler = "scx_bpfland";

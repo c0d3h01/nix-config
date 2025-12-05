@@ -3,17 +3,14 @@
   lib,
   userConfig,
   ...
-}:
-let
+}: let
   inherit (lib) mkIf;
-in
-{
+in {
   config = mkIf (userConfig.machineConfig.windowManager == "kde") {
-
     # Plasma desktop environment configuration
     services.desktopManager.plasma6.enable = true;
     services.displayManager.sddm.enable = true;
-    xdg.portal.extraPortals = [ pkgs.kdePackages.xdg-desktop-portal-kde ];
+    xdg.portal.extraPortals = [pkgs.kdePackages.xdg-desktop-portal-kde];
 
     # Enable hardware bluetooth
     hardware = {

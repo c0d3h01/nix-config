@@ -2,9 +2,7 @@
   userConfig,
   lib,
   ...
-}:
-
-let
+}: let
   inherit (lib) mkMerge;
   inherit (userConfig.machineConfig) gpuType;
 
@@ -37,8 +35,7 @@ let
   environmentVariables = mkMerge [
     currentGpuConfig.envVars
   ];
-in
-{
+in {
   services.ollama = {
     enable = true;
 

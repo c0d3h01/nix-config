@@ -3,13 +3,11 @@
   lib,
   userConfig,
   ...
-}:
-let
+}: let
   inherit (lib) mkIf;
-in
-{
+in {
   config = mkIf (userConfig.devStack.container == "docker") {
-    users.users.${userConfig.username}.extraGroups = [ "docker" ];
+    users.users.${userConfig.username}.extraGroups = ["docker"];
     # Configure Docker
     virtualisation.docker = {
       enable = true;
@@ -22,7 +20,7 @@ in
       autoPrune = {
         enable = true;
         dates = "weekly";
-        flags = [ "--all" ];
+        flags = ["--all"];
       };
 
       # Daemon configuration
@@ -31,7 +29,7 @@ in
           "1.1.1.1"
           "8.8.8.8"
         ];
-        registry-mirrors = [ "https://mirror.gcr.io" ];
+        registry-mirrors = ["https://mirror.gcr.io"];
         storage-driver = "overlay2";
         log-driver = "journald";
       };

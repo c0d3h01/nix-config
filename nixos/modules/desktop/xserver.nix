@@ -1,11 +1,7 @@
-{
-  pkgs,
-  ...
-}:
-{
+{pkgs, ...}: {
   services.xserver = {
     enable = true;
     desktopManager.xterm.enable = true;
-    excludePackages = [ pkgs.xterm ];
+    excludePackages = [pkgs.xterm];
   };
 }

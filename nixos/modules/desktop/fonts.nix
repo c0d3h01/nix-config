@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   fonts = {
     packages = with pkgs; [
       dejavu_fonts
@@ -37,10 +35,10 @@
         lcdfilter = "default";
       };
       defaultFonts = {
-        sansSerif = [ "DejaVu Sans" ];
-        serif = [ "DejaVu Serif" ];
-        monospace = [ "DejaVu Sans Mono" ];
-        emoji = [ "Noto Color Emoji" ];
+        sansSerif = ["DejaVu Sans"];
+        serif = ["DejaVu Serif"];
+        monospace = ["DejaVu Sans Mono"];
+        emoji = ["Noto Color Emoji"];
       };
     };
   };

@@ -2,12 +2,10 @@
   lib,
   userConfig,
   ...
-}:
-let
+}: let
   isUsr = userConfig.username == "c0d3h01";
-  ssh-keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICSjL8HGjiSAnLHupMZin095bql7A8+UDfc7t9XCZs8l" ];
-in
-{
+  ssh-keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICSjL8HGjiSAnLHupMZin095bql7A8+UDfc7t9XCZs8l"];
+in {
   imports = [
     ./hardware.nix
   ];

@@ -2,12 +2,10 @@
   lib,
   userConfig,
   ...
-}:
-let
+}: let
   inherit (lib) mkIf;
   isLaptop = userConfig.machineConfig.laptop.enable;
-in
-{
+in {
   config = mkIf isLaptop {
     # DBus service that provides power management support to applications.
     services.upower = {

@@ -3,9 +3,9 @@
   lib,
   pkgs,
   ...
-}:
-let
-  inherit (lib)
+}: let
+  inherit
+    (lib)
     optionals
     ;
   # Core runtime libraries needed by a large class of prebuilt binaries.
@@ -99,8 +99,7 @@ let
   ];
 
   finalLibs = baseLibs ++ extendedLibs ++ optionals config.services.xserver.enable graphicsLibs;
-in
-{
+in {
   programs.nix-ld = {
     enable = true;
     libraries = finalLibs;

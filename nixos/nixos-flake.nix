@@ -2,11 +2,9 @@
   inputs,
   self,
   ...
-}:
-let
+}: let
   hosts = import (self + /hosts/config.nix);
-  mkNixosSystem =
-    hostName: userConfig:
+  mkNixosSystem = hostName: userConfig:
     inputs.nixpkgs.lib.nixosSystem {
       inherit (userConfig) system;
       specialArgs = {
@@ -41,7 +39,7 @@ let
                 ;
             };
             users.${userConfig.username} = {
-              imports = [ (self + /home-manager/modules/home.nix) ];
+              imports = [(self + /home-manager/modules/home.nix)];
             };
           };
         }
@@ -50,7 +48,6 @@ let
 
   # Generate nixosConfigurations for all hosts
   nixosConfigurations = inputs.nixpkgs.lib.mapAttrs mkNixosSystem hosts;
-in
-{
-  flake = { inherit nixosConfigurations; };
+in {
+  flake = {inherit nixosConfigurations;};
 }

@@ -5,7 +5,7 @@
     startWhenNeeded = true;
     allowSFTP = true;
     openFirewall = true;
-    ports = [ 22 ];
+    ports = [22];
     settings = {
       # Don't allow root login
       PermitRootLogin = "no";

@@ -2,8 +2,7 @@
   lib,
   userConfig,
   ...
-}:
-{
+}: {
   services = lib.mkIf userConfig.machineConfig.workstation {
     printing = {
       enable = false;

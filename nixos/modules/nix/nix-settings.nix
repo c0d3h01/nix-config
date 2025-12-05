@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   nix = {
     # Automatic store GC + optimisation
     gc = {
@@ -12,7 +11,6 @@
     optimise.automatic = true;
 
     settings = {
-
       # Core Features
       experimental-features = [
         "nix-command"

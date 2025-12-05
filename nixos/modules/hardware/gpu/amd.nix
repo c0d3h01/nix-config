@@ -3,17 +3,14 @@
   pkgs,
   userConfig,
   ...
-}:
-let
+}: let
   inherit (lib) mkIf;
   cfg = userConfig.machineConfig.gpuType;
   isWorskstaion = userConfig.machineConfig.workstation;
-in
-{
+in {
   config = mkIf (cfg == "amd") {
-
     # xorg drivers
-    services.xserver.videoDrivers = [ "amdgpu" ];
+    services.xserver.videoDrivers = ["amdgpu"];
 
     # auto-epp for amd active pstate.
     # services.auto-epp.enable = true;
@@ -33,9 +30,9 @@ in
     };
 
     # LACT - Linux AMDGPU Controller
-    environment.systemPackages = with pkgs; [ lact ];
-    systemd.packages = with pkgs; [ lact ];
-    systemd.services.lactd.wantedBy = [ "multi-user.target" ];
+    environment.systemPackages = with pkgs; [lact];
+    systemd.packages = with pkgs; [lact];
+    systemd.services.lactd.wantedBy = ["multi-user.target"];
 
     # Environment variables for optimal GPU performance
     environment.variables.AMD_VULKAN_ICD = "RADV";

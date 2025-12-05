@@ -3,11 +3,9 @@
   pkgs,
   config,
   ...
-}:
-let
+}: let
   inherit (lib) mkIf mkMerge mkAfter;
-in
-{
+in {
   config = mkMerge [
     {
       system.activationScripts.diff = {

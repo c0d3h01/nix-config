@@ -2,12 +2,10 @@
   lib,
   userConfig,
   ...
-}:
-let
+}: let
   inherit (lib) mkForce;
   cfg = userConfig.machineConfig.networking;
-in
-{
+in {
   networking.networkmanager = {
     enable = true;
     dns = "systemd-resolved";

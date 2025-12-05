@@ -1,123 +1,120 @@
 {
-  perSystem =
-    { pkgs, ... }:
-    let
-      inherit (pkgs) lib;
-    in
-    {
-      formatter = pkgs.treefmt.withConfig {
-        runtimeInputs = with pkgs; [
-          actionlint
-          deadnix
-          keep-sorted
-          alejandra
-          shellcheck
-          shfmt
-          statix
-          stylua
-          taplo
-          mypy
+  perSystem = {pkgs, ...}: let
+    inherit (pkgs) lib;
+  in {
+    formatter = pkgs.treefmt.withConfig {
+      runtimeInputs = with pkgs; [
+        actionlint
+        deadnix
+        keep-sorted
+        alejandra
+        shellcheck
+        shfmt
+        statix
+        stylua
+        taplo
+        mypy
 
-          (writeShellScriptBin "statix-fix" ''
-            for file in "$@"; do
-              ${lib.getExe statix} fix "$file"
-            done
-          '')
+        (writeShellScriptBin "statix-fix" ''
+          for file in "$@"; do
+            ${lib.getExe statix} fix "$file"
+          done
+        '')
+      ];
+
+      settings = {
+        on-unmatched = "info";
+        tree-root-file = "flake.nix";
+
+        excludes = [
+          "secrets/*"
+          ".envrc"
+          "*.lock"
+          "*.patch"
+          "*.age"
         ];
 
-        settings = {
-          on-unmatched = "info";
-          tree-root-file = "flake.nix";
+        formatter = {
+          actionlint = {
+            command = "actionlint";
+            includes = [
+              ".github/workflows/*.yml"
+              ".github/workflows/*.yaml"
+            ];
+          };
 
-          excludes = [
-            "secrets/*"
-            ".envrc"
-            "*.lock"
-            "*.patch"
-            "*.age"
-          ];
+          mypy = {
+            command = "mypy";
+            includes = ["*.py"];
+            excludes = ["home/.jupyter/*"];
+            options = [
+              "--ignore-missing-imports"
+              "--show-error-codes"
+            ];
+          };
 
-          formatter = {
-            actionlint = {
-              command = "actionlint";
-              includes = [
-                ".github/workflows/*.yml"
-                ".github/workflows/*.yaml"
-              ];
-            };
+          deadnix = {
+            command = "deadnix";
+            includes = ["*.nix"];
+          };
 
-            mypy = {
-              command = "mypy";
-              includes = [ "*.py" ];
-              excludes = [ "home/.jupyter/*" ];
-              options = [
-                "--ignore-missing-imports"
-                "--show-error-codes"
-              ];
-            };
+          keep-sorted = {
+            command = "keep-sorted";
+            includes = [
+              "*.nix"
+              "*.toml"
+              "*.json"
+            ];
+          };
 
-            deadnix = {
-              command = "deadnix";
-              includes = [ "*.nix" ];
-            };
+          alejandra = {
+            command = "alejandra";
+            includes = ["*.nix"];
+          };
 
-            keep-sorted = {
-              command = "keep-sorted";
-              includes = [
-                "*.nix"
-                "*.toml"
-                "*.json"
-              ];
-            };
+          shellcheck = {
+            command = "shellcheck";
+            includes = [
+              "*.sh"
+              "*.bash"
+            ];
+          };
 
-            alejandra = {
-              command = "alejandra";
-              includes = [ "*.nix" ];
-            };
+          shfmt = {
+            command = "shfmt";
+            options = [
+              "-s"
+              "-w"
+              "-i"
+              "2"
+            ];
+            includes = [
+              "*.sh"
+              "*.bashrc"
+              "*.bash_profile"
+              "*.zshrc"
+              "*.envrc"
+              "*.envrc.private-template"
+            ];
+          };
 
-            shellcheck = {
-              command = "shellcheck";
-              includes = [
-                "*.sh"
-                "*.bash"
-              ];
-            };
+          statix = {
+            command = "statix-fix";
+            includes = ["*.nix"];
+          };
 
-            shfmt = {
-              command = "shfmt";
-              options = [
-                "-s"
-                "-w"
-                "-i"
-                "2"
-              ];
-              includes = [
-                "*.sh"
-                "*.bashrc"
-                "*.bash_profile"
-                "*.zshrc"
-                "*.envrc"
-                "*.envrc.private-template"
-              ];
-            };
+          stylua = {
+            command = "stylua";
+            includes = ["*.lua"];
+          };
 
-            statix = {
-              command = "statix-fix";
-              includes = [ "*.nix" ];
-            };
-
-            stylua = {
-              command = "stylua";
-              includes = [ "*.lua" ];
-            };
-
-            taplo = {
-              command = "taplo";
-              options = "format";
-              includes = [ "*.toml" ];
-            };
+          taplo = {
+            command = "taplo";
+            options = "format";
+            includes = ["*.toml"];
           };
         };
       };
     };
+  };
 }

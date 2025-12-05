@@ -3,11 +3,9 @@
   pkgs,
   config,
   ...
-}:
-let
+}: let
   inherit (lib) getExe;
-in
-{
+in {
   services.dbus.apparmor = "disabled";
 
   # apparmor configuration
@@ -23,7 +21,7 @@ in
     killUnconfinedConfinables = true;
 
     # packages to be added to AppArmor’s include path
-    packages = [ pkgs.apparmor-profiles ];
+    packages = [pkgs.apparmor-profiles];
 
     # apparmor policies
     policies = {

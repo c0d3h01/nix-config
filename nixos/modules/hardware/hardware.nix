@@ -4,10 +4,9 @@
   userConfig,
   modulesPath,
   ...
-}:
-
-let
-  inherit (lib)
+}: let
+  inherit
+    (lib)
     optionals
     mkIf
     mkDefault
@@ -17,21 +16,21 @@ let
   # Hardware-specific configurations
   cpuConfig = {
     amd = {
-      kernelModules = [ "kvm-amd" ];
-      kernelParams = [ "amd_pstate=active" ];
+      kernelModules = ["kvm-amd"];
+      kernelParams = ["amd_pstate=active"];
       microcode = config.hardware.cpu.amd.updateMicrocode;
     };
     intel = {
-      kernelModules = [ "kvm-intel" ];
-      kernelParams = [ "intel_pstate=active" ];
+      kernelModules = ["kvm-intel"];
+      kernelParams = ["intel_pstate=active"];
       microcode = config.hardware.cpu.intel.updateMicrocode;
     };
   };
 
   gpuConfig = {
     amd = {
-      kernelModules = [ "amdgpu" ];
-      initrdModules = [ "amdgpu" ];
+      kernelModules = ["amdgpu"];
+      initrdModules = ["amdgpu"];
     };
     nvidia = {
       kernelModules = [
@@ -40,17 +39,17 @@ let
         "nvidia_uvm"
         "nvidia_drm"
       ];
-      initrdModules = [ ];
+      initrdModules = [];
     };
     intel = {
-      kernelModules = [ "i915" ];
-      initrdModules = [ "i915" ];
+      kernelModules = ["i915"];
+      initrdModules = ["i915"];
     };
   };
 
   # Current hardware selection
-  cpu = cpuConfig.${cpuType} or { };
-  gpu = gpuConfig.${gpuType} or { };
+  cpu = cpuConfig.${cpuType} or {};
+  gpu = gpuConfig.${gpuType} or {};
 
   isLaptop = userConfig.machineConfig.laptop.enable;
 
@@ -85,12 +84,11 @@ let
     "processor.max_cstate=2"
   ];
 
-  desktopKernelParams = optionals (!isLaptop) [
-  ];
-
-in
-{
-  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+  desktopKernelParams =
+    optionals (!isLaptop) [
+    ];
+in {
+  imports = [(modulesPath + "/installer/scan/not-detected.nix")];
 
   boot = {
     # load kernel modules for all detected hardware
@@ -104,7 +102,7 @@ in
       tmpfsHugeMemoryPages = "within_size";
     };
 
-    kernelModules = commonKernelModules ++ cpu.kernelModules or [ ] ++ gpu.kernelModules or [ ];
+    kernelModules = commonKernelModules ++ cpu.kernelModules or [] ++ gpu.kernelModules or [];
 
     extraModulePackages = with config.boot.kernelPackages; [
       acpi_call
@@ -120,7 +118,7 @@ in
     ];
 
     kernelParams =
-      commonKernelParams ++ cpu.kernelParams or [ ] ++ laptopKernelParams ++ desktopKernelParams;
+      commonKernelParams ++ cpu.kernelParams or [] ++ laptopKernelParams ++ desktopKernelParams;
 
     initrd = {
       verbose = true;
@@ -131,7 +129,7 @@ in
         "-T0"
       ];
 
-      kernelModules = commonInitrdModules ++ gpu.initrdModules or [ ];
+      kernelModules = commonInitrdModules ++ gpu.initrdModules or [];
 
       availableKernelModules = [
         "nvme"

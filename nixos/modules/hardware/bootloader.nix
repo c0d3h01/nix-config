@@ -3,16 +3,12 @@
   userConfig,
   pkgs,
   ...
-}:
-
-let
+}: let
   inherit (lib) mkForce mkDefault;
   inherit (userConfig.machineConfig) bootloader;
   isSystemdBoot = bootloader == "systemd";
   isGrub = bootloader == "grub";
-
-in
-{
+in {
   boot.loader = {
     timeout = mkForce 5;
 
@@ -34,7 +30,7 @@ in
     grub = {
       enable = mkDefault isGrub;
       efiSupport = true;
-      devices = [ "nodev" ];
+      devices = ["nodev"];
       useOSProber = true;
       memtest86.enable = true;
       configurationName = "NixOS - c0d3h01";

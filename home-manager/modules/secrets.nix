@@ -4,9 +4,8 @@
   self,
   config,
   ...
-}:
-{
-  imports = [ inputs.sops.homeManagerModules.sops ];
+}: {
+  imports = [inputs.sops.homeManagerModules.sops];
 
   sops = {
     defaultSopsFile = "${self}/secrets/${userConfig.username}.yaml";

@@ -3,18 +3,16 @@
   lib,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib) mkIf;
   cfg = userConfig.machineConfig;
-in
-{
+in {
   config = mkIf cfg.glApps {
     # nix-gl configuration for GPU support
     nixGL = {
       packages = pkgs.nixgl.auto.nixGLDefault;
       defaultWrapper = "mesa";
-      installScripts = [ "mesa" ];
+      installScripts = ["mesa"];
     };
   };
 }

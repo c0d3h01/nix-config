@@ -3,12 +3,10 @@
   config,
   userConfig,
   ...
-}:
-let
+}: let
   inherit (lib) mkIf;
   iftrue = userConfig.machineConfig.server.enable;
-in
-{
+in {
   config = mkIf iftrue {
     # enable opportunistic TCP encryption
     # this is NOT a pancea, however, if the receiver supports encryption and the attacker is passive
@@ -16,7 +14,7 @@ in
     networking.tcpcrypt.enable = true;
 
     users = lib.mkIf config.networking.tcpcrypt.enable {
-      groups.tcpcryptd = { };
+      groups.tcpcryptd = {};
       users.tcpcryptd = {
         group = "tcpcryptd";
         isSystemUser = true;

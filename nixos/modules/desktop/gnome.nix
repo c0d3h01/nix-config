@@ -3,21 +3,18 @@
   lib,
   userConfig,
   ...
-}:
-let
+}: let
   inherit (lib) mkIf;
-in
-{
+in {
   config = mkIf (userConfig.machineConfig.windowManager == "gnome") {
-
     # GNOME desktop environment configuration
     services.desktopManager.gnome.enable = true;
     services.displayManager.gdm.enable = true;
-    xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gnome ];
+    xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-gnome];
 
     networking.firewall = {
-      allowedTCPPorts = [ 1716 ]; # gsconnect / KDE
-      allowedUDPPorts = [ 1716 ];
+      allowedTCPPorts = [1716]; # gsconnect / KDE
+      allowedUDPPorts = [1716];
     };
 
     # Exclude unwanted GNOME packages

@@ -3,15 +3,12 @@
   pkgs,
   userConfig,
   ...
-}:
-let
+}: let
   inherit (userConfig.devStack) flutterdevEnable;
-in
-{
+in {
   config = lib.mkIf flutterdevEnable {
     # Allow unfree packages for Flutter development
-    nixpkgs.config.allowUnfreePredicate =
-      pkg:
+    nixpkgs.config.allowUnfreePredicate = pkg:
       builtins.elem (lib.getName pkg) [
         "flutter"
         "android-studio"
@@ -31,6 +28,6 @@ in
     programs.adb.enable = true;
 
     # Add user to adbusers group automatically
-    users.users.${userConfig.username}.extraGroups = [ "adbusers" ];
+    users.users.${userConfig.username}.extraGroups = ["adbusers"];
   };
 }

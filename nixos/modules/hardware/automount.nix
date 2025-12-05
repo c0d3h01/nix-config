@@ -2,8 +2,7 @@
   lib,
   userConfig,
   ...
-}:
-{
+}: {
   # Enable polkit rules only if GUI is available
   security.polkit.extraConfig = lib.mkIf userConfig.machineConfig.workstation ''
     polkit.addRule(function(action, subject) {

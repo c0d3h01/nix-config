@@ -1,14 +1,10 @@
-{
-  pkgs,
-  ...
-}:
-{
+{pkgs, ...}: {
   services.mysql = {
     enable = true;
     package = pkgs.mariadb;
 
     # Pre-create production DB
-    ensureDatabases = [ "production" ];
+    ensureDatabases = ["production"];
 
     settings.mysqld = {
       bind_address = "127.0.0.1";

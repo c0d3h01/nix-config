@@ -2,11 +2,9 @@
   inputs,
   self,
   ...
-}:
-let
+}: let
   hosts = import (self + /hosts/config.nix);
-  mkHomeConfiguration =
-    hostName: userConfig:
+  mkHomeConfiguration = hostName: userConfig:
     inputs.home-manager.lib.homeManagerConfiguration {
       pkgs = import inputs.nixpkgs {
         inherit (userConfig) system;
@@ -21,22 +19,25 @@ let
           self
           ;
       };
-      modules = [ (self + /home-manager/modules/home.nix) ];
+      modules = [(self + /home-manager/modules/home.nix)];
     };
 
   # Generate homeConfigurations for all hosts
-  homeConfigurations = inputs.nixpkgs.lib.mapAttrs (
-    hostName: userConfig: mkHomeConfiguration hostName userConfig
-  ) hosts;
+  homeConfigurations =
+    inputs.nixpkgs.lib.mapAttrs (
+      hostName: userConfig: mkHomeConfiguration hostName userConfig
+    )
+    hosts;
 
   # Also create user@host format for compatibility
-  homeConfigurationsWithUser = inputs.nixpkgs.lib.mapAttrs' (
-    hostName: userConfig:
-    inputs.nixpkgs.lib.nameValuePair "${userConfig.username}@${userConfig.hostname}" (
-      mkHomeConfiguration hostName userConfig
+  homeConfigurationsWithUser =
+    inputs.nixpkgs.lib.mapAttrs' (
+      hostName: userConfig:
+        inputs.nixpkgs.lib.nameValuePair "${userConfig.username}@${userConfig.hostname}" (
+          mkHomeConfiguration hostName userConfig
+        )
     )
-  ) hosts;
-in
-{
+    hosts;
+in {
   flake.homeConfigurations = homeConfigurations // homeConfigurationsWithUser;
 }

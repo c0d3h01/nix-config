@@ -3,12 +3,10 @@
   lib,
   userConfig,
   ...
-}:
-let
+}: let
   inherit (lib) mkForce;
   isServer = userConfig.machineConfig.server.enable;
-in
-{
+in {
   networking.firewall = {
     enable = true;
     package = pkgs.iptables;
@@ -29,8 +27,8 @@ in
       59011
     ];
 
-    allowedTCPPortRanges = [ ];
-    allowedUDPPortRanges = [ ];
+    allowedTCPPortRanges = [];
+    allowedUDPPortRanges = [];
 
     # make a much smaller and easier to read log
     logReversePathDrops = true;

@@ -3,8 +3,7 @@
   pkgs,
   userConfig,
   ...
-}:
-let
+}: let
   inherit (lib) mkIf mkForce concatStringsSep;
 
   avoid = concatStringsSep "|" [
@@ -45,8 +44,7 @@ let
     "node"
     "pipewire(.*)"
   ];
-in
-{
+in {
   config = mkIf userConfig.machineConfig.workstation {
     services = {
       earlyoom = {

@@ -3,11 +3,9 @@
   lib,
   userConfig,
   ...
-}:
-let
+}: let
   inherit (lib) mkIf;
-in
-{
+in {
   config = mkIf (userConfig.devStack.container == "podman") {
     users.users.${userConfig.username}.extraGroups = [
       "podman"

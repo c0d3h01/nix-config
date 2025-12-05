@@ -3,16 +3,14 @@
   pkgs,
   lib,
   ...
-}:
-let
+}: let
   inherit (lib) mkIf;
-in
-{
+in {
   config = mkIf userConfig.machineConfig.workstation {
     services.dbus = {
       enable = true;
       implementation = "broker";
-      packages = builtins.attrValues { inherit (pkgs) dconf gcr_4 udisks; };
+      packages = builtins.attrValues {inherit (pkgs) dconf gcr_4 udisks;};
     };
   };
 }

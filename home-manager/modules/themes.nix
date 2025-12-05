@@ -3,11 +3,9 @@
   userConfig,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib) mkIf;
-in
-{
+in {
   config = mkIf userConfig.machineConfig.theme {
     home.pointerCursor = {
       gtk.enable = true;

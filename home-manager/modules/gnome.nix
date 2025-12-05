@@ -3,14 +3,11 @@
   lib,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib) mkIf;
   cfg = userConfig.machineConfig;
-in
-{
+in {
   config = mkIf (cfg.windowManager == "gnome" && cfg.theme) {
-
     programs.gnome-shell = {
       enable = true;
 

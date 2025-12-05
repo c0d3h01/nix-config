@@ -2,11 +2,9 @@
   userConfig,
   lib,
   ...
-}:
-let
+}: let
   inherit (lib) mkIf;
-in
-{
+in {
   config = mkIf userConfig.machineConfig.workstation {
     # AppImage support
     programs.appimage = {

@@ -1,5 +1,4 @@
-{ lib, ... }:
-{
+{lib, ...}: {
   systemd = {
     # Systemd OOMd
     oomd = {

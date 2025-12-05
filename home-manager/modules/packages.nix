@@ -3,12 +3,13 @@
   pkgs,
   config,
   ...
-}:
-let
+}: let
   cfg = userConfig.machineConfig.glApps;
-  wrap = pkg: if cfg then config.lib.nixGL.wrap pkg else pkg;
-in
-{
+  wrap = pkg:
+    if cfg
+    then config.lib.nixGL.wrap pkg
+    else pkg;
+in {
   programs.wezterm = {
     enable = true;
     package = wrap pkgs.wezterm;
@@ -36,6 +37,6 @@ in
     nix-direnv
     sapling
     watchman
-    (callPackage ./notion-app { })
+    (callPackage ./notion-app {})
   ];
 }

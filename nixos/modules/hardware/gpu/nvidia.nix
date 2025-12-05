@@ -4,17 +4,14 @@
   pkgs,
   userConfig,
   ...
-}:
-let
+}: let
   inherit (lib) mkIf;
   cfg = userConfig.machineConfig.gpuType;
   isWorskstaion = userConfig.machineConfig.workstation;
-in
-{
+in {
   config = mkIf (cfg == "nvidia") {
-
     # xorg drivers
-    services.xserver.videoDrivers = [ "nvidia" ];
+    services.xserver.videoDrivers = ["nvidia"];
 
     hardware.graphics = lib.mkIf isWorskstaion {
       enable = true;
@@ -46,7 +43,7 @@ in
       kernelParams = [
         "nvidia-drm.modeset=1"
       ];
-      blacklistedKernelModules = [ "nouveau" ];
+      blacklistedKernelModules = ["nouveau"];
     };
 
     # Environment variables

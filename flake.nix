@@ -24,9 +24,8 @@
     spicetify.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs =
-    inputs:
-    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
+  outputs = inputs:
+    inputs.flake-parts.lib.mkFlake {inherit inputs;} {
       imports = [
         ./flake-modules
         ./home-manager/home-flake.nix

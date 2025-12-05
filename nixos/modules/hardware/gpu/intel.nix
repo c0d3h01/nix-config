@@ -3,17 +3,14 @@
   pkgs,
   userConfig,
   ...
-}:
-let
+}: let
   inherit (lib) mkIf;
   cfg = userConfig.machineConfig.gpuType;
   isWorskstaion = userConfig.machineConfig.workstation;
-in
-{
+in {
   config = mkIf (cfg == "intel") {
-
     # xorg drivers
-    services.xserver.videoDrivers = [ "modesetting" ];
+    services.xserver.videoDrivers = ["modesetting"];
 
     hardware.graphics = lib.mkIf isWorskstaion {
       enable = true;

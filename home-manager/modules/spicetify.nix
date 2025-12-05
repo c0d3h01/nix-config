@@ -4,11 +4,9 @@
   inputs,
   userConfig,
   ...
-}:
-let
+}: let
   inherit (lib) mkIf;
-in
-{
+in {
   imports = [
     inputs.spicetify.homeManagerModules.default
   ];
@@ -16,8 +14,7 @@ in
   programs.spicetify = mkIf userConfig.machineConfig.workstation (
     let
       spicePkgs = inputs.spicetify.legacyPackages.${pkgs.stdenv.hostPlatform.system};
-    in
-    {
+    in {
       enable = true;
       theme = spicePkgs.themes.sleek;
       colorScheme = "Nord";
