@@ -34,6 +34,8 @@ in
     mise
     direnv
     nix-direnv
+    sapling
+    watchman
     (callPackage ./notion-app { })
   ];
 }
