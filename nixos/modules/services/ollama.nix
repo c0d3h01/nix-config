@@ -1,5 +1,9 @@
-{ userConfig, lib, pkgs, ... }:
-let
+{
+  userConfig,
+  lib,
+  pkgs,
+  ...
+}: let
   gpuConfigs = {
     nvidia = {
       acceleration = "cuda";
@@ -34,7 +38,10 @@ let
     };
   };
   config = gpuConfigs.${userConfig.machineConfig.gpuType};
-  pkgName = if config.acceleration == "cpu" then "ollama" else "ollama-${config.acceleration}";
+  pkgName =
+    if config.acceleration == "cpu"
+    then "ollama"
+    else "ollama-${config.acceleration}";
 in {
   services.ollama = {
     enable = true;
