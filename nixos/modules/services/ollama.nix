@@ -52,7 +52,6 @@
   environmentVariables = mkMerge [
     currentGpuConfig.envVars
   ];
-
 in {
   services.ollama = {
     enable = true;
