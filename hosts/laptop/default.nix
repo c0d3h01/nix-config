@@ -7,7 +7,7 @@
   ssh-keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICSjL8HGjiSAnLHupMZin095bql7A8+UDfc7t9XCZs8l"];
 in {
   imports = [
-    ./hardware.nix
+    ./hardware0x1.nix
   ];
 
   users.users = lib.mkIf isUsr {
