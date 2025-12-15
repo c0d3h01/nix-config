@@ -30,9 +30,9 @@ in {
     };
 
     # LACT - Linux AMDGPU Controller
-    environment.systemPackages = with pkgs; [lact];
-    systemd.packages = with pkgs; [lact];
-    systemd.services.lactd.wantedBy = ["multi-user.target"];
+    # environment.systemPackages = with pkgs; [lact];
+    # systemd.packages = with pkgs; [lact];
+    # systemd.services.lactd.wantedBy = ["multi-user.target"];
 
     # Environment variables for optimal GPU performance
     environment.variables.AMD_VULKAN_ICD = "RADV";
