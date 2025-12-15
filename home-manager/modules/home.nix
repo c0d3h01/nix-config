@@ -6,12 +6,10 @@
   ...
 }: {
   imports = [
-    ./gnome.nix
     ./htop.nix
     ./packages.nix
     ./secrets.nix
     ./spicetify.nix
-    ./themes.nix
   ];
 
   # Let Home Manager install and manage itself.

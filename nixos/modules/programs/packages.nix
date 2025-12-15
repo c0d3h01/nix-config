@@ -5,7 +5,7 @@
   ...
 }: let
   inherit (lib) optionals;
-  isWorkstation = userConfig.machineConfig.workstation;
+  isWorkstation = userConfig.workstation;
 
   # DESKTOP APPLICATIONS
   desktopApps = with pkgs; [
@@ -16,7 +16,6 @@
     drawio
     libreoffice-still
     arduino
-    kitty
     wezterm
     (callPackage ./notion-app {})
   ];
@@ -28,14 +27,12 @@
     mold
     sccache
     nil
-    nixd
     gcc
     clang
     zig
     rustup
     openjdk17
     lld
-    nasm
 
     # System Utilities
     ouch

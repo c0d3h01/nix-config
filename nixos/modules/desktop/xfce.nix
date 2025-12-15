@@ -5,7 +5,7 @@
 }: let
   inherit (lib) mkIf;
 in {
-  config = mkIf (userConfig.machineConfig.windowManager == "xfce") {
+  config = mkIf (userConfig.windowManager == "xfce") {
     nixpkgs.config.pulseaudio = true;
     services.xserver = {
       enable = true;

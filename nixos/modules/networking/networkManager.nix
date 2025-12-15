@@ -4,7 +4,7 @@
   ...
 }: let
   inherit (lib) mkForce;
-  cfg = userConfig.machineConfig.networking;
+  cfg = userConfig.networking;
 in {
   networking.networkmanager = {
     enable = true;
@@ -12,7 +12,7 @@ in {
 
     wifi = {
       # Default is wpa_supplicant
-      inherit (cfg) backend;
+      backend = "wpa_supplicant";
 
       # use a random mac address on every boot, this can scew with static ip
       # macAddress = "random";

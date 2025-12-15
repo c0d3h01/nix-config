@@ -5,8 +5,8 @@
   ...
 }: {
   # flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-  config = lib.mkIf userConfig.machineConfig.workstation {
-    services.flatpak.enable = true;
+  config = lib.mkIf userConfig.workstation {
+    services.flatpak.enable = false;
     systemd.services.flatpak-repo = {
       wantedBy = ["multi-user.target"];
       path = [pkgs.flatpak];

@@ -45,7 +45,7 @@
     "pipewire(.*)"
   ];
 in {
-  config = mkIf userConfig.machineConfig.workstation {
+  config = mkIf userConfig.workstation {
     services = {
       earlyoom = {
         enable = true;

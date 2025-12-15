@@ -4,7 +4,7 @@
   ...
 }: let
   inherit (lib) mkIf;
-  isLaptop = userConfig.machineConfig.laptop.enable;
+  isLaptop = userConfig.laptop.enable;
 in {
   config = mkIf isLaptop {
     # Input settings for libinput

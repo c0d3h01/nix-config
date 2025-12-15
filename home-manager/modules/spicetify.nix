@@ -11,7 +11,7 @@ in {
     inputs.spicetify.homeManagerModules.default
   ];
 
-  programs.spicetify = mkIf userConfig.machineConfig.workstation (
+  programs.spicetify = mkIf userConfig.workstation (
     let
       spicePkgs = inputs.spicetify.legacyPackages.${pkgs.stdenv.hostPlatform.system};
     in {

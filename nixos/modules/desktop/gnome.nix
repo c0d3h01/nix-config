@@ -6,14 +6,14 @@
 }: let
   inherit (lib) mkIf;
 in {
-  config = mkIf (userConfig.machineConfig.windowManager == "gnome") {
+  config = mkIf (userConfig.windowManager == "gnome") {
     # GNOME desktop environment configuration
     services.desktopManager.gnome.enable = true;
     services.displayManager.gdm.enable = true;
     xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-gnome];
 
     networking.firewall = {
-      allowedTCPPorts = [1716]; # gsconnect / KDE
+      allowedTCPPorts = [1716]; # KDE connect port
       allowedUDPPorts = [1716];
     };
 
@@ -22,12 +22,15 @@ in {
       systemPackages = with pkgs; [
         gnome-tweaks
         gnome-photos
-        thunderbird
         vlc
+        kdePackages.kdeconnect-kde
       ];
 
       gnome.excludePackages = with pkgs; [
         gnome-tour
+        helm
+        decibels
+        cutecom
         gnome-font-viewer
         epiphany
         yelp

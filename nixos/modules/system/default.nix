@@ -2,7 +2,6 @@
   imports = [
     ./apparmor.nix
     ./appImage.nix
-    ./console.nix
     ./diff.nix
     ./earlyoom.nix
     ./fhs-compact.nix

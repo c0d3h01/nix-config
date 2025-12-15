@@ -1,26 +1,17 @@
 {pkgs, ...}: {
   fonts = {
     packages = with pkgs; [
+      # Core fonts
       dejavu_fonts
-      fira-code
-      fira-code-symbols
-      font-awesome
-      jetbrains-mono
-      material-icons
-      maple-mono.NF
-      nerd-fonts.fira-code
-      nerd-fonts.droid-sans-mono
-      nerd-fonts.jetbrains-mono
-      nerd-fonts.meslo-lg
-      nerd-fonts.hack
-      terminus_font
-      inter
-      # Mono space
-      nerd-fonts.caskaydia-mono
-      # Emoji & Symbols
       noto-fonts
       noto-fonts-color-emoji
-      noto-fonts-cjk-sans
+
+      # Monospace/coding fonts
+      jetbrains-mono
+      nerd-fonts.jetbrains-mono
+
+      # UI fonts
+      inter
     ];
 
     fontconfig = {
@@ -28,16 +19,14 @@
       antialias = true;
       hinting = {
         enable = true;
-        style = "full";
+        style = "slight";
       };
-      subpixel = {
-        rgba = "rgb";
-        lcdfilter = "default";
-      };
+      subpixel.rgba = "rgb";
+
       defaultFonts = {
-        sansSerif = ["DejaVu Sans"];
+        sansSerif = ["Inter" "DejaVu Sans"];
         serif = ["DejaVu Serif"];
-        monospace = ["DejaVu Sans Mono"];
+        monospace = ["JetBrains Mono" "DejaVu Sans Mono"];
         emoji = ["Noto Color Emoji"];
       };
     };

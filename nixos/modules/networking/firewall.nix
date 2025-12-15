@@ -5,14 +5,11 @@
   ...
 }: let
   inherit (lib) mkForce;
-  isServer = userConfig.machineConfig.server.enable;
 in {
   networking.firewall = {
     enable = true;
     package = pkgs.iptables;
-
-    # allow servers to be pinnged, but not our clients
-    allowPing = isServer;
+    allowPing = false;
 
     allowedTCPPorts = [
       22

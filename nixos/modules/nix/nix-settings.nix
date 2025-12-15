@@ -35,7 +35,7 @@
       # build-dir = "/var/tmp";
 
       # Hard-link identical paths immediately
-      auto-optimise-store = true;
+      auto-optimise-store = false;
 
       # Output / Debug
       show-trace = true; # Better error diagnostics

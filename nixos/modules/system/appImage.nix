@@ -5,7 +5,7 @@
 }: let
   inherit (lib) mkIf;
 in {
-  config = mkIf userConfig.machineConfig.workstation {
+  config = mkIf userConfig.workstation {
     # AppImage support
     programs.appimage = {
       enable = true;

@@ -1,55 +1,31 @@
-{
-  userConfig,
-  lib,
-  pkgs,
-  ...
-}: let
-  gpuConfigs = {
-    nvidia = {
-      acceleration = "cuda";
-      envVars = {
-        OLLAMA_GPU_OVERHEAD = "0";
-        OLLAMA_FLASH_ATTENTION = "1";
-        CUDA_VISIBLE_DEVICES = "0";
-        OLLAMA_NUM_PARALLEL = "4";
-      };
-    };
-    amd = {
-      acceleration = "rocm";
-      envVars = {
-        OLLAMA_GPU_OVERHEAD = "0";
-        ROC_ENABLE_PRE_VEGA = "1";
-        HIP_VISIBLE_DEVICES = "0";
-        OLLAMA_NUM_PARALLEL = "2";
-      };
-    };
-    intel = {
-      acceleration = "vulkan";
-      envVars = {
-        OLLAMA_GPU_OVERHEAD = "0";
-        OLLAMA_NUM_PARALLEL = "2";
-      };
-    };
-    cpu = {
-      acceleration = "cpu";
-      envVars = {
-        OLLAMA_NUM_PARALLEL = "1";
-      };
-    };
-  };
-  config = gpuConfigs.${userConfig.machineConfig.gpuType};
-  pkgName =
-    if config.acceleration == "cpu"
-    then "ollama"
-    else "ollama-${config.acceleration}";
-in {
+{pkgs, ...}: {
   services.ollama = {
     enable = true;
-    package = pkgs.lib.getAttr pkgName pkgs;
-    openFirewall = true;
-    environmentVariables = config.envVars;
-    loadModels = [
+    package = pkgs.ollama-rocm;
+    acceleration = "rocm";
+
+    environmentVariables = {
+      # GPU GCN 5.0 (Vega)
+      HSA_OVERRIDE_GFX_VERSION = "9.0.0";
+
+      # Performance tuning
+      OLLAMA_GPU_OVERHEAD = "0";
+      HIP_VISIBLE_DEVICES = "0";
+
+      # Conservative parallel
+      OLLAMA_NUM_PARALLEL = "1";
+
+      # Limit models in memory due to low RAM
+      OLLAMA_MAX_LOADED_MODELS = "1";
+
+      # integrated GPU with shared RAM
+      OLLAMA_MAX_VRAM = "2048"; # Reserve 2GB max for GPU
+    };
+
+    # Auto-load small models suitable for your hardware
+    # loadModels = [
       # "qwen2.5-coder:1.5b"
-    ];
+      # "llama3.2:1b"
+    # ];
   };
 }

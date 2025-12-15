@@ -13,9 +13,8 @@
     gh
     lazygit
     neovim
-    starship
     bat
-    lsd
+    eza
     fd
     ripgrep
     zoxide
