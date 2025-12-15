@@ -1,176 +1,107 @@
+{ config, lib, modulesPath, ... }:
+
 {
-  config,
-  lib,
-  userConfig,
-  modulesPath,
-  ...
-}: let
-  inherit
-    (lib)
-    optionals
-    mkIf
-    mkDefault
-    ;
-  inherit (userConfig.machineConfig) gpuType cpuType;
+  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
-  # Hardware-specific configurations
-  cpuConfig = {
-    amd = {
-      kernelModules = ["kvm-amd"];
-      kernelParams = ["amd_pstate=active"];
-      microcode = config.hardware.cpu.amd.updateMicrocode;
-    };
-    intel = {
-      kernelModules = ["kvm-intel"];
-      kernelParams = ["intel_pstate=active"];
-      microcode = config.hardware.cpu.intel.updateMicrocode;
-    };
-  };
-
-  gpuConfig = {
-    amd = {
-      kernelModules = ["amdgpu"];
-      initrdModules = ["amdgpu"];
-    };
-    nvidia = {
-      kernelModules = [
-        "nvidia"
-        "nvidia_modeset"
-        "nvidia_uvm"
-        "nvidia_drm"
-      ];
-      initrdModules = [];
-    };
-    intel = {
-      kernelModules = ["i915"];
-      initrdModules = ["i915"];
-    };
-  };
-
-  # Current hardware selection
-  cpu = cpuConfig.${cpuType} or {};
-  gpu = gpuConfig.${gpuType} or {};
-
-  isLaptop = userConfig.machineConfig.laptop.enable;
-
-  # Common configurations
-  commonKernelModules = [
-    "acpi_call"
-    "fuse"
-  ];
-
-  commonInitrdModules = [
-    "nvme"
-    "btrfs"
-    "ahci"
-    "sd_mod"
-    "dm_mod"
-    "xhci_pci"
-  ];
-
-  commonKernelParams = [
-    "nowatchdog"
-    "loglevel=7"
-    "pti=auto"
-    "transparent_hugepage=madvise"
-
-    # Performance
-    "pcie_aspm.policy=performance"
-    "nvme_core.default_ps_max_latency_us=0"
-  ];
-
-  laptopKernelParams = optionals isLaptop [
-    "acpi_backlight=native"
-    "processor.max_cstate=2"
-  ];
-
-  desktopKernelParams =
-    optionals (!isLaptop) [
-    ];
-in {
-  imports = [(modulesPath + "/installer/scan/not-detected.nix")];
-
+  # === BOOT CONFIGURATION ===
   boot = {
-    # load kernel modules for all detected hardware
-    hardwareScan = true;
+    # Kernel version
+    kernelPackages = pkgs.linuxPackages_6_12;
+
+    # Kernel modules
+    initrd.availableKernelModules = [
+      "nvme" "ahci" "xhci_pci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc"
+    ];
+    initrd.kernelModules = [ "amdgpu" ];
+    kernelModules = [ "kvm-amd" ];
+
+    # Kernel parameters
+    kernelParams = [
+      "quiet"
+      "loglevel=3"
+      "nowatchdog"
+      "mitigations=auto"
+    ];
+
+    # Initrd optimization
+    initrd.systemd.enable = true;
+    initrd.compressor = "zstd";
+    initrd.compressorArgs = [ "-19" "-T0" ];
 
     # Tmpfs
     tmp = {
       useTmpfs = true;
-      cleanOnBoot = true;
-      tmpfsSize = mkDefault "75%";
-      tmpfsHugeMemoryPages = "within_size";
+      tmpfsSize = "50%";
     };
 
-    kernelModules = commonKernelModules ++ cpu.kernelModules or [] ++ gpu.kernelModules or [];
-
-    extraModulePackages = with config.boot.kernelPackages; [
-      acpi_call
-      cpupower
-    ];
-
-    supportedFilesystems = [
-      "ntfs"
-      "cifs"
-      "nfs"
-      "exfat"
-      "vfat"
-    ];
-
-    kernelParams =
-      commonKernelParams ++ cpu.kernelParams or [] ++ laptopKernelParams ++ desktopKernelParams;
-
-    initrd = {
-      verbose = true;
-      systemd.enable = true;
-      compressor = "zstd";
-      compressorArgs = [
-        "-3"
-        "-T0"
-      ];
-
-      kernelModules = commonInitrdModules ++ gpu.initrdModules or [];
-
-      availableKernelModules = [
-        "nvme"
-        "xhci_pci"
-        "ahci"
-        "usb_storage"
-        "sd_mod"
-        "dm_mod"
-        "sr_mod"
-        "usbhid"
-        "uas"
-      ];
-    };
+    # Filesystem support
+    supportedFilesystems = [ "ntfs" "exfat" "vfat" ];
   };
 
-  # handle ACPI events
-  services.acpid.enable = true;
-  hardware.acpilight.enable = true;
-
-  networking = {
-    useDHCP = mkDefault true;
-    dhcpcd.enable = mkDefault true;
-
-    interfaces = {
-      enp2s0.useDHCP = mkDefault true;
-      wlp3s0.useDHCP = mkDefault true;
-    };
-  };
-
-  nixpkgs.hostPlatform = mkDefault userConfig.system;
-
-  # CPU microcode updates
+  # === HARDWARE FEATURES ===
   hardware = {
-    cpu = {
-      amd.updateMicrocode = mkIf (cpuType == "amd") (mkDefault true);
-      intel.updateMicrocode = mkIf (cpuType == "intel") (mkDefault true);
-    };
+    # AMD CPU microcode updates
+    cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-    enableRedistributableFirmware = mkDefault true;
+    # Enable all firmware (WiFi, Bluetooth, etc.)
+    enableRedistributableFirmware = true;
+
+    # Graphics
+    amdgpu.amdvlk.enable = false;
+    graphics.enable = true;
   };
 
-  # Intel thermal management for laptops
-  services.thermald.enable = mkIf (cpuType == "intel" && isLaptop) (mkDefault true);
+  # === POWER MANAGEMENT ===
+  powerManagement = {
+    enable = true;
+    cpuFreqGovernor = lib.mkDefault "schedutil";
+  };
+
+  # Battery optimization
+  services.tlp = {
+    enable = true;
+    settings = {
+      # CPU scaling
+      CPU_SCALING_GOVERNOR_ON_AC = "schedutil";
+      CPU_SCALING_GOVERNOR_ON_BAT = "schedutil";
+
+      # AMD P-State (Zen+ uses acpi-cpufreq, not amd-pstate)
+      CPU_ENERGY_PERF_POLICY_ON_AC = "balance_performance";
+      CPU_ENERGY_PERF_POLICY_ON_BAT = "balance_power";
+
+      # Boost control
+      CPU_BOOST_ON_AC = 1;
+      CPU_BOOST_ON_BAT = 0;
+
+      # Disk
+      DISK_DEVICES = "nvme0n1 sda";
+      DISK_APM_LEVEL_ON_AC = "254 254";
+      DISK_APM_LEVEL_ON_BAT = "128 128";
+    };
+  };
+
+  # === NETWORKING ===
+  networking = {
+    useDHCP = lib.mkDefault true;
+    networkmanager.enable = true; # GUI network management
+
+    # Interface names from your system
+    interfaces = {
+      enp2s0.useDHCP = lib.mkDefault true;  # Ethernet
+      wlp3s0.useDHCP = lib.mkDefault true;  # WiFi
+    };
+  };
+
+  # === SYSTEM PROFILE ===
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+
+  # firmware updater for machine hardware
+  services.fwupd = {
+    enable = true;
+    daemonSettings.EspLocation = config.boot.loader.efi.efiSysMountPoint;
+  };
+
+  # === THERMAL/BACKLIGHT ===
+  services.acpid.enable = true;         # ACPI event handling
+  hardware.acpilight.enable = true;     # Backlight control via /sys
 }
