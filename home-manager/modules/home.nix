@@ -6,7 +6,6 @@
   ...
 }: {
   imports = [
-    ./htop.nix
     ./packages.nix
     ./secrets.nix
     ./spicetify.nix

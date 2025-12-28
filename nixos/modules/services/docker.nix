@@ -13,28 +13,11 @@ in {
   virtualisation.docker = {
     enable = true;
     enableOnBoot = true;
-    storageDriver = "overlay2";
-
     # Auto cleanup - runs weekly, removes all unused images
     autoPrune = {
       enable = true;
       dates = "weekly";
       flags = ["--all"];
-    };
-
-    # Daemon settings
-    daemon.settings = {
-      # DNS: Cloudflare + Google for reliability
-      dns = [
-        "1.1.1.1"
-        "8.8.8.8"
-      ];
-
-      # Mirror to speed up pulls and avoid rate limits
-      registry-mirrors = ["https://mirror.gcr.io"];
-
-      # Integrate with systemd logging (view: journalctl -u docker)
-      log-driver = "journald";
     };
   };
 

@@ -10,7 +10,9 @@ in {
     # Plasma desktop environment configuration
     services.desktopManager.plasma6.enable = true;
     services.displayManager.sddm.enable = true;
-    xdg.portal.extraPortals = [pkgs.kdePackages.xdg-desktop-portal-kde];
+
+    # X11 session by default
+    services.displayManager.defaultSession = "plasmax11";
 
     # Enable hardware bluetooth
     hardware = {

@@ -3,32 +3,33 @@
   pkgs,
   userConfig,
   ...
-}: let
-  inherit (lib) mkDefault;
-in {
+}: {
   # Set hostname
   networking.hostName = userConfig.hostname;
+
+  # Set your time zone.
+  time.timeZone = "Asia/Kolkata";
+
+  # Select internationalisation properties.
+  i18n.defaultLocale = "en_IN";
+
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "en_IN";
+    LC_IDENTIFICATION = "en_IN";
+    LC_MEASUREMENT = "en_IN";
+    LC_MONETARY = "en_IN";
+    LC_NAME = "en_IN";
+    LC_NUMERIC = "en_IN";
+    LC_PAPER = "en_IN";
+    LC_TELEPHONE = "en_IN";
+    LC_TIME = "en_IN";
+  };
 
   # System state version
   system.stateVersion = "25.11";
 
   # Zsh program enabled as default user
   programs.zsh.enable = true;
-
-  # configure a setcap wrapper
-  programs.mtr.enable = true;
-
-  # Image/video preview
-  services.tumbler.enable = true;
-
-  # Mounting USB & More
-  services.gvfs.enable = true;
-
-  # smartd daemon from smartmontools package
-  services.smartd = {
-    enable = true;
-    autodetect = true;
-  };
 
   # Create the main user
   users.users.${userConfig.username} = {
@@ -42,9 +43,6 @@ in {
     extraGroups = [
       "wheel"
       "networkmanager"
-      "audio"
-      "pipewire"
-      "video"
     ];
   };
 }

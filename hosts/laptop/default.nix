@@ -4,7 +4,11 @@
   ...
 }: let
   isUsr = userConfig.username == "c0d3h01";
-  ssh-keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICSjL8HGjiSAnLHupMZin095bql7A8+UDfc7t9XCZs8l"];
+
+  # Define your keys here to reuse them
+  myKeys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDgTxUEL0BNaKsL0FXEBY9PJRO0itKILY2Z5Buxzb79N harshalsawant.dev@gmail.com"
+  ];
 in {
   imports = [
     ./hardware0x1.nix
@@ -12,15 +16,16 @@ in {
 
   users.users = lib.mkIf isUsr {
     root = {
-      # Allow the user to log in as root without a password.
       hashedPassword = "";
-      openssh.authorizedKeys.keys = ssh-keys;
+      # Use the variable defined above
+      openssh.authorizedKeys.keys = myKeys;
     };
 
     c0d3h01 = {
       home = "/home/c0d3h01";
-      hashedPassword = "$y$j9T$zv/9zYffWILQWXz9xwMaa0$oKN.JemKWm/KA4p.mO3rzSIS.ODD7jQeeG5NbvQ0Wa5";
-      openssh.authorizedKeys.keys = ssh-keys;
+      hashedPassword = "$y$j9T$jbMpDi1jashn36Vczb8jO/$E8M0edjvWOZg24Su5bFWaQ5tHcPkwyQ8HdzkAMx0km7";
+      # Use the variable defined above
+      openssh.authorizedKeys.keys = myKeys;
     };
   };
 }

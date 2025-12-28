@@ -10,12 +10,18 @@ in {
     # GNOME desktop environment configuration
     services.desktopManager.gnome.enable = true;
     services.displayManager.gdm.enable = true;
-    xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-gnome];
+    # xdg.portal.enable = true;
 
     networking.firewall = {
       allowedTCPPorts = [1716]; # KDE connect port
       allowedUDPPorts = [1716];
     };
+
+    # To disable installing GNOME's suite of applications
+    # and only be left with GNOME shell.
+    services.gnome.core-apps.enable = false;
+    services.gnome.core-developer-tools.enable = false;
+    services.gnome.games.enable = false;
 
     # Exclude unwanted GNOME packages
     environment = {
@@ -24,13 +30,16 @@ in {
         gnome-photos
         vlc
         kdePackages.kdeconnect-kde
+
+        # Gnome extensions
+        gnomeExtensions.gsconnect
+        gnomeExtensions.just-perfection
+        gnomeExtensions.arc-menu
       ];
 
       gnome.excludePackages = with pkgs; [
         gnome-tour
-        helm
         decibels
-        cutecom
         gnome-font-viewer
         epiphany
         yelp

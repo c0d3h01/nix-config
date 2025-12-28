@@ -1,7 +1,8 @@
 {
   imports = [
-    ./nix-config.nix
-    ./nix-settings.nix
-    ./nix-user.nix
+    ./config.nix
+    ./optimise.nix
+    ./settings.nix
+    ./user.nix
   ];
 }

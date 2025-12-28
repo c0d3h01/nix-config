@@ -8,8 +8,6 @@
 in {
   networking.firewall = {
     enable = true;
-    package = pkgs.iptables;
-    allowPing = false;
 
     allowedTCPPorts = [
       22
@@ -24,8 +22,8 @@ in {
       59011
     ];
 
-    allowedTCPPortRanges = [];
-    allowedUDPPortRanges = [];
+    # allowedTCPPortRanges = [];
+    # allowedUDPPortRanges = [];
 
     # make a much smaller and easier to read log
     logReversePathDrops = true;

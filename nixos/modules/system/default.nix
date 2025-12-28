@@ -1,15 +1,14 @@
 {
   imports = [
-    ./apparmor.nix
     ./appImage.nix
     ./diff.nix
-    ./earlyoom.nix
-    ./fhs-compact.nix
-    ./irqbalance.nix
+    ./fonts.nix
     ./libvirt.nix
-    ./locale.nix
+    ./nix-ld.nix
     ./oomd.nix
+    ./pipewire.nix
     ./printing.nix
     ./scheduler.nix
+    ./xserver.nix
   ];
 }

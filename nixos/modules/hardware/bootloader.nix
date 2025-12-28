@@ -3,19 +3,14 @@
   pkgs,
   ...
 }: {
+  # Bootloader.
   boot.loader = {
-    timeout = 3;
-
-    efi = {
-      canTouchEfiVariables = true;
-      efiSysMountPoint = "/boot";
-    };
+    timeout = 5;
+    efi.canTouchEfiVariables = true;
 
     systemd-boot = {
       enable = true;
-      configurationLimit = 10;
-      editor = false;
-      consoleMode = "max";
+      configurationLimit = 15;
     };
   };
 }
