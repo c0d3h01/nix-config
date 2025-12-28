@@ -11,7 +11,7 @@
   ];
 in {
   imports = [
-    ./hardware0x1.nix
+    ./hardware-configuration.nix
   ];
 
   users.users = lib.mkIf isUsr {
