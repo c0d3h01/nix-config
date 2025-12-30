@@ -29,12 +29,9 @@ in {
         gnome-tweaks
         gnome-photos
         vlc
-        kdePackages.kdeconnect-kde
 
         # Gnome extensions
         gnomeExtensions.gsconnect
-        gnomeExtensions.just-perfection
-        gnomeExtensions.arc-menu
       ];
 
       gnome.excludePackages = with pkgs; [
