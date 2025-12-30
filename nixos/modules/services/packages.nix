@@ -10,9 +10,17 @@
   # DESKTOP APPLICATIONS
   desktopApps = with pkgs; [
     brave
+    notion-app
     vscode-fhs
     postman
     github-desktop
+    telegram-desktop
+    signal-desktop-bin
+    bitwarden-desktop
+    discord
+    gnuchess
+    slack
+    zoom-us
     drawio
     libreoffice-still
     wezterm
